@@ -4,8 +4,8 @@ const isEmpty = require('./is-empty');
 module.exports = validateLoginInput = (data) => {
   errors = {};
 
-  data.email = isEmpty(data.email) ? data.email : '';
-  data.password = isEmpty(data.password) ? data.password : '';
+  data.email = !isEmpty(data.email) ? data.email : '';
+  data.password = !isEmpty(data.password) ? data.password : '';
 
   if(!Validator.isEmail(data.email)) {
     errors.email = 'L\'adresse e-mail n\'est pas valide';

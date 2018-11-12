@@ -17,6 +17,8 @@ const User = require('../../models/User');
 // @desc    Register a user 
 // @access  Public
 router.post('/register', (req, res) => {
+
+  // Are inputs valid?
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if(!isValid) {
@@ -41,7 +43,7 @@ router.post('/register', (req, res) => {
           password: req.body.password
         });
 
-        // Bcrypt
+        // Bcrypt process
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if(err) throw err;
@@ -63,9 +65,60 @@ router.post('/register', (req, res) => {
 // @desc    Login user / Returning JWT
 // @access  Public
 router.post('/login', (req, res) => {
-  const { errors, isValid } = validateLoginInput(req.body);
+
+   // Are inputs valid?
+   const { errors, isValid } = validateLoginInput(req.body);
+   if(!isValid) {
+     return res.status(400).json(errors);
+   }
+
+   const email = req.body.email;
+   const password = req.body.password;
+
+  // Is user exists in DB?
+  User
+    .findOne({ email })
+    .then(user => {
+
+      if(!user) {
+        errors.login = 'E-mail ou mot de passe invalide.';
+        res.status(404).json(errors);
+      }
+
+      bcrypt.compare(password, user.password)
+        .then(isMatch => {
+
+          if(isMatch) {
+            const payload = {
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName
+            }
+
+            // JSON Web Token process
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: 604800 }, (err, token) => {
+              res.json({sucess: true, token: 'Bearer ' + token});
+            });
+
+          } else {
+            errors.login = 'E-mail ou mot de passe invalide.';
+            res.status(404).json(errors);
+          }
+        });
+    });
+});
 
 
+// @route   POST api/users/current
+// @desc    Return current user due to JWT & Passport module
+// @access  Private
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    id: req.user.id,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    email: req.user.email  
+  });
 });
 
 module.exports = router;
