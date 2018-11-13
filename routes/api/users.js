@@ -109,7 +109,7 @@ router.post('/login', (req, res) => {
 });
 
 
-// @route   POST api/users/current
+// @route   GET api/users/current
 // @desc    Return current user due to JWT & Passport module
 // @access  Private
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
