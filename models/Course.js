@@ -23,23 +23,18 @@ const courseSchema = new Schema({
   delivery: {
     type: String
   },
-  targetedAudience: {
-    type: [String]
-  },
   price: {
     type: Number,
     required: true
+  },
+  targetedAudience: {
+    type: [String]
   },
   CPF: {
     type: Boolean
   },
   duration: {
-    number: {
-      type: Number
-    },
-    of: {
-      type: String
-    }
+    type: Number,
   },
   syllabus: [
     {
@@ -54,7 +49,7 @@ const courseSchema = new Schema({
   targetedLevel: {
     type: String
   },
-  categories: {
+  domain: {
     type: [String]
   },
   requirements: {

@@ -19,10 +19,10 @@ const slugify = text => {
 }
 
 // @route   POST api/tc
-// @desc    Create or edit user profile
+// @desc    Create or edit training center profile
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  
+
   // Are inputs valid?
   const { errors, isValid } = validateTrainingCenterInput(req.body);
 
@@ -35,9 +35,9 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   trainingCenterFields.user = req.user.id
 
   if(req.body.companyName) trainingCenterFields.companyName = req.body.companyName;
-  
+
   // handle
-  if(req.body.companyName) trainingCenterFields.handle = slugify(req.body.companyName);  
+  if(req.body.companyName) trainingCenterFields.handle = slugify(req.body.companyName);
   if(req.body.desc) trainingCenterFields.desc = req.body.desc;
   if(req.body.certification) trainingCenterFields.certification = req.body.certification;
   if(req.body.expertise) trainingCenterFields.expertise = req.body.expertise;

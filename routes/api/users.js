@@ -14,7 +14,7 @@ const User = require('../../models/User');
 
 
 // @route   POST api/users/register
-// @desc    Register a user 
+// @desc    Register a user
 // @access  Public
 router.post('/register', (req, res) => {
 
@@ -117,7 +117,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
     id: req.user.id,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
-    email: req.user.email  
+    email: req.user.email
   });
 });
 
