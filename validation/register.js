@@ -11,11 +11,11 @@ module.exports = validateRegisterInput = (data) => {
   data.password = !isEmpty(data.password) ? data.password : '';
 
   if(Validator.isEmpty(data.firstName)) {
-    errors.firstName = 'Un mot de passe est obligatoire.';
+    errors.firstName = 'Merci de renseigner votre prénom.';
   }
 
   if(Validator.isEmpty(data.lastName)) {
-    errors.lastName = 'Une adresse e-mail est obligatoire.';
+    errors.lastName = 'Merci de renseigner votre nom.';
   }
 
   if(!Validator.isEmail(data.email)) {

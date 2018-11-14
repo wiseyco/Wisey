@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const courseSchema = new Schema({
   trainingcenter: {
     type: Schema.Types.ObjectId,
-    ref: 'trainingcenter'
+    ref: 'trainingcenters'
   },
   title: {
     type: String,

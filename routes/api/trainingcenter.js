@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const multer = require('multer');
+
+// Multer Setup
+const toTCLogosFolder = multer({ dest: 'uploads/img/tc-logos' });
+const defaultLogo = '../../uploads/img/tc-logos/default.png';
 
 // Load input validation
 const validateTrainingCenterInput = require('../../validation/tc-register');
@@ -8,7 +13,7 @@ const validateTrainingCenterInput = require('../../validation/tc-register');
 // Load Profile and User Models
 const TrainingCenter = require('../../models/TrainingCenter');
 
-
+// Format uri
 const slugify = text => {
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
@@ -17,6 +22,26 @@ const slugify = text => {
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
 }
+
+
+// @route   GET api/tc
+// @desc    Get training center by uri
+// @access  Public
+router.get('/:uri', (req, res) => {
+
+  TrainingCenter
+    .findOne({ uri: req.params.uri })
+    // .populate('user', ['firstName', 'lastName']) // In case we want to get users info
+    .then(trainingCenter => {
+
+      if(!trainingCenter) {
+        res.status(404).json({ notFound: 'There is no training center for this uri.' })
+      }
+      res.json(trainingCenter);
+    })
+    .catch(err => res.status(404).json(err));
+});
+
 
 // @route   POST api/tc
 // @desc    Create or edit user profile
@@ -34,10 +59,10 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
   trainingCenterFields.user = req.user.id
 
+  // uri
+  if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName);  
   if(req.body.companyName) trainingCenterFields.companyName = req.body.companyName;
-  
-  // handle
-  if(req.body.companyName) trainingCenterFields.handle = slugify(req.body.companyName);  
+  trainingCenterFields.logo = defaultLogo;
   if(req.body.desc) trainingCenterFields.desc = req.body.desc;
   if(req.body.certification) trainingCenterFields.certification = req.body.certification;
   if(req.body.expertise) trainingCenterFields.expertise = req.body.expertise;
@@ -66,7 +91,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
       if(trainingCenter) {
 
         // Update
-        TrainingCenter.findOneAndUpdate(
+        TrainingCenter
+          .findOneAndUpdate(
             { user: req.user.id },
             { $set: trainingCenterFields },
             { new: true })
@@ -75,14 +101,14 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
       } else {
 
         // Create
-        TrainingCenter.findOne({ handle: trainingCenterFields.handle })
+        TrainingCenter.findOne({ uri: trainingCenterFields.uri })
           .then(trainingCenter => {
 
-            // Check if the handle exists
+            // Check if the uri exists
             if(trainingCenter) {
 
-              // Create special handle
-              trainingCenterFields.handle = `${trainingCenter.handle}-${Math.floor(Math.random() * Math.floor(9999))}`;
+              // Create special uri
+              trainingCenterFields.uri = `${trainingCenter.uri}-${Math.floor(Math.random() * Math.floor(9999))}`;
               new TrainingCenter(trainingCenterFields)
                 .save()
                 .then(trainingCenter => res.json(trainingCenter));
@@ -94,8 +120,47 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
             }
           });
       }
-    })
+    });
 });
 
+
+// @route   POST api/tc/add-logo
+// @desc    Add or edit the training center logo
+// @access  Private
+router.post('/add-logo', toTCLogosFolder.single('logo'), passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  let errors = {};
+
+  TrainingCenter
+    .findOne({ user: req.user.id })
+    .then(trainingCenter => {
+
+      if(trainingCenter) {
+        TrainingCenter
+          .findOneAndUpdate(
+            { user: req.user.id },
+            { logo: req.file.path },
+            { new: true })
+          .then(trainingCenter => {
+            res.json(trainingCenter)
+          })
+
+      } else {
+        errors.logo = `Vous n'êtes pas référencé comment centre de formation.`;
+        res.status(404).json(errors);
+      }
+    });
+});
+
+
+// @route   DELETE api/tc
+// @desc    Delete trainingcenter
+// @access  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  TrainingCenter
+    .findOneAndRemove({ user: req.user.id })
+    .then(() => res.json({ success: true }))
+});
 
 module.exports = router;

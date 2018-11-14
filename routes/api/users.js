@@ -121,4 +121,16 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
   });
 });
 
+
+// @route   DELETE api/users
+// @desc    Delete current user
+// @access  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  User
+    .findOneAndRemove({ _id: req.user.id })
+    .then(() => res.json({ success: true }))
+});
+
+
 module.exports = router;

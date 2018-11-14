@@ -7,7 +7,7 @@ const trainingCenterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  handle: {
+  uri: {
     type: String,
     required: true,
     max: 40
