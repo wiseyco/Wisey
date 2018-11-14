@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import NavbarLanding from './NavbarLanding';
 
 class Landing extends Component {
 
     render() {
     
     return (
-        
+		<div>
+		<NavbarLanding />
         <div>
         {/* // Start Banner Area */}
 		<section className= "banner-area relative">
@@ -165,6 +167,7 @@ class Landing extends Component {
 		</section>
 		{/* // End Digital Studio */}
         </div>
+		</div>
         
     )
     }
