@@ -2,36 +2,26 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const multer = require('multer');
+const path = require('path');
 
-// Multer Setup
+
+// Set storage Engine 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if(file.fieldname === 'logo') {
-      cb(null, 'uploads/img/tc-logos');
-    } else {
-      cb(null, 'uploads/img/tc-pictures');
-    }
-  },
+  destination: 'uploads/img/tc-pictures',
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now());
-  },
-  fileFilter: (req, file, cb) => {
-    let ext = path.extname(file.originalname);
-    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-         req.fileValidationError = "Forbidden extension";
-         return cb(null, false, req.fileValidationError);
-    }
-    cb(null, true);
+    cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
-var uploads = multer({ storage: storage })
-
-// const uploads = multer({ dest: 'uploads/img/tc-logos' });
+const upload = multer({storage}).single('logo');
+const uploads = multer({storage}).array('pictures', 6);
 const defaultLogo = '../../uploads/img/tc-logos/default.png';
 
 // Load input validation
 const validateTrainingCenterInput = require('../../validation/tc-register');
+
+// Load Slugify
+const slugify = require('../../utils/slugify');
 
 // Load Profile and User Models
 const TrainingCenter = require('../../models/TrainingCenter');
@@ -167,7 +157,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @route   POST api/tc/add-logo
 // @desc    Add or edit the training center logo
 // @access  Private
-router.post('/add-logo', uploads.single('logo'), passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/add-logo', upload, passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = {};
 
   TrainingCenter
@@ -195,7 +185,7 @@ router.post('/add-logo', uploads.single('logo'), passport.authenticate('jwt', { 
 // @route   POST api/tc/pictures
 // @desc    Add pictures to a training center
 // @access  Private
-router.post('/pictures', uploads.array('pictures', 2), passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/pictures', uploads, passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = {};
  
   let filesCopy = [...req.files];
@@ -208,7 +198,7 @@ router.post('/pictures', uploads.array('pictures', 2), passport.authenticate('jw
   TrainingCenter
     .findOneAndUpdate(
       { user: req.user.id },
-      { $push: { pictures: newPictures }},
+      { $push:{ pictures: newPictures }},
       { new: true })
     .then(trainingCenter => res.json(trainingCenter))
     .catch(err => console.log('err :', err));
@@ -225,20 +215,5 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
     .findOneAndRemove({ user: req.user.id })
     .then(() => res.json({ success: true }))
 });
-
-
-/**************/
-/* END ROUTES */
-/**************/
-
-// @functions format uri
-const slugify = text => {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-}
 
 module.exports = router;
