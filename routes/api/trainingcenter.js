@@ -4,7 +4,30 @@ const passport = require('passport');
 const multer = require('multer');
 
 // Multer Setup
-const toTCLogosFolder = multer({ dest: 'uploads/img/tc-logos' });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if(file.fieldname === 'logo') {
+      cb(null, 'uploads/img/tc-logos');
+    } else {
+      cb(null, 'uploads/img/tc-pictures');
+    }
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now());
+  },
+  fileFilter: (req, file, cb) => {
+    let ext = path.extname(file.originalname);
+    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+         req.fileValidationError = "Forbidden extension";
+         return cb(null, false, req.fileValidationError);
+    }
+    cb(null, true);
+  }
+});
+
+var uploads = multer({ storage: storage })
+
+// const uploads = multer({ dest: 'uploads/img/tc-logos' });
 const defaultLogo = '../../uploads/img/tc-logos/default.png';
 
 // Load input validation
@@ -13,15 +36,31 @@ const validateTrainingCenterInput = require('../../validation/tc-register');
 // Load Profile and User Models
 const TrainingCenter = require('../../models/TrainingCenter');
 
-// Format uri
-const slugify = text => {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-}
+
+// @route   GET api/tc/all
+// @desc    Get all training centers
+// @access  Public
+router.get('/all', (req, res) => {
+  const errors = {};
+
+  TrainingCenter
+    .find({})
+    // .populate('user', ['firstName', 'lastName']) // In case we want to get users info
+    .then(trainingCenters => {
+
+      if(!trainingCenters) {
+        errors.notFound = `Il n'y a aucun centre de formation`;
+        res.status(404).json(errors);
+      }
+
+      res.json(trainingCenters);
+    })
+    .catch(err => {
+      console.log('err :', err);
+      errors.notFound = `Il n'y a aucun centre de formation`;
+      res.status(404).json(errors);
+    });
+});
 
 
 // @route   GET api/tc
@@ -44,7 +83,7 @@ router.get('/:uri', (req, res) => {
 
 
 // @route   POST api/tc
-// @desc    Create or edit user profile
+// @desc    Create or edit training center
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   
@@ -55,12 +94,12 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     return res.status(400).json(errors);
   }
 
-  let trainingCenterFields = {};
+  const trainingCenterFields = {};
 
   trainingCenterFields.user = req.user.id
 
   // uri
-  if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName);  
+  // if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName); // Moved below 
   if(req.body.companyName) trainingCenterFields.companyName = req.body.companyName;
   trainingCenterFields.logo = defaultLogo;
   if(req.body.desc) trainingCenterFields.desc = req.body.desc;
@@ -80,7 +119,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
   // Missed one
   // if(req.body.dateOfEstablishment) trainingCenterFields.dateOfEstablishment = req.body.dateOfEstablishment;
-  // if(req.body.logo) trainingCenterFields.logo = req.body.logo;
   // if(req.body.mainCustomers) trainingCenterFields.mainCustomers = req.body.mainCustomers;
   // if(req.body.satisfactionRating) trainingCenterFields.satisfactionRating = req.body.satisfactionRating;
 
@@ -101,7 +139,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
       } else {
 
         // Create
-        TrainingCenter.findOne({ uri: trainingCenterFields.uri })
+        TrainingCenter
+          .findOne({ uri: slugify(req.body.companyName) })
           .then(trainingCenter => {
 
             // Check if the uri exists
@@ -114,6 +153,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
                 .then(trainingCenter => res.json(trainingCenter));
 
             } else {
+              trainingCenterFields.uri = slugify(req.body.companyName);
               new TrainingCenter(trainingCenterFields)
                 .save()
                 .then(trainingCenter => res.json(trainingCenter));
@@ -127,8 +167,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @route   POST api/tc/add-logo
 // @desc    Add or edit the training center logo
 // @access  Private
-router.post('/add-logo', toTCLogosFolder.single('logo'), passport.authenticate('jwt', { session: false }), (req, res) => {
-
+router.post('/add-logo', uploads.single('logo'), passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = {};
 
   TrainingCenter
@@ -146,10 +185,34 @@ router.post('/add-logo', toTCLogosFolder.single('logo'), passport.authenticate('
           })
 
       } else {
-        errors.logo = `Vous n'êtes pas référencé comment centre de formation.`;
+        errors.notFound = `Vous n'êtes pas référencé comment centre de formation.`;
         res.status(404).json(errors);
       }
     });
+});
+
+
+// @route   POST api/tc/pictures
+// @desc    Add pictures to a training center
+// @access  Private
+router.post('/pictures', uploads.array('pictures', 2), passport.authenticate('jwt', { session: false }), (req, res) => {
+  let errors = {};
+ 
+  let filesCopy = [...req.files];
+  let newPictures = [];
+  
+  for(let i = 0; i < filesCopy.length; i++) {
+    newPictures.push({uri: filesCopy[i].path, pictureTitle: filesCopy[i].filename, pictureDesc: filesCopy[i].path});
+  }
+
+  TrainingCenter
+    .findOneAndUpdate(
+      { user: req.user.id },
+      { $push: { pictures: newPictures }},
+      { new: true })
+    .then(trainingCenter => res.json(trainingCenter))
+    .catch(err => console.log('err :', err));
+
 });
 
 
@@ -162,5 +225,20 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
     .findOneAndRemove({ user: req.user.id })
     .then(() => res.json({ success: true }))
 });
+
+
+/**************/
+/* END ROUTES */
+/**************/
+
+// @functions format uri
+const slugify = text => {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
 
 module.exports = router;

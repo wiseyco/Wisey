@@ -14,7 +14,7 @@ const User = require('../../models/User');
 
 
 // @route   POST api/users/register
-// @desc    Register a user 
+// @desc    Register or update a user 
 // @access  Public
 router.post('/register', (req, res) => {
 
@@ -51,7 +51,9 @@ router.post('/register', (req, res) => {
 
             newUser
               .save()
-              .then(user => res.json(user))
+              .then(user => {
+                doWeSendBAckToken(req, res, user);
+              })
               .catch(err => console.log('error saving user into DB:', err));
           })
         })
@@ -72,39 +74,13 @@ router.post('/login', (req, res) => {
      return res.status(400).json(errors);
    }
 
-   const email = req.body.email;
-   const password = req.body.password;
+  const email = req.body.email;
 
   // Is user exists in DB?
   User
     .findOne({ email })
     .then(user => {
-
-      if(!user) {
-        errors.login = 'E-mail ou mot de passe invalide.';
-        res.status(404).json(errors);
-      }
-
-      bcrypt.compare(password, user.password)
-        .then(isMatch => {
-
-          if(isMatch) {
-            const payload = {
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName
-            }
-
-            // JSON Web Token process
-            jwt.sign(payload, keys.secretOrKey, { expiresIn: 604800 }, (err, token) => {
-              res.json({sucess: true, token: 'Bearer ' + token});
-            });
-
-          } else {
-            errors.login = 'E-mail ou mot de passe invalide.';
-            res.status(404).json(errors);
-          }
-        });
+      doWeSendBAckToken(req, res, user);
     });
 });
 
@@ -131,6 +107,42 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
     .findOneAndRemove({ _id: req.user.id })
     .then(() => res.json({ success: true }))
 });
+
+
+/**************/
+/* END ROUTES */
+/**************/
+
+// @functions send back token if match email & password
+const doWeSendBAckToken = (req, res, user) => {
+  const password = req.body.password;
+  
+  if(!user) {
+    errors.login = 'E-mail ou mot de passe invalide.';
+    res.status(404).json(errors);
+  }
+
+  bcrypt.compare(password, user.password)
+    .then(isMatch => {
+
+      if(isMatch) {
+        const payload = {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName
+        }
+
+        // JSON Web Token process
+        jwt.sign(payload, keys.secretOrKey, { expiresIn: 604800 }, (err, token) => {
+          res.json({sucess: true, token: 'Bearer ' + token});
+        });
+
+      } else {
+        errors.login = 'E-mail ou mot de passe invalide.';
+        res.status(404).json(errors);
+      }
+    });
+};
 
 
 module.exports = router;
