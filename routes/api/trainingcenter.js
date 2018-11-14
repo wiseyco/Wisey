@@ -7,9 +7,15 @@ const path = require('path');
 
 // Set storage Engine 
 const storage = multer.diskStorage({
-  destination: 'uploads/img/tc-pictures',
+  destination: (req, file, cb) => {
+    if(file.fieldname === 'logo') {
+      cb(null, 'uploads/img/tc-logos');
+    } else {
+      cb(null, 'uploads/img/tc-pictures');
+    }
+  },
   filename: (req, file, cb) => {
-    cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname));
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
@@ -192,7 +198,7 @@ router.post('/pictures', uploads, passport.authenticate('jwt', { session: false 
   let newPictures = [];
   
   for(let i = 0; i < filesCopy.length; i++) {
-    newPictures.push({uri: filesCopy[i].path, pictureTitle: filesCopy[i].filename, pictureDesc: filesCopy[i].path});
+    newPictures.push({imgUri: filesCopy[i].path, pictureTitle: filesCopy[i].filename, pictureDesc: filesCopy[i].path});
   }
 
   TrainingCenter
@@ -202,7 +208,42 @@ router.post('/pictures', uploads, passport.authenticate('jwt', { session: false 
       { new: true })
     .then(trainingCenter => res.json(trainingCenter))
     .catch(err => console.log('err :', err));
+});
 
+
+// @route   DELETE api/tc/pictures/:id/:picture_id
+// @desc    Delete a picture
+// @access  Private
+router.delete('/pictures/:id/:picture_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const errors = {};
+
+  TrainingCenter
+    .findById(req.params.id)
+    .then(trainingCenter => {
+
+      // Check if the picture exists
+      if(trainingCenter.pictures.filter(picture => picture._id.toString() === req.params.picture_id).length === 0) {
+        errors.notFound = 'La photo n\'exite pas';
+        return res.status(404).json(errors);
+      }
+
+      // Get remove index
+      const removeIndex = trainingCenter.pictures
+      .map(item => item._id.toString())
+      .indexOf(req.params.picture_id);
+
+      // Splice comment out of array
+      trainingCenter.pictures.splice(removeIndex, 1);
+
+      // Save
+      trainingCenter
+        .save()
+        .then(trainingCenter => res.json(trainingCenter));
+    })
+    .catch(err => {
+      errors.notFound = 'Aucun centre de formation trouvé';
+      res.status(404).json(errors);
+    });
 });
 
 

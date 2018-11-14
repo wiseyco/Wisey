@@ -58,7 +58,7 @@ const trainingCenterSchema = new Schema({
   },
   pictures: [
     {
-      uri: {
+      imgUri: {
         type: String
       },
       pictureTitle: {
