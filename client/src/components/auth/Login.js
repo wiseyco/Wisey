@@ -8,10 +8,15 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          modal: false
+          modal: false,
+          email: '',
+          password: '',
+          errors: {}
         };
     
         this.toggle = this.toggle.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
       }
     
       toggle() {
@@ -19,6 +24,22 @@ class Login extends Component {
           modal: !this.state.modal
         });
       }
+
+      onSubmit (e) {
+        e.preventDefault();
+
+        const user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        console.log(user);
+    }
+
+      onChange (e) {
+        this.setState({
+            [e.target.name] : e.target.value
+        });
+    }
 
     render () {
     
@@ -31,16 +52,29 @@ class Login extends Component {
         <Modal className="reactstrap-modal" isOpen={this.state.modal} toggle={this.toggle}>
                                     <ModalHeader toggle={this.toggle}>Connexion</ModalHeader>
         <ModalBody >
-                                    <form>
+                                    <form onSubmit={this.onSubmit}>
                                                     <div className="form-group login-form">
                                                         <br />
                                                       <label for="exampleInputEmail1">Email</label>
-                                                      <input type="email" className="form-control profile-input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre adresse email" />
+                                                      <input type="email"
+                                                      name="email"
+                                                      className="form-control profile-input"
+                                                      value={this.state.email}
+                                                      onChange={this.onChange}
+                                                      id="exampleInputEmail1"
+                                                      aria-describedby="emailHelp"
+                                                      placeholder="Entrez votre adresse email" />
                                                       <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                                                     </div>
                                                     <div className="form-group login-form">
                                                       <label for="exampleInputPassword1">Mot de passe</label>
-                                                      <input type="password" className="form-control profile-input" id="exampleInputPassword1" placeholder="Saisissez votre mot de passe" />
+                                                      <input type="password"
+                                                      name="password"
+                                                      value={this.state.password}
+                                                      onChange={this.onChange}
+                                                      className="form-control profile-input"
+                                                      id="exampleInputPassword1"
+                                                      placeholder="Saisissez votre mot de passe" />
                                                     </div>
                                                     <button type="submit" className="btn btn-primary primary-btn">Connexion</button>
                                                     <div className="form-group login-form">
@@ -49,7 +83,6 @@ class Login extends Component {
                                                   </form>
                                     </ModalBody>
                                     <ModalFooter>
-                                        <Button color="primary" onClick={this.toggle}>Valider</Button>{' '}
                                         <Button color="secondary" onClick={this.toggle}>Annuler</Button>
                                     </ModalFooter>
                                     </Modal>
