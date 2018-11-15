@@ -16,6 +16,10 @@ import Footer from './components/layout/Footer'
 import Register from './components/auth/Register'
 import Dashboard from './components/dashboard/Dashboard';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
+import Register from './components/auth/Register';
+
+import Profile from './components/profile/Profile';
+
 
 import './App.css';
 
@@ -43,6 +47,7 @@ class App extends Component {
           <Route exact path="/register" component={ Register } />
           {/* <Route exact path="/login" component={ Login } /> */}
           <Route exact path="/add-training-center" component={AddTrainingCenter} />
+          <Route exact path="/profile" component={ Profile } />
           </div>
           <Footer />
           </div>
