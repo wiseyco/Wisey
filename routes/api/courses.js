@@ -12,7 +12,7 @@ const Course = require('../../models/Course');
 const TrainingCenter = require('../../models/TrainingCenter');
 
 // @route   POST api/courses/create
-// @desc    Create course
+// @desc    Create course as a training center
 // @access  Private
 router.post(
   '/create',
@@ -103,7 +103,7 @@ router.post(
 });
 
 // @route   POST api/courses/update
-// @desc    Update course
+// @desc    Update course as a training center
 // @access  Private
 router.post(
   '/update',
@@ -176,5 +176,118 @@ router.post(
       });
   });
 
+  // @route   DELETE api/courses/delete/:id
+  // @desc    Delete course as a training center
+  // @access  Private
+  router.delete(
+    '/delete/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      //Get TrainingCenter ID
+      TrainingCenter.findOne({ user: req.user.id })
+        .then(trainingCenter => {
+          Course.findById(req.params.id)
+            .then(course => {
+              // Check for training center
+              if (course.trainingcenter.toString() !== trainingCenter.id) {
+                return res
+                  .status(401)
+                  .json({ notauthorized: 'User not authorized' });
+              }
+
+            // Delete
+            course.remove().then(() => res.json({ success: true }));
+            })
+            .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+        })
+        .catch(err => res.status(404).json({ trainingcenternotfound: 'No training center found' }));
+  });
+
+  // @route   GET api/courses
+  // @desc    Get courses
+  // @access  Public
+  router.get('/', (req, res) => {
+    Course.find()
+      .sort({ date: -1 })
+      .then(course => res.json(course))
+      .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
+  });
+
+
+  // @route   GET api/courses/:id
+  // @desc    Get course by id
+  // @access  Public
+  router.get('/:id', (req, res) => {
+    Course.findById(req.params.id)
+      .then(course => res.json(course))
+      .catch(err =>
+        res.status(404).json({ nocoursefound: 'No course found with that ID' })
+      );
+  });
+
+
+  // @route   POST api/courses/like/:id
+  // @desc    Like a course as a user
+  // @access  Private
+  router.post(
+    '/like/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      TrainingCenter.findOne({ user: req.user.id }).then(trainingcenter => {
+        Course.findById(req.params.id)
+          .then(course => {
+            if (
+              course.likes.filter(like => like.user.toString() === req.user.id)
+                .length > 0
+            ) {
+              return res
+                .status(400)
+                .json({ alreadyliked: 'User already liked this post' });
+            }
+
+            // Add user id to likes array
+            course.likes.unshift({ user: req.user.id });
+
+            course.save().then(course => res.json(course));
+          })
+          .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+      });
+    }
+  );
+
+  // @route   POST api/courses/unlike/:id
+  // @desc    Unlike a course as a user
+  // @access  Private
+  router.post(
+    '/unlike/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      TrainingCenter.findOne({ user: req.user.id }).then(trainingcenter => {
+        Course.findById(req.params.id)
+          .then(course => {
+            if (
+              course.likes.filter(like => like.user.toString() === req.user.id)
+                .length === 0
+            ) {
+              return res
+                .status(400)
+                .json({ notliked: 'You have not yet liked this post' });
+            }
+
+            // Get remove index
+            const removeIndex = course.likes
+              .map(item => item.user.toString())
+              .indexOf(req.user.id);
+
+            // Splice out of array
+            course.likes.splice(removeIndex, 1);
+
+            // Save
+            course.save().then(course => res.json(course));
+          })
+          .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+      });
+    }
+  );
 
 module.exports = router;
