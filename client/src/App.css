@@ -1114,6 +1114,18 @@ color: #e15f41;
   height: 100vh;
 }
 
+.banner-become-a-tc {
+  background: url(img/landing/become-a-training-center.jpg) no-repeat center center/cover;
+  height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+  .banner-become-a-tc {
+    background-position: left;
+    height: 100vh;
+  }
+}
+
 /* .banner-area .overlay-bg {
   background: -moz-linear-gradient(left, rgba(60, 64, 143, 0.95) 0%, rgba(91, 97, 207, 0.95) 100%);
   background: -webkit-linear-gradient(left, rgba(60, 64, 143, 0.95) 0%, rgba(91, 97, 207, 0.95) 100%);

@@ -164,7 +164,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @desc    Add or edit the training center logo
 // @access  Private
 router.post('/add-logo', upload, passport.authenticate('jwt', { session: false }), (req, res) => {
-  let errors = {};
+  const errors = {};
 
   TrainingCenter
     .findOne({ user: req.user.id })
@@ -192,7 +192,7 @@ router.post('/add-logo', upload, passport.authenticate('jwt', { session: false }
 // @desc    Add pictures to a training center
 // @access  Private
 router.post('/pictures', uploads, passport.authenticate('jwt', { session: false }), (req, res) => {
-  let errors = {};
+  const errors = {};
  
   let filesCopy = [...req.files];
   let newPictures = [];
@@ -232,7 +232,7 @@ router.delete('/pictures/:id/:picture_id', passport.authenticate('jwt', { sessio
       .map(item => item._id.toString())
       .indexOf(req.params.picture_id);
 
-      // Splice comment out of array
+      // Splice picture out of array
       trainingCenter.pictures.splice(removeIndex, 1);
 
       // Save
