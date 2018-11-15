@@ -4,6 +4,7 @@ const passport = require('passport');
 
 // Load input validation
 const validateCourseInput = require('../../validation/course');
+const validateRatingInput = require('../../validation/rating');
 
 // Load Course Model
 const Course = require('../../models/Course');
@@ -327,6 +328,82 @@ router.post(
           .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
   });
 
+  // @route   POST api/courses/rating/:id
+  // @desc    Add a rating to a course as a user
+  // @access  Private
+  router.post(
+    '/rating/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      const { errors, isValid } = validateRatingInput(req.body);
 
+      // Check Validation
+      if (!isValid) {
+        // If any errors, send 400 with errors object
+        return res.status(400).json(errors);
+      }
+
+      Course.findById(req.params.id)
+        .then(course => {
+
+          // Check if the user has already rated this course
+          if (
+            course.ratings.filter(rating => rating.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadyliked: 'User already rated this course' });
+          }
+          const newRating = {
+            stars: req.body.stars,
+            name: req.body.name,
+            comment: req.body.comment,
+            user: req.user.id
+          };
+
+          // Add to ratings array
+          course.ratings.unshift(newRating);
+
+          // Save
+          course.save().then(course => res.json(course));
+        })
+        .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+    }
+  );
+
+  // @route   DELETE api/courses/rating/:course_id/:rating_id
+  // @desc    Remove a rating from a course as a user
+  // @access  Private
+  router.delete(
+    '/rating/:course_id/:rating_id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      Course.findById(req.params.course_id)
+        .then(course => {
+          // Check to see if rating exists
+          if (
+            course.ratings.filter(
+              rating => rating._id.toString() === req.params.rating_id
+            ).length === 0
+          ) {
+            return res
+              .status(404)
+              .json({ ratingnotexists: 'Rating does not exist' });
+          }
+
+          // Get remove index
+          const removeIndex = course.ratings
+            .map(rating => rating._id.toString())
+            .indexOf(req.params.rating_id);
+
+          // Splice comment out of array
+          course.ratings.splice(removeIndex, 1);
+
+          course.save().then(course => res.json(course));
+        })
+        .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+    }
+  );
 
 module.exports = router;
