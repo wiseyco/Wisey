@@ -52,7 +52,7 @@ router.post('/register', (req, res) => {
             newUser
               .save()
               .then(user => {
-                doWeSendBAckToken(req, res, user);
+                doWeSendBackToken(req, res, user);
               })
               .catch(err => console.log('error saving user into DB:', err));
           })
@@ -80,7 +80,7 @@ router.post('/login', (req, res) => {
   User
     .findOne({ email })
     .then(user => {
-      doWeSendBAckToken(req, res, user);
+      doWeSendBackToken(req, res, user);
     });
 });
 
@@ -114,7 +114,7 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 /**************/
 
 // @functions send back token if match email & password
-const doWeSendBAckToken = (req, res, user) => {
+const doWeSendBackToken = (req, res, user) => {
   const password = req.body.password;
   
   if(!user) {

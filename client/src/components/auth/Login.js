@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import classnames from 'classnames';
+import { loginUser } from '../../actions/authActions';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 class Login extends Component {
@@ -25,14 +29,26 @@ class Login extends Component {
         });
       }
 
+      componentWillReceiveProps(nextProps) {
+        
+        if (nextProps.auth.isAuthenticated) {
+          this.props.history.push('/register');
+        }
+    
+        if(nextProps.errors){
+         this.setState({errors: nextProps.errors})
+        }
+      }
+
       onSubmit (e) {
         e.preventDefault();
 
-        const user = {
+        const userData = {
             email: this.state.email,
             password: this.state.password
         }
-        console.log(user);
+        console.log(userData);
+        this.props.loginUser(userData);
     }
 
       onChange (e) {
@@ -42,7 +58,8 @@ class Login extends Component {
     }
 
     render () {
-    
+      const { errors } = this.state;
+      
     return (
 
         <div>
@@ -50,21 +67,22 @@ class Login extends Component {
         <Button color="danger" onClick={this.toggle}>Connexion</Button>
 
         <Modal className="reactstrap-modal" isOpen={this.state.modal} toggle={this.toggle}>
-                                    <ModalHeader toggle={this.toggle}>Connexion</ModalHeader>
-        <ModalBody >
-                                    <form onSubmit={this.onSubmit}>
+          <ModalHeader toggle={this.toggle}>Connexion</ModalHeader>
+             <ModalBody >
+                <form onSubmit={this.onSubmit}>
                                                     <div className="form-group login-form">
                                                         <br />
                                                       <label for="exampleInputEmail1">Email</label>
                                                       <input type="email"
                                                       name="email"
-                                                      className="form-control profile-input"
+                                                      className={classnames('form-control', { 'is-invalid': errors.email})}
                                                       value={this.state.email}
                                                       onChange={this.onChange}
                                                       id="exampleInputEmail1"
                                                       aria-describedby="emailHelp"
-                                                      placeholder="Entrez votre adresse email" />
-                                                      <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                                                      placeholder="Entrez votre adresse email"
+                                                      />
+                                                      {errors.email && (<div className ="invalid-feedback">{errors.email}</div>)}
                                                     </div>
                                                     <div className="form-group login-form">
                                                       <label for="exampleInputPassword1">Mot de passe</label>
@@ -72,9 +90,11 @@ class Login extends Component {
                                                       name="password"
                                                       value={this.state.password}
                                                       onChange={this.onChange}
-                                                      className="form-control profile-input"
+                                                      className={classnames('form-control', { 'is-invalid': errors.password})}
                                                       id="exampleInputPassword1"
-                                                      placeholder="Saisissez votre mot de passe" />
+                                                      placeholder="Saisissez votre mot de passe"
+                                                      />
+                                                      {errors.password && (<div className ="invalid-feedback">{errors.password}</div>)}
                                                     </div>
                                                     <button type="submit" className="btn btn-primary primary-btn">Connexion</button>
                                                     <div className="form-group login-form">
@@ -92,4 +112,15 @@ class Login extends Component {
     }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));

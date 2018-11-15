@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import { withRouter, Link } from 'react-router-dom';
 import Navbar from '../layout/Navbar';
-import axios from 'axios';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 class Register extends Component {
 
@@ -17,6 +20,18 @@ class Register extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
+    componentWillReceiveProps (nextProps) {
+
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push('/');
+          }
+
+        if (nextProps.errors){
+            this.setState({errors: nextProps.errors})
+        }
+    }
+    
 
     onChange (e) {
         this.setState({
@@ -35,10 +50,13 @@ class Register extends Component {
         }
         console.log(newUser);
 
-        axios
-        .post('/api/users/register', newUser)
-        .then(res => console.log("retour serveur :",res.data))
-        .catch(err => this.setState({errors: err.response.data}))
+        // use this.props.history to redirect from this action
+        this.props.registerUser(newUser, this.props.history);
+
+        // axios
+        // .post('/api/users/register', newUser)
+        // .then(res => console.log("retour serveur :",res.data))
+        // .catch(err => this.setState({errors: err.response.data}))
     }
 
     render () {
@@ -116,4 +134,16 @@ class Register extends Component {
     }
 }
 
-export default Register;
+// Mapping PropTypes
+Register.PropTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect (mapStateToProps, { registerUser }) (withRouter(Register));
