@@ -214,10 +214,10 @@ router.post(
   });
 
 
-  // @route   GET api/courses/:id
+  // @route   GET api/courses/get/:id
   // @desc    Get course by id
   // @access  Public
-  router.get('/:id', (req, res) => {
+  router.get('/get/:id', (req, res) => {
     Course.findById(req.params.id)
       .then(course => res.json(course))
       .catch(err =>
@@ -289,5 +289,44 @@ router.post(
       });
     }
   );
+
+  // @route   GET api/courses/dashboard
+  // @desc    Get all the courses registered by the training center
+  // @access  Private (training center)
+
+  router.get(
+    '/dashboard',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      console.log("Hello1");
+      //Get TrainingCenter ID
+      TrainingCenter.findOne({ user: req.user.id })
+        .then(trainingCenter => {
+          Course.find({trainingcenter: trainingCenter.id})
+            .sort({ date: -1 })
+            .then(course => res.json(course))
+            .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
+        });
+      }
+    );
+
+  // @route   POST api/courses/wishlist
+  // @desc    Get all the courses liked by the user
+  // @access  Private (user)
+
+  router.get(
+    '/wishlist',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    console.log("Hello1");
+    //Get list of courses with the user's id in their like table
+        Course.find({ likes: { $elemMatch: { user: req.user.id } }})
+
+          .sort({ date: -1 })
+          .then(course => res.json(course))
+          .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
+  });
+
+
 
 module.exports = router;
