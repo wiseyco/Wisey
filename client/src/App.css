@@ -2045,8 +2045,10 @@ footer .footer-nav li a:hover {
   border-radius: 0.5rem;
   background: #fff;
 }
+
 .profile-img{
   text-align: center;
+  max-width: 150px;
 }
 .profile-img img{
   width: 70%;

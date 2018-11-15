@@ -11,7 +11,10 @@ import store from './store';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer'
 // import Login from './components/auth/Login'
-import Register from './components/auth/Register'
+import Register from './components/auth/Register';
+
+import Profile from './components/profile/Profile';
+
 
 import './App.css';
 
@@ -35,6 +38,7 @@ class App extends Component {
           <div className="container">
           <Route exact path="/register" component={ Register } />
           {/* <Route exact path="/login" component={ Login } /> */}
+          <Route exact path="/profile" component={ Profile } />
           </div>
           <Footer />
           </div>
