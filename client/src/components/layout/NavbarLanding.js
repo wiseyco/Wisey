@@ -45,7 +45,9 @@ class NavbarLanding extends Component {
                                             <button className="search-submit"><span className="lnr lnr-magnifier"></span></button>
                                         </form>
                                     </div>
-                                <li><button className="primary-btn navbar-btn">Je suis un professionnel</button></li>
+                                {/* <li><button className="primary-btn navbar-btn">Je suis un professionnel</button></li> */}
+                                <li><Link className="primary-btn navbar-btn" to="/dashboard">Je suis un professionnel</Link></li>
+
                             </ul>
                             <a href="#" className="mobile-btn"><span className="lnr lnr-menu"></span></a>
                         </nav>

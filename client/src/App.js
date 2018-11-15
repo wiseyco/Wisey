@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
@@ -7,12 +7,15 @@ import { setCurrentUser } from './actions/authActions';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import PrivateRoute from './components/common/PrivateRoute';
+
 // import NavbarLanding from './components/layout/NavbarLanding';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer'
 // import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Test from './components/common/Test'
+import Dashboard from './components/dashboard/Dashboard';
+import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
 
 import './App.css';
 
@@ -33,9 +36,13 @@ class App extends Component {
         <Router>
           <div className="App">
           <Route exact path="/" component={ Landing } />
+          <Switch>
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          </Switch>
           <div className="container">
           <Route exact path="/register" component={ Register } />
           {/* <Route exact path="/login" component={ Login } /> */}
+          <Route exact path="/add-training-center" component={AddTrainingCenter} />
           </div>
           <Footer />
           </div>

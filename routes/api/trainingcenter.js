@@ -58,6 +58,26 @@ router.get('/all', (req, res) => {
     });
 });
 
+// @route   GET api/tc
+// @desc    Get current user training center
+// @access  Private
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  const errors = {};
+
+  TrainingCenter.findOne({ user: req.user.id })
+    // .populate('user', ['name', 'avatar'])
+    .then(trainingCenter => {
+
+      if(!trainingCenter) {
+        errors.notrainingcenter = 'There is no profile for this user!';
+        return res.status(404).json(errors);
+      }
+
+      res.json(trainingCenter);
+    })
+    .catch(err => res.status(404).json(err))
+});
+
 
 // @route   GET api/tc
 // @desc    Get training center by uri

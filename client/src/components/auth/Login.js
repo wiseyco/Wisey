@@ -32,7 +32,7 @@ class Login extends Component {
       componentWillReceiveProps(nextProps) {
         
         if (nextProps.auth.isAuthenticated) {
-          this.props.history.push('/register');
+          this.props.history.push('/dashboard');
         }
     
         if(nextProps.errors){
@@ -70,44 +70,44 @@ class Login extends Component {
           <ModalHeader toggle={this.toggle}>Connexion</ModalHeader>
              <ModalBody >
                 <form onSubmit={this.onSubmit}>
-                                                    <div className="form-group login-form">
-                                                        <br />
-                                                      <label for="exampleInputEmail1">Email</label>
-                                                      <input type="email"
-                                                      name="email"
-                                                      className={classnames('form-control', { 'is-invalid': errors.email})}
-                                                      value={this.state.email}
-                                                      onChange={this.onChange}
-                                                      id="exampleInputEmail1"
-                                                      aria-describedby="emailHelp"
-                                                      placeholder="Entrez votre adresse email"
-                                                      />
-                                                      {errors.email && (<div className ="invalid-feedback">{errors.email}</div>)}
-                                                    </div>
-                                                    <div className="form-group login-form">
-                                                      <label for="exampleInputPassword1">Mot de passe</label>
-                                                      <input type="password"
-                                                      name="password"
-                                                      value={this.state.password}
-                                                      onChange={this.onChange}
-                                                      className={classnames('form-control', { 'is-invalid': errors.password})}
-                                                      id="exampleInputPassword1"
-                                                      placeholder="Saisissez votre mot de passe"
-                                                      />
-                                                      {errors.password && (<div className ="invalid-feedback">{errors.password}</div>)}
-                                                    </div>
-                                                    <button type="submit" className="btn btn-primary primary-btn">Connexion</button>
-                                                    <div className="form-group login-form">
-                                                            <Link to='/register'><p id="emailHelp" className="form-text text-muted">Vous n'avez pas encore de compte ? Inscrivez vous ici</p></Link>
-                                                          </div>
-                                                  </form>
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="secondary" onClick={this.toggle}>Annuler</Button>
-                                    </ModalFooter>
-                                    </Modal>
+                  <div className="form-group login-form">
+                      <br />
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email"
+                    name="email"
+                    className={classnames('form-control', { 'is-invalid': errors.email})}
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Entrez votre adresse email"
+                    />
+                    {errors.email && (<div className ="invalid-feedback">{errors.email}</div>)}
+                  </div>
+                  <div className="form-group login-form">
+                    <label for="exampleInputPassword1">Mot de passe</label>
+                    <input type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    className={classnames('form-control', { 'is-invalid': errors.password})}
+                    id="exampleInputPassword1"
+                    placeholder="Saisissez votre mot de passe"
+                    />
+                    {errors.password && (<div className ="invalid-feedback">{errors.password}</div>)}
+                  </div>
+                  <button type="submit" className="btn btn-primary primary-btn">Connexion</button>
+                  <div className="form-group login-form">
+                          <Link to='/register'><p id="emailHelp" className="form-text text-muted">Vous n'avez pas encore de compte ? Inscrivez vous ici</p></Link>
+                        </div>
+                </form>
+        </ModalBody>
+        <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>Annuler</Button>
+        </ModalFooter>
+        </Modal>
 
-                                    </div>
+  </div>
     )
     }
 }

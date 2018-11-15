@@ -8,12 +8,13 @@ export const getCurrentTrainingCenter = () => dispatch => {
   
   axios
     .get('/api/tc')
-    .then(res => 
+    .then(res => {
+      console.log('res :', res);
       dispatch({
         type: GET_TRAINING_CENTER,
         payload: res.data
       })
-    )
+    })
     .catch(err => 
       dispatch({
         type: GET_TRAINING_CENTER,

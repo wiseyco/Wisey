@@ -45,7 +45,7 @@ class Dashboard extends Component {
                       <h1 className="text-uppercase">Faites décoller votre activité.</h1>
                       <br />
                       <p className="text-uppercase ">Inscrivez gratuitement votre centre de formation et référencez votre entreprise et vos parcours.</p>
-                      <Link href="/add-training-center" className="primary-btn banner-btn text-dark">
+                      <Link to="/add-training-center" className="primary-btn banner-btn text-dark">
                         Je suis professionnel de la formation
                       </Link>
                     </div>
@@ -60,17 +60,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <Navbar />
-        <section className="dashboard-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="display-4">Dashboard</h1>
-                {dashboardContent}
-              </div>
-            </div>
-          </div>
-        </section>
+        {dashboardContent}
       </div>
     )
   }
