@@ -223,7 +223,7 @@ router.delete('/pictures/:id/:picture_id', passport.authenticate('jwt', { sessio
 
       // Check if the picture exists
       if(trainingCenter.pictures.filter(picture => picture._id.toString() === req.params.picture_id).length === 0) {
-        errors.notFound = 'La photo n\'exite pas';
+        errors.notFound = 'La photo n\'existe pas';
         return res.status(404).json(errors);
       }
 
