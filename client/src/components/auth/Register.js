@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Navbar from '../layout/Navbar';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
@@ -22,6 +22,11 @@ class Register extends Component {
     }
 
     componentWillReceiveProps (nextProps) {
+
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push('/');
+          }
+
         if (nextProps.errors){
             this.setState({errors: nextProps.errors})
         }

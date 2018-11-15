@@ -8,7 +8,19 @@ import { GET_ERRORS, SET_CURRENT_USER } from './types';
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post('/api/users/register', userData)
-    .then(res => history.push('/'))
+    .then(res => {
+        console.log("on est dans le THEN", res)
+      // Save to localStorage
+      const { token } = res.data;
+      // Set token to ls
+      localStorage.setItem('jwtToken', token);
+      // Set token to Auth header
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
+      // Set current user
+      dispatch(setCurrentUser(decoded));
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
