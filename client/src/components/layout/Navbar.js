@@ -13,6 +13,7 @@ class Navbar extends Component {
     onLogoutClick (e) {
         e.preventDefault();
         this.props.logoutUser();
+        this.props.clearCurrentTrainingCenter();
     }
 
     render () {
@@ -71,6 +72,7 @@ class Navbar extends Component {
 }
 Navbar.proptypes = {
     logoutUser: PropTypes.func.isRequired,
+    clearCurrentTrainingCenter: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
   }
   
@@ -78,4 +80,4 @@ Navbar.proptypes = {
     auth: state.auth
   })
   
-  export default connect(mapStateToProps, {logoutUser })(Navbar);
+  export default connect(mapStateToProps, {logoutUser, clearCurrentTrainingCenter })(Navbar);

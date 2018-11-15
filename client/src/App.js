@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
+import { clearCurrentTrainingCenter } from './actions/tcActions';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -16,7 +17,6 @@ import Footer from './components/layout/Footer'
 import Register from './components/auth/Register'
 import Dashboard from './components/dashboard/Dashboard';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
-import Register from './components/auth/Register';
 
 import Profile from './components/profile/Profile';
 

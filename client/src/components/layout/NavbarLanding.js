@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Login from '../auth/Login';
+import { clearCurrentTrainingCenter } from '../../actions/tcActions';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
@@ -26,6 +28,8 @@ class NavbarLanding extends Component {
     onLogoutClick (e) {
         e.preventDefault();
         this.props.logoutUser();
+        this.props.clearCurrentTrainingCenter();
+        
     }
 
     render () {
@@ -101,6 +105,7 @@ class NavbarLanding extends Component {
 
 NavbarLanding.proptypes = {
     logoutUser: PropTypes.func.isRequired,
+    clearCurrentTrainingCenter: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
   }
   
@@ -108,4 +113,4 @@ NavbarLanding.proptypes = {
     auth: state.auth
   })
   
-  export default connect(mapStateToProps, {logoutUser })(NavbarLanding);
+  export default connect(mapStateToProps, {logoutUser, clearCurrentTrainingCenter })(NavbarLanding);
