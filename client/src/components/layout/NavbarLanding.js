@@ -65,7 +65,6 @@ class NavbarLanding extends Component {
             <nav className="d-flex align-items-center">
                             <ul className="main-menu">
                                 <li><a href="/search.html">Formations</a></li>
-                                <li><Link to="/profile">Profil</Link></li>
                                 <li><Login /></li>
                                 <div className="search relative">
                                         <span className="lnr lnr-magnifier"></span>
