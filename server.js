@@ -21,7 +21,7 @@ const db = require('./config/key').mongoURI;
 // Connect to MongoDB
 mongoose
   // .connect(db, { useNewUrlParser: true })
-  .connect(db)
+  .connect("mongodb://bagnolecom:Hellobagnole18@ds063929.mlab.com:63929/wisey")
   .then(() => console.log('MongoDB Connected !'))
   .catch(err => console.log('err :', err));
 
