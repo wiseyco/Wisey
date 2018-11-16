@@ -16,12 +16,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // DB config
-const db = require('./config/key').mongoURI;
+const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
 mongoose
   // .connect(db, { useNewUrlParser: true })
-  .connect("mongodb://bagnolecom:Hellobagnole18@ds063929.mlab.com:63929/wisey")
+  .connect(db)
   .then(() => console.log('MongoDB Connected !'))
   .catch(err => console.log('err :', err));
 
