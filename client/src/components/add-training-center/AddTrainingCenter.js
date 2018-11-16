@@ -12,9 +12,7 @@ class AddTrainingCenter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayInputs: false,
       displayInputTab: 1,
-      displayThirdStep: false,
       uri: '',
       companyName: '',
       logo: '',
@@ -31,26 +29,39 @@ class AddTrainingCenter extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
 
-    const trainingCenterData = {
-      uri: this.state.uri,
-      companyName: this.state.companyName,
-      logo: this.state.logo,
-      desc: this.state.desc,
-      certification: this.state.certification,
-      expertise: this.state.expertise,
-      numberOfTrainers: this.state.numberOfTrainers,
-      lastYearTrainedPeople: this.state.lastYearTrainedPeople,
-      website: this.state.website,
-      linkedin: this.state.linkedin,
-      twitter: this.state.twitter,
-      youtube: this.state.youtube
+    if (this.state.errors.companyName) {
+      this.setState({
+        displayInputTab: 1
+      });
+
+    } else {
+
+      const trainingCenterData = {
+        uri: this.state.uri,
+        companyName: this.state.companyName,
+        logo: this.state.logo,
+        desc: this.state.desc,
+        certification: this.state.certification,
+        expertise: this.state.expertise,
+        numberOfTrainers: this.state.numberOfTrainers,
+        lastYearTrainedPeople: this.state.lastYearTrainedPeople,
+        website: this.state.website,
+        linkedin: this.state.linkedin,
+        twitter: this.state.twitter,
+        youtube: this.state.youtube
+      }
+
+      this.props.createTrainingCenter(trainingCenterData, this.props.history);
     }
-
-    this.props.createTrainingCenter(trainingCenterData, this.props.history);
   }
 
   onChange = (e) => {
@@ -61,14 +72,12 @@ class AddTrainingCenter extends Component {
 
   render() {
 
-    const { errors } = this.state;
-
     // Select option for status
     // const options = [
     //   { label: 'Selectionnez ' }
     // ];
 
-    const { displayInputTab } = this.state;
+    const { errors, displayInputTab } = this.state;
 
     let progressBar;
     let inputTab;
@@ -227,6 +236,19 @@ class AddTrainingCenter extends Component {
               type="button"
               onClick={() => {
                 this.setState({
+                  displayInputTab: 1
+                });
+              }}
+              className="btn btn-primary btn-lg pro-btn"
+              style={{marginRight: '20px'}}
+            >
+            Précédent
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                this.setState({
                   displayInputTab: 3
                 });
               }}
@@ -234,6 +256,7 @@ class AddTrainingCenter extends Component {
             >
             Continuer
             </button>
+
           </div>
         </div>        
       );
@@ -260,7 +283,20 @@ class AddTrainingCenter extends Component {
             </div>
           </div>
 
-          <div class="form-group submit-btn-pro">
+            <div class="form-group submit-btn-pro">
+          <button
+            type="button"
+            onClick={() => {
+              this.setState({
+                displayInputTab: 2
+              });
+            }}
+            className="btn btn-primary btn-lg pro-btn"
+            style={{marginRight: '20px'}}
+          >
+            Précédent
+          </button>
+
             <input
               type="submit"
               value="Continuer"
@@ -274,17 +310,17 @@ class AddTrainingCenter extends Component {
 
     return (
       <div>
-        <Navbar />
-          <section class="section profile-section">
-            <div class="container">
-              
-              {progressBar}
+      <Navbar />
+      <section class="section profile-section">
+        <div class="container">
+          
+          {progressBar}
 
-                <div class="row">
-                  <div class="pro-form col-md-5">
-                    <form onSubmit={this.onSubmit}>
+            <div class="row">
+              <div class="pro-form col-md-5">
+                <form onSubmit={this.onSubmit}>
 
-                      {inputTab}
+                  {inputTab}
 
                 </form>
               </div>
