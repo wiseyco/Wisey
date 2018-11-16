@@ -1,9 +1,80 @@
 import React, { Component } from 'react';
 import Navbar from '../layout/Navbar';
 
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
+import { setCurrentUser } from '../../actions/authActions';
+import isEmpty from '../../validation/isEmpty';
+
+
 class Profile extends Component {
 
+    constructor (props) {
+        super(props);
+        this.state = {
+            firstName: this.props.auth.user.firstName,
+            lastName: this.props.auth.user.lastName,
+            email: this.props.auth.user.email,
+            errors: {}
+        };
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
+    componentDidMount () {
+        // this.props.setCurrentUser();
+        console.log("props did mount :", this.props.auth.user.email);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors})
+        }
+
+        if (nextProps.auth.user) {
+            const user = nextProps.auth.user;
+
+            // If user field does not exist, make an empty string
+            user.firstName =!isEmpty(user.firstName) ? user.firstName : '';
+            user.lastName =!isEmpty(user.lastName) ? user.lastName : '';
+            user.email =!isEmpty(user.email) ? user.email : '';
+
+            // Set component fields state
+            this.setState({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+            })
+        }
+    }
+
+    onChange (e) {
+        this.setState({
+            [e.target.name] : e.target.value
+        });
+    }
+
+    onSubmit (e) {
+        console.log(this.props);
+        e.preventDefault();
+
+        const updateUser = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+        }
+
+        axios
+        .post('/api/users/update', updateUser)
+        .then(res => console.log("retour serveur :",res.data))
+        .catch(err => this.setState({errors: err.response.data}))
+    }
+
     render () {
+
+        const { isAuthenticated, user} = this.props.auth;
     
     return (
         <div> 
@@ -27,7 +98,7 @@ class Profile extends Component {
                             <div className="col-md-6">
                                 <div className="profile-head">
                                     <h3>
-                                        Paul Crussaire
+                                    {this.props.auth.user.firstName} {this.props.auth.user.lastName}
                                     </h3>
                                     <h4>
                                         CTO
@@ -63,6 +134,7 @@ class Profile extends Component {
 
                             <div className="col-md-8">
                                 <div className="tab-content profile-tab" id="myTabContent">
+                                <form noValidate onSubmit={this.onSubmit} action="/" method="post">
                                     <div className="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <div className="row">
 
@@ -77,7 +149,13 @@ class Profile extends Component {
                                                 <label>Prénom</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>Paul</p>
+                                            <input
+                                            class="form-control profile-input"
+                                            type="text" name="firstName"
+                                            value={this.state.firstName}
+                                            placeholder={this.props.auth.user.firstName}
+                                            onChange={this.onChange}
+                                            />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -85,7 +163,14 @@ class Profile extends Component {
                                                 <label>Nom</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>Crussaire</p>
+                                            <input
+                                            class="form-control profile-input"
+                                            onChange={this.onChange}
+                                            type="text"
+                                            name="lastName"
+                                            value={this.state.lastName}
+                                            placeholder={this.props.auth.user.lastName}
+                                            />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -93,7 +178,14 @@ class Profile extends Component {
                                                 <label>Email</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>devpaulo@bagnole.com</p>
+                                            <input
+                                            class="form-control profile-input"
+                                            onChange={this.onChange}
+                                            type="email"
+                                            name="email"
+                                            value={this.state.email}
+                                            placeholder={this.props.auth.user.email}
+                                            />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -154,7 +246,14 @@ class Profile extends Component {
                                                 <p>100</p>
                                             </div>
                                         </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <button type="submit" class="btn btn-primary primary-btn">Enregistrer les modifications</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -167,4 +266,16 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+Navbar.proptypes = {
+    setCurrentUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+  }
+  
+  const mapStateToProps = (state) => ({
+    auth: state.auth,
+    payload: state.payload
+  })
+
+// export default Profile;
+
+export default connect(mapStateToProps, {setCurrentUser})(Profile);

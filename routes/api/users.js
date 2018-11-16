@@ -23,6 +23,7 @@ router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if(!isValid) {
+    console.log(errors)
     return res.status(400).json(errors);
   }
 
@@ -33,6 +34,7 @@ router.post('/register', (req, res) => {
 
       if(user) {
         errors.email = 'Il semble que vous possédez déjà un compte. Veuillez vous connecter.';
+        console.log(errors.email)
         return res.status(400).json(errors);
       } else {
 
@@ -109,7 +111,13 @@ router.post('/login', (req, res) => {
   User
     .findOne({ email })
     .then(user => {
+
+      if(!user) {
+        errors.email = 'Aucun compte existant à cette adresse';
+        return res.status(400).json(errors);
+      } else {
       doWeSendBackToken(req, res, user);
+      }
     });
 });
 
@@ -158,7 +166,8 @@ const doWeSendBackToken = (req, res, user) => {
         const payload = {
           id: user.id,
           firstName: user.firstName,
-          lastName: user.lastName
+          lastName: user.lastName,
+          email: user.email
         }
 
         // JSON Web Token process
