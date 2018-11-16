@@ -128,7 +128,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   trainingCenterFields.social = {};
   if(req.body.website) trainingCenterFields.social.website = req.body.website;
   if(req.body.linkedin) trainingCenterFields.social.linkedin = req.body.linkedin;
-  if(req.body.twitter) trainingCenterFields.social.twitter = req.social.twitter;
+  if(req.body.twitter) trainingCenterFields.social.twitter = req.body.twitter;
   if(req.body.youtube) trainingCenterFields.social.youtube = req.body.youtube;
 
   // pictures

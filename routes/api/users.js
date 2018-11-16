@@ -8,6 +8,7 @@ const passport = require('passport');
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
+const validateUserUpdateInput = require('../../validation/user-update');
 
 // Load User model
 const User = require('../../models/User');
@@ -60,6 +61,34 @@ router.post('/register', (req, res) => {
       }
     });
 
+});
+
+
+// @route   POST api/users/update
+// @desc    Update user account
+// @access  Private
+router.post('/update', passport.authenticate('jwt', { session: false }), (req, res) => {
+    
+  // Are inputs valid?
+  const { errors, isValid } = validateUserUpdateInput(req.body);
+
+  if(!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const updateUser = {};
+
+  if(req.body.firstName) updateUser.firstName = req.body.firstName;
+  if(req.body.lastName) updateUser.lastName = req.body.lastName;
+  if(req.body.email) updateUser.email = req.body.email;
+
+  User
+    .findByIdAndUpdate(
+      { _id: req.user.id },
+      { $set: updateUser },
+      { new: true })
+    .then(user => res.json(user))
+    .catch(err => console.log('err :', err))
 });
 
 

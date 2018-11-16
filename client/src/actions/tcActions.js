@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_TRAINING_CENTER, TRAINING_CENTER_LOADING, CLEAR_CURRENT_TRAINING_CENTER } from './types';
+import { GET_TRAINING_CENTER, TRAINING_CENTER_LOADING, CLEAR_CURRENT_TRAINING_CENTER, GET_ERRORS } from './types';
 
 // Get current training center
 export const getCurrentTrainingCenter = () => dispatch => {
@@ -21,6 +21,18 @@ export const getCurrentTrainingCenter = () => dispatch => {
         payload: {}
       })  
     )
+}
+
+// Create training center
+export const createTrainingCenter = (trainingCenterData, history) => dispatch => {
+  axios.post('/api/tc', trainingCenterData)
+    .then(res => history.push('/dashboard'))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 }
 
 // Training center loading
