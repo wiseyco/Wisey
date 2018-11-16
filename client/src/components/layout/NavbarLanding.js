@@ -39,7 +39,7 @@ class NavbarLanding extends Component {
         const authLinks = (
             <nav className="d-flex align-items-center">
                             <ul className="main-menu">
-                                <li><a href="/search.html">Formations</a></li>
+                            <li><Link to="/search">Formations</Link></li>
                                 <li><Link to="/profile">Profil</Link></li>
                                 <li class="nav-link">
                                 <a href="" onClick={this.onLogoutClick.bind(this)}>
@@ -55,7 +55,7 @@ class NavbarLanding extends Component {
                                             <button className="search-submit"><span className="lnr lnr-magnifier"></span></button>
                                         </form>
                                     </div>
-                                <li><button className="primary-btn navbar-btn">Je suis un professionnel</button></li>
+                                    <li><Link className="primary-btn navbar-btn" to="/dashboard">Je suis un professionnel</Link></li>
                             </ul>
                             <a href="#" className="mobile-btn"><span className="lnr lnr-menu"></span></a>
                         </nav>
@@ -64,7 +64,7 @@ class NavbarLanding extends Component {
         const guestLinks = (
             <nav className="d-flex align-items-center">
                             <ul className="main-menu">
-                                <li><a href="/search.html">Formations</a></li>
+                            <li><Link to="/search">Formations</Link></li>
                                 <li><Login /></li>
                                 <div className="search relative">
                                         <span className="lnr lnr-magnifier"></span>

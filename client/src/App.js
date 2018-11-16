@@ -15,6 +15,8 @@ import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer'
 // import Login from './components/auth/Login'
 import Register from './components/auth/Register'
+import Search from './components/courses/Search'
+
 import Dashboard from './components/dashboard/Dashboard';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
 
@@ -48,6 +50,7 @@ class App extends Component {
           {/* <Route exact path="/login" component={ Login } /> */}
           <Route exact path="/add-training-center" component={AddTrainingCenter} />
           <Route exact path="/profile" component={ Profile } />
+          <Route exact path="/search" component={ Search } />
           </div>
           <Footer />
           </div>

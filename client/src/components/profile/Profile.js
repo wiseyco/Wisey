@@ -68,7 +68,11 @@ class Profile extends Component {
 
         axios
         .post('/api/users/update', updateUser)
-        .then(res => console.log("retour serveur :",res.data))
+        .then(res => this.setState({
+            firstName: res.firstName,
+            lastName: res.lastName,
+            email: res.email,
+        }))
         .catch(err => this.setState({errors: err.response.data}))
     }
 
