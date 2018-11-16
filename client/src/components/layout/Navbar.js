@@ -30,11 +30,11 @@ class Navbar extends Component {
                     <Link class="nav-link" to="/profile">Profil <span class="sr-only">(current)</span></Link>
                 </li>
                 <li class="nav-link">
-                <a href="" onClick={this.onLogoutClick.bind(this)}>
+                <Link to="/" onClick={this.onLogoutClick.bind(this)}>
                      {/* <img style={{width: '25px', marginRight: '5px'}} src={user.avatar} alt={user.name} title="You must have a Gravatar connecter to your email to display an image" /> */}
                      {' '}
                         Logout
-                </a>
+                </Link>
                 </li>
             </ul>
 
@@ -58,7 +58,7 @@ class Navbar extends Component {
     return (
         <div> 
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
-        <Link class="navbar-brand" to="/">wiseyco</Link>
+            <Link to="/"><img style={{width: '150px'}} src="/logo_title.png" /></Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

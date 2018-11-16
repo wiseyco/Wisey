@@ -88,7 +88,7 @@ class NavbarLanding extends Component {
             <div className="container">
                 <div className="header-content d-flex justify-content-between align-items-center second-navbar-content">
                     <div className="logo">
-                        <Link to="/"><h3>wiseyco</h3></Link>
+                        <Link to="/"><img style={{width: '150px'}} src="/logo_title.png" /></Link>
                     </div>
                     <div className="right-bar d-flex align-items-center">
                     {isAuthenticated ? authLinks : guestLinks}

@@ -105,10 +105,10 @@ class Profile extends Component {
                                     {this.props.auth.user.firstName} {this.props.auth.user.lastName}
                                     </h3>
                                     <h4>
-                                        CTO
+                                        Agent Secret
                                     </h4>
                                     <h4>
-                                        Bagnole.com
+                                        Office of Strategy Services
                                     </h4>
                                     <p className="proile-rating"></p>
                                     <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -214,7 +214,7 @@ class Profile extends Component {
                                                 <label>Poste</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>CTO</p>
+                                                <p>Agent Secret</p>
                                             </div>
 
                                         </div>
@@ -223,7 +223,7 @@ class Profile extends Component {
                                                 <label>Société</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>Bagnole.com</p>
+                                                <p>Office of Stategy Services</p>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -231,7 +231,7 @@ class Profile extends Component {
                                                 <label>Experience</label>
                                             </div>
                                             <div className="col-md-6">
-                                                <p>5 ans</p>
+                                                <p>10 ans</p>
                                             </div>
                                         </div>
                                         <div className="row">

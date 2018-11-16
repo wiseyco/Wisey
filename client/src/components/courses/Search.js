@@ -33,7 +33,7 @@ class Search extends Component {
                                     </div>
                                 </div>
                                 <br />
-                                <div className="container search-items-container">
+                                {/* <div className="container search-items-container">
                                     <div className="row search-items-row justify-content-between align-items-center">
                                         <div className="col-md-3">
                                             <button type="button" className="btn btn-outline-primary search-btn">Stratégie</button>
@@ -46,8 +46,8 @@ class Search extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br />
-                                <div className="container search-items-container">
+                                <br /> */}
+                                {/* <div className="container search-items-container">
                                         <div className="row search-items-row justify-content-between align-items-center">
                                             <div className="col-md-3">
                                                 <button type="button" className="btn btn-outline-primary search-btn">Stratégie</button>
@@ -59,7 +59,7 @@ class Search extends Component {
                                                 <button type="button" className="btn btn-outline-success search-btn">Développement</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                              </div>
                                 <div className="container">
