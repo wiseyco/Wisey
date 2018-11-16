@@ -1851,8 +1851,10 @@ footer .footer-nav li a:hover {
   border: 1px solid #574b90;
   border-radius: 10px;
   margin-bottom: 20px;
-  font-size: 14px;
-  max-width: 600px;
+  font-size: 12px;
+  max-width: 400px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 /* FIN CSS PROFILE */
 
@@ -2050,6 +2052,8 @@ footer .footer-nav li a:hover {
 
 /* START PROFILE-2 */
 
+
+
 .emp-profile{
   padding: 3%;
   margin-top: 100px;
@@ -2060,7 +2064,7 @@ footer .footer-nav li a:hover {
 
 .profile-img{
   text-align: center;
-  max-width: 150px;
+  max-width: 200px;
 }
 .profile-img img{
   width: 70%;
