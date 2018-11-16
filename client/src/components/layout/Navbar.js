@@ -24,7 +24,7 @@ class Navbar extends Component {
             <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Formations<span class="sr-only">(current)</span></a>
+                <Link class="nav-link" to="/search">Formations <span class="sr-only">(current)</span></Link>
                 </li>
                 <li class="nav-item active">
                     <Link class="nav-link" to="/profile">Profil <span class="sr-only">(current)</span></Link>
@@ -45,7 +45,7 @@ class Navbar extends Component {
             <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Formations<span class="sr-only">(current)</span></a>
+                <Link class="nav-link" to="/search">Formations <span class="sr-only">(current)</span></Link>
                 </li>
                 <li class="nav-item">
                     <Login/>
