@@ -38,12 +38,12 @@ class AddTrainingCenter extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.errors.companyName) {
-      this.setState({
-        displayInputTab: 1
-      });
+    // if (this.state.errors.companyName) {
+    //   this.setState({
+    //     displayInputTab: 1
+    //   });
 
-    } else {
+    // } else {
 
       const trainingCenterData = {
         uri: this.state.uri,
@@ -61,7 +61,7 @@ class AddTrainingCenter extends Component {
       }
 
       this.props.createTrainingCenter(trainingCenterData, this.props.history);
-    }
+    // }
   }
 
   onChange = (e) => {
