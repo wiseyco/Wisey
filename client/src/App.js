@@ -18,6 +18,9 @@ import Register from './components/auth/Register'
 import Search from './components/courses/Search'
 
 import Dashboard from './components/dashboard/Dashboard';
+import TCProfile from './components/dashboard/TCProfile';
+import TCCourses from './components/dashboard/TCCourses';
+import TCMap from './components/dashboard/TCMap';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
 
 import Profile from './components/profile/Profile';
@@ -42,19 +45,28 @@ class App extends Component {
         <Router>
           <div className="App">
           <Route exact path="/" component={ Landing } />
+          <div className="container">
+            <Route exact path="/register" component={ Register } />
+            {/* <Route exact path="/login" component={ Login } /> */}
+            <Route exact path="/add-training-center" component={AddTrainingCenter} />
+            <Switch>
+              <PrivateRoute exact path="/profile" component={ Profile } />
+            </Switch>
+            <Route exact path="/search" component={ Search } />
+          </div>
+          {/* <Footer /> */}
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
-          <div className="container">
-          <Route exact path="/register" component={ Register } />
-          {/* <Route exact path="/login" component={ Login } /> */}
-          <Route exact path="/add-training-center" component={AddTrainingCenter} />
           <Switch>
-            <PrivateRoute exact path="/profile" component={ Profile } />
+            <PrivateRoute exact path="/tc-profile" component={TCProfile} />
           </Switch>
-          <Route exact path="/search" component={ Search } />
-          </div>
-          <Footer />
+          <Switch>
+            <PrivateRoute exact path="/tc-courses" component={TCCourses} />
+          </Switch>
+          <Switch>
+            <PrivateRoute exact path="/tc-map" component={TCMap} />
+          </Switch>
           </div>
         </Router>
       </Provider>

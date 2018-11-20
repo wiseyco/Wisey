@@ -23,6 +23,25 @@ export const getCurrentTrainingCenter = () => dispatch => {
     )
 }
 
+// Get tc by handle
+export const getProfileByHandle = uri => dispatch => {
+  dispatch(setTrainingCenterLoading());
+  axios
+    .get(`/api/tc/${uri}`)
+    .then(res => {
+      dispatch({
+        type: GET_TRAINING_CENTER,
+        payload: res.data
+      })
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_TRAINING_CENTER,
+        payload: null
+      })
+    );
+};
+
 // Create training center
 export const createTrainingCenter = (trainingCenterData, history) => dispatch => {
   axios.post('/api/tc', trainingCenterData)

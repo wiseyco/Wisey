@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const async = require('async');
+const nodemailer = require('nodemailer');
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -120,6 +122,37 @@ router.post('/login', (req, res) => {
       }
     });
 });
+
+// // @route   POST api/users/reset-password
+// // @desc    Reset the user password
+// // @access  Private
+// router.post('/reset-password', passport.authenticate('jwt', { session: false }), (req, res) => {
+  
+//   // Are inputs valid?
+//   let email;
+//   // catch inputs 
+//   if(req.body.email) email = req.body.email;
+
+//   User
+//     .findOne({ email })
+//     .then(user => {
+
+//       if(!user) {
+//         let errors = 'No user found';
+//         res.status(400).json(errors);
+//       }
+
+      
+
+//     })
+
+
+//   // compare
+
+//   // Salt
+
+//   // Update
+// });
 
 
 // @route   GET api/users/current

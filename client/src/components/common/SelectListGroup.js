@@ -20,7 +20,7 @@ const SelectListGroup = ({
   return (
     <div className='form-group'>
       <select
-        className={classnames('form-control form-control-lg', {
+        className={classnames('form-control', {
           'is-invalid': error
         })}
         name={name}
