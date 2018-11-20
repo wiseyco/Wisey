@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from '../layout/Navbar';
 
 class Course extends Component {
 
@@ -6,8 +7,10 @@ class Course extends Component {
     
     return (
         <div> 
-
-
+            <Navbar />
+            <section className="section">
+            <h1>COURSE</h1>  
+            </section>
         </div>
     )
     }

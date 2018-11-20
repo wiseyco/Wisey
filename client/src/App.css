@@ -1837,7 +1837,7 @@ footer .footer-nav li a:hover {
 
 /* DEBUT CSS PROFILE */
 
-.profile-section {
+.section {
   margin-top: 100px;
 }
 .avatar {
@@ -2209,3 +2209,66 @@ footer .footer-nav li a:hover {
 
 /* END DASHBOARD */
 
+.filters {
+  width: 15%;
+  float: left; }
+  .filters .star-button-container {
+    text-align: center; }
+    .filters .star-button-container small {
+      color: #aaa;
+      margin-bottom: 8px;
+      display: inline-block; }
+  .filters .title {
+    margin-top: 2px;
+    margin-bottom: 20px; }
+  .filters-available-size {
+    display: inline-block;
+    margin-bottom: 10px;
+    /* Customize the label (the container) */ }
+    .filters-available-size label {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      font-size: 22px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      width: 150px;
+      height: 35px;
+      font-size: 1em;
+      margin-bottom: 8px;
+      margin-right: 8px;
+      line-height: 35px;
+      text-align: center;
+      /* On mouse-over, add a grey background color */
+      /* When the checkbox is checked, add a blue background */
+      /* Show the checkmark when checked */
+      /* Create a custom checkbox */ }
+      .filters-available-size label:hover input ~ .checkmark {
+        border: 1px solid #1b1a20; }
+      .filters-available-size label input:checked ~ .checkmark {
+        background-color: #786fa6;
+        color: black; }
+      .filters-available-size label input:checked ~ .checkmark:after {
+        display: block; }
+      .filters-available-size label input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer; }
+      .filters-available-size label .checkmark {
+        position: absolute;
+        background-color: #303952;
+        top: 0;
+        left: 0;
+        width: 150px;
+        height: 35px;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1px solid grey;
+        line-height: 35px;
+        text-align: center;
+        color: #ffffff;
+        border: 1px solid transparent;
+        border-radius: 10px;
+     }

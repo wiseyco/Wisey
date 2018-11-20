@@ -16,6 +16,8 @@ import Footer from './components/layout/Footer'
 // import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Courses from './components/courses/Courses'
+import Course from './components/courses/Course'
+
 
 import Dashboard from './components/dashboard/Dashboard';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
@@ -53,6 +55,7 @@ class App extends Component {
             <PrivateRoute exact path="/profile" component={ Profile } />
           </Switch>
           <Route exact path="/Courses" component={ Courses } />
+          <Route exact path="/Course" component={ Course } />
           </div>
           <Footer />
           </div>
