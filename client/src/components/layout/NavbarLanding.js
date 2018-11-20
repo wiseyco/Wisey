@@ -50,7 +50,7 @@ class NavbarLanding extends Component {
                                 </li>
                                 <div className="search relative">
                                         <span className="lnr lnr-magnifier"></span>
-                                        <form action="#" className="search-field">
+                                        <form action="#" className="search-field search-field-landing">
                                             <input type="text" placeholder="Search here" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search here'" />
                                             <button className="search-submit"><span className="lnr lnr-magnifier"></span></button>
                                         </form>
@@ -88,7 +88,7 @@ class NavbarLanding extends Component {
             <div className="container">
                 <div className="header-content d-flex justify-content-between align-items-center second-navbar-content">
                     <div className="logo">
-                        <Link to="/"><img style={{width: '150px'}} src="/logo_title.png" /></Link>
+                        <Link to="/"><img style={{width: '120px'}} src="/logo_title.png" /></Link>
                     </div>
                     <div className="right-bar d-flex align-items-center">
                     {isAuthenticated ? authLinks : guestLinks}

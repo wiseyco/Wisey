@@ -58,7 +58,7 @@ class Navbar extends Component {
     return (
         <div> 
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
-            <Link to="/"><img style={{width: '150px'}} src="/logo_title.png" /></Link>
+            <Link to="/"><img style={{width: '120px'}} src="/logo_title.png" /></Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

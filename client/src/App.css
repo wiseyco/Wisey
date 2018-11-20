@@ -1139,6 +1139,15 @@ color: #e15f41;
   color: black;
 }
 
+.search-field-landing {
+  align-items: center;
+  justify-content: center;
+}
+
+.searchbar-landing {
+  max-width: 400px;
+}
+
 .signle-service {
   margin-top: 30px;
 }

@@ -19,7 +19,10 @@ class Landing extends Component {
 							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
 							<br />
 							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
-							<a href="/" className="primary-btn banner-btn">Je trouve ma formation</a>
+							<form class="form-inline md-form form-sm active-pink-2 mt-2 searchbar-landing">
+							<input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" />
+							<i class="fa fa-search" aria-hidden="true"></i>
+							</form>
 						</div>
 					</div>
 				</div>
