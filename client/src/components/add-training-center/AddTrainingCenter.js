@@ -7,6 +7,7 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 // import SelectListGroup from '../common/SelectListGroup';
 import Navbar from '../layout/Navbar';
 import { createTrainingCenter } from '../../actions/tcActions';
+import isEmpty from '../../validation/isEmpty'
 
 class AddTrainingCenter extends Component {
   constructor(props) {
@@ -60,9 +61,9 @@ class AddTrainingCenter extends Component {
         youtube: this.state.youtube
       }
 
-      this.props.createTrainingCenter(trainingCenterData, this.props.history);
+      this.props.createTrainingCenter(trainingCenterData, null);
     // }
-  }
+  }  
 
   onChange = (e) => {
     this.setState({
@@ -77,14 +78,26 @@ class AddTrainingCenter extends Component {
     //   { label: 'Selectionnez ' }
     // ];
 
-    const { errors, displayInputTab } = this.state;
+    const { errors, displayInputTab, companyName } = this.state;
 
     let progressBar;
     let inputTab;
 
     if(displayInputTab === 1) {
 
-    
+      const onClickNext = () => {
+        if(!isEmpty(companyName)) {
+          this.setState({
+            displayInputTab: 2
+          });
+        } else {
+          this.setState({
+            displayInputTab: 1,
+            errors: {companyName: 'Un nom est obligatoire.'}
+          });
+        }
+      }
+
       progressBar = (
         <div class="progress">
           <div class="progress-bar" role="progressbar" style={{width: '33%'}} aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
@@ -120,11 +133,7 @@ class AddTrainingCenter extends Component {
           <div class="form-group submit-btn-pro">
             <button
               type="button"
-              onClick={() => {
-                this.setState({
-                  displayInputTab: 2
-                });
-              }}
+              onClick={() => onClickNext()}
               className="btn btn-primary btn-lg btn-block pro-btn"
             >
             Continuer
@@ -201,10 +210,10 @@ class AddTrainingCenter extends Component {
 
           <TextFieldGroup 
             placeholder="Site internet"
-            name="uri"
-            value={this.state.uri}
+            name="website"
+            value={this.state.website}
             onChange={this.onChange}
-            error={errors.uri}
+            error={errors.website}
           />
 
           <TextFieldGroup 

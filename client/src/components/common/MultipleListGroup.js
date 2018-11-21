@@ -2,39 +2,49 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const TextAreaFieldGroup = ({
+const MultipleListGroup = ({
   name,
-  placeholder,
   value,
   error,
   info,
-  onChange
+  onChange,
+  options,
+  disabled
 }) => {
+
+  const selectOptions = options.map(option => 
+    <option key={option.label} value={option.value}>
+      {option.label}
+    </option>  
+  )
+
   return (
     <div className='form-group'>
-      <textarea
+      <select
+        multiple
         className={classnames('form-control', {
           'is-invalid': error
         })}
-        rows="4"
-        placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}
-      />
+        disabled={disabled}
+      >
+        {selectOptions}
+      </select>
       {info && <small className='form-text text-muted' >{info}</small>}
       {error && <div className='invalid-feedback' >{error}</div>}
     </div>
   );
 };
 
-TextAreaFieldGroup.propTypes = {
+MultipleListGroup.propTypes = {
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
   info: PropTypes.string,
-  onChange: PropTypes.string.isRequired
+  onChange: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired
 };
 
-export default TextAreaFieldGroup;
+export default MultipleListGroup;

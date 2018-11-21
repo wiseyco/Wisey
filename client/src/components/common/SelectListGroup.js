@@ -8,7 +8,8 @@ const SelectListGroup = ({
   error,
   info,
   onChange,
-  options
+  options,
+  disabled
 }) => {
 
   const selectOptions = options.map(option => 
@@ -20,12 +21,13 @@ const SelectListGroup = ({
   return (
     <div className='form-group'>
       <select
-        className={classnames('form-control form-control-lg', {
+        className={classnames('form-control', {
           'is-invalid': error
         })}
         name={name}
         value={value}
         onChange={onChange}
+        disabled={disabled}
       >
         {selectOptions}
       </select>

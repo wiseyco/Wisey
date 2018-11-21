@@ -135,7 +135,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
   // Missed one
   // if(req.body.dateOfEstablishment) trainingCenterFields.dateOfEstablishment = req.body.dateOfEstablishment;
-  // if(req.body.mainCustomers) trainingCenterFields.mainCustomers = req.body.mainCustomers;
+  if(req.body.mainCustomers) trainingCenterFields.mainCustomers = req.body.mainCustomers;
   // if(req.body.satisfactionRating) trainingCenterFields.satisfactionRating = req.body.satisfactionRating;
 
   TrainingCenter
