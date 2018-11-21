@@ -7,8 +7,6 @@ import { connect } from 'react-redux';
 import { getCurrentTrainingCenter, createTrainingCenter } from '../../actions/tcActions';
 import isEmpty from '../../validation/isEmpty';
 import { NavLink } from 'react-router-dom';
-import laCapsuleLogo from '../../assets/img/uploads/lacapsule.png'
-
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -308,15 +306,15 @@ class TCProfile extends Component {
                         </div>
                         <div className="card-body">
                           <div className="author">
-                            <a href="/tc-profile">
-                              <img className="avatar border-gray" src={laCapsuleLogo} alt="..." />
+                            <a to={this.onClickLogo}>
+                              <img className="avatar border-gray" src={this.state.logo} alt="..." />
                               <h5 className="title">{this.state.companyName}</h5>
                             </a>
                           <p className="description">
                               {this.state.website}
                           </p>
                         </div>
-                        <p className="description text-center">
+                        <p className="description text-center text-muted" >
                           {this.state.desc}
                         </p>
                       </div>

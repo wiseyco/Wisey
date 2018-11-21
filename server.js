@@ -8,10 +8,21 @@ const path = require('path');
 const users = require('./routes/api/users');
 const trainingcenter = require('./routes/api/trainingcenter');
 const courses = require('./routes/api/courses');
+const cloudinary = require('cloudinary');
 
 const app = express();
 
-// // Body parser middleware
+// Cloudinary config
+const cloudinaryApiKey = require('./config/keys').apiKey;
+const cloudinaryApiSecret = require('./config/keys').apiSecret;
+
+cloudinary.config({ 
+  cloud_name: 'devpolo', 
+  api_key: cloudinaryApiKey, 
+  api_secret: cloudinaryApiSecret 
+});
+
+// Body parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

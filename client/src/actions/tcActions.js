@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GET_TRAINING_CENTER, TRAINING_CENTER_LOADING, CLEAR_CURRENT_TRAINING_CENTER, GET_ERRORS } from './types';
 
+
 // Get current training center
 export const getCurrentTrainingCenter = () => dispatch => {
   
@@ -46,11 +47,14 @@ export const getProfileByHandle = uri => dispatch => {
 export const createTrainingCenter = (trainingCenterData, history) => dispatch => {
   axios.post('/api/tc', trainingCenterData)
     .then(res => history.push('/dashboard'))
-    .catch(err => 
+    // .then(res => console.log('res :', res))
+    .catch(err => {
+      console.log('err :', err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
       })
+    }
     );
 }
 

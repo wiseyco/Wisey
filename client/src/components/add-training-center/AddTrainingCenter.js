@@ -26,6 +26,7 @@ class AddTrainingCenter extends Component {
       linkedin: '',
       twitter: '',
       youtube: '',
+      mainCustomers: '',
       errors: {}
     }
   }
@@ -55,13 +56,14 @@ class AddTrainingCenter extends Component {
         expertise: this.state.expertise,
         numberOfTrainers: this.state.numberOfTrainers,
         lastYearTrainedPeople: this.state.lastYearTrainedPeople,
+        mainCustomers: this.state.mainCustomers,
         website: this.state.website,
         linkedin: this.state.linkedin,
         twitter: this.state.twitter,
         youtube: this.state.youtube
       }
 
-      this.props.createTrainingCenter(trainingCenterData, null);
+      this.props.createTrainingCenter(trainingCenterData, this.props.history);
     // }
   }  
 
@@ -286,9 +288,13 @@ class AddTrainingCenter extends Component {
           <h5>Télécharger des photos</h5>
 
           <div class="form-group input-group mb-3">
-            <div class="custom-file form-control-lg">
-              <input type="file" placeholder="Logo" class="custom-file-input " id="logo" />
-              <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Importez votre logo</label>
+            {/* <div class="custom-file form-control-lg">
+              <input type="file" name="logo" placeholder="Logo" class="custom-file-input " />
+              <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Importez votre logo</label>
+            </div> */}
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Example file input</label>
+              <input type="file" name="logo" class="form-control-file" id="exampleFormControlFile1" />
             </div>
           </div>
 
