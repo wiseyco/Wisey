@@ -2040,8 +2040,9 @@ fieldset[disabled] .form-control {
 .navbar .navbar-nav .nav-item .nav-link [class^="fa"] {
   font-size: 19px;
   position: relative;
-  line-height: 40px;
+  line-height: 10px;
   top: 1px;
+  z-index: 0;
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover {
@@ -2084,8 +2085,13 @@ fieldset[disabled] .form-control {
   line-height: 18px;
   top: 0;
   left: 7px;
+  z-index: 10;
 }
-
+.dropdown-toggle {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
 .navbar .navbar-nav .dropdown-toggle:after {
   display: inline-block;
   width: 0;
@@ -2099,8 +2105,25 @@ fieldset[disabled] .form-control {
   border-left: 4px solid transparent;
 }
 
+.reactstrap-modal-dashboard {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  box-shadow:0 30px 70px rgba(0,0,0,.2);
+}
+
+.modal {
+  top: 0%;
+}
+
+.modal-content {
+  border: none;
+}
+
 .navbar .btn {
-  margin: 15px 3px;
+  margin: 8px 8px;
   font-size: 14px;
 }
 

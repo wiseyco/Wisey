@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const SelectListGroup = ({
+const MultipleListGroup = ({
   name,
   value,
   error,
@@ -21,6 +21,7 @@ const SelectListGroup = ({
   return (
     <div className='form-group'>
       <select
+        multiple
         className={classnames('form-control', {
           'is-invalid': error
         })}
@@ -37,7 +38,7 @@ const SelectListGroup = ({
   );
 };
 
-SelectListGroup.propTypes = {
+MultipleListGroup.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
@@ -46,4 +47,4 @@ SelectListGroup.propTypes = {
   options: PropTypes.array.isRequired
 };
 
-export default SelectListGroup;
+export default MultipleListGroup;

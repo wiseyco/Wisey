@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { clearCurrentTrainingCenter } from '../../../actions/tcActions';
+import { logoutUser } from '../../../actions/authActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 
 class DbNavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownOpen: false
+    }
+  }
+  toggle =() => {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+
+  onLogoutClick = (e) => {
+    e.preventDefault();
+    this.props.logoutUser();
+    this.props.clearCurrentTrainingCenter();
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg " color-on-scroll="500">
@@ -21,34 +43,28 @@ class DbNavBar extends Component {
                         <span className="d-lg-none">Dashboard</span>
                     </NavLink>
                 </li>
-                <li className="dropdown nav-item">
-                    <NavLink to="#" className="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span className="notification">5</span>
-                        <i className="far fa-envelope-open"></i>
-                        <span className="d-lg-none">Notification</span>
-                    </NavLink>
-                    <ul className="dropdown-menu">
-                        <NavLink className="dropdown-item" to="#">Notification 1</NavLink>
-                        <NavLink className="dropdown-item" to="#">Notification 2</NavLink>
-                        <NavLink className="dropdown-item" to="#">Notification 3</NavLink>
-                        <NavLink className="dropdown-item" to="#">Notification 4</NavLink>
-                        <NavLink className="dropdown-item" to="#">Another notification</NavLink>
-                    </ul>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="#" className="nav-link">
-                      <i class="fas fa-search"></i>
-                      <span className="d-lg-block">&nbsp;Search</span>
-                    </NavLink>
-                </li>
+                  <Dropdown isOpen={this.state.dropdownOpen} size="sm" toggle={this.toggle}>
+                  <DropdownToggle caret>
+                    <span className="notification">5</span>
+                    <i className="far fa-envelope-open"></i>
+                    <span className="d-lg-none">Notification</span>
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Header</DropdownItem>
+                    <DropdownItem disabled>Action</DropdownItem>
+                    <DropdownItem>Another Action</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Another Action</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </ul>
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <NavLink className="nav-link" to="#pablo">
-                        <span className="no-icon">Account</span>
+                    <NavLink className="nav-link" to="/">
+                        <span className="no-icon">Acceuil du site</span>
                     </NavLink>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <NavLink className="nav-link dropdown-toggle" to="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span className="no-icon">Dropdown</span>
                   </NavLink>
@@ -60,11 +76,12 @@ class DbNavBar extends Component {
                     <div className="divider"></div>
                     <NavLink className="dropdown-item" to="#">Separated link</NavLink>
                   </div>
-                </li>
+                </li> */}
                 <li className="nav-item">
-                <NavLink className="nav-link" to="#pablo">
+                <NavLink className="nav-link" to="/" onClick={this.onLogoutClick}>
                   <span className="no-icon">Log out</span>
                 </NavLink>
+
               </li>
             </ul>
           </div>
@@ -74,4 +91,15 @@ class DbNavBar extends Component {
   }
 }
 
-export default DbNavBar;
+
+DbNavBar.proptypes = {
+  logoutUser: PropTypes.func.isRequired,
+  clearCurrentTrainingCenter: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, {logoutUser, clearCurrentTrainingCenter })(DbNavBar);
