@@ -91,7 +91,7 @@ class TCCourses extends Component {
       { label: 'Bac +5', value: 'bac5' },
       { label: 'Doctorat', value: 'doctorat' },
     ];
-    
+  
 
     addCourseForm = (
       <div>
@@ -284,6 +284,7 @@ class TCCourses extends Component {
                       <div className="col-md-3 btn-group-vertical">
                             
                           {addCourseForm}
+                          
 
                       </div>
                     </div>

@@ -871,7 +871,7 @@ body>.navbar-collapse[data-color="purple"]:after {
   text-decoration: none;
 }
 
-.btn {
+/* .btn {
   border-width: 2px;
   background-color: transparent;
   font-weight: 400;
@@ -880,7 +880,7 @@ body>.navbar-collapse[data-color="purple"]:after {
   padding: 8px 16px;
   border-color: #888888;
   color: #888888;
-}
+} */
 
 .btn:hover,
 .btn:focus,
@@ -1232,10 +1232,10 @@ fieldset[disabled] .btn-warning.active {
   border-top-color: #FF9500;
 }
 
-.btn-danger {
+/* .btn-danger {
   border-color: #FF4A55;
   color: #FF4A55;
-}
+} */
 
 .btn-danger:hover,
 .btn-danger:focus,
@@ -2114,8 +2114,13 @@ fieldset[disabled] .form-control {
   box-shadow:0 30px 70px rgba(0,0,0,.2);
 }
 
-.modal {
-  top: 0%;
+/* .modal {
+  top: -50%;
+} */
+
+.btn-secondary {
+  background-color: white !important;
+  color: #6c757d !important;
 }
 
 .modal-content {

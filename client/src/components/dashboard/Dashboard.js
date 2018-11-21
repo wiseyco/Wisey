@@ -46,8 +46,8 @@ class Dashboard extends Component {
                   <Graph />
                 </div>
               </div>
-            </div>
             <DbFooter />
+            </div>
           </div>
           
         );
