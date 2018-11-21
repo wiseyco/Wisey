@@ -20,7 +20,7 @@ class CourseCard extends Component {
             <br />
             <p>{this.props.punchline}</p>
             <hr />
-            <Link to="/course"><h4>Voir la formation</h4></Link>
+            <Link to={`/course/${course._id}`}><h4>Voir la formation</h4></Link>
             <span>
             </span>
         </div>

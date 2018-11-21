@@ -55,7 +55,7 @@ class App extends Component {
             <PrivateRoute exact path="/profile" component={ Profile } />
           </Switch>
           <Route exact path="/Courses" component={ Courses } />
-          <Route exact path="/Course" component={ Course } />
+          <Route exact path="/course/:id" component={ Course } />
           </div>
           <Footer />
           </div>

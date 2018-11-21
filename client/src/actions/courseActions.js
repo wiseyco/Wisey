@@ -1,8 +1,27 @@
 import axios from 'axios';
 
-import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER } from './types';
+import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE } from './types';
 
 
+// Get course by id
+export const getCourseById = (id) => dispatch => {
+  // dispatch(setProfileLoading());
+  axios.get(`/api/courses/get/${id}`)
+  .then(res => {
+    console.log("res après axios", res);
+      dispatch({
+          type: GET_COURSE,
+          payload: res.data
+      })
+    })
+      
+      .catch(err =>
+          dispatch({
+              type: GET_COURSE,
+              payload: null
+          })
+          )
+}
 
 // Get all courses
 export const getCourses = (filters) => dispatch => {

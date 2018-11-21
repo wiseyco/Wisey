@@ -34,7 +34,6 @@ class Courses extends Component {
 
     componentWillMount() {
         const { filters } = this.props;
-        console.log("will mount filters", filters)
     
         this.handleGetCourses(filters);
       }
@@ -42,7 +41,6 @@ class Courses extends Component {
       componentWillReceiveProps(nextProps) {
 
         const { filters: nextFilters } = nextProps;
-        console.log("nextProps", nextProps)
 
         if(nextProps.course.course) {
             const loadedCourse = nextProps.course.course;
@@ -50,14 +48,11 @@ class Courses extends Component {
         }
             
         if (nextFilters !== this.props.filters) {
-            console.log("nextFilters:", nextFilters)
-            console.log("ON FILTRE DANS COURSES")
           this.handleGetCourses(nextFilters);
         }
       }
     
       handleGetCourses = (filters = this.props.filters) => {
-          console.log("filters", filters)
         this.setState({ loading: true });
         this.props.getCourses(filters, () => {
           this.setState({ loading: false });
