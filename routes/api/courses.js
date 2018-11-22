@@ -36,14 +36,18 @@ router.post(
         if (req.body.title) courseFields.title = req.body.title;
         if (req.body.handle) courseFields.handle = req.body.handle;
         if (req.body.punchline) courseFields.punchline = req.body.punchline;
+        if (req.body.desc) courseFields.desc = req.body.desc;
         if (req.body.delivery) courseFields.delivery = req.body.delivery;
         if (req.body.price) courseFields.price = req.body.price;
         // targetedAudience - Split into array
         if (typeof req.body.targetedAudience !== 'undefined') {
           courseFields.targetedAudience = req.body.targetedAudience.split(',');
         }
-        if (req.body.CPF) courseFields.CPF = req.body.CPF;
-        if (req.body.duration) courseFields.duration = req.body.duration;
+        if (req.body.cpf) courseFields.cpf = req.body.cpf;
+        // Duration
+        courseFields.duration = {time:"", unit:""}
+        if (req.body.time) courseFields.duration.time = req.body.time;
+        if (req.body.unit) courseFields.duration.unit = req.body.unit;
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
         if (req.body.ref) courseFields.ref = req.body.ref;
@@ -127,14 +131,18 @@ router.post(
         if (req.body.title) courseFields.title = req.body.title;
         if (req.body.handle) courseFields.handle = req.body.handle;
         if (req.body.punchline) courseFields.punchline = req.body.punchline;
+        if (req.body.desc) courseFields.desc = req.body.desc;
         if (req.body.delivery) courseFields.delivery = req.body.delivery;
         if (req.body.price) courseFields.price = req.body.price;
         // targetedAudience - Split into array
         if (typeof req.body.targetedAudience !== 'undefined') {
           courseFields.targetedAudience = req.body.targetedAudience.split(',');
         }
-        if (req.body.CPF) courseFields.CPF = req.body.CPF;
-        if (req.body.duration) courseFields.duration = req.body.duration;
+        if (req.body.cpf) courseFields.cpf = req.body.cpf;
+        // Duration
+        courseFields.duration = {time:"", unit:""}
+        if (req.body.time) courseFields.duration.time = req.body.time;
+        if (req.body.unit) courseFields.duration.unit = req.body.unit;
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
         // domain - Split into array
@@ -405,5 +413,16 @@ router.post(
         .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
     }
   );
+
+  // @route   GET api/courses/latest
+  // @desc    Get latest courses
+  // @access  Public
+  router.get('/latest', (req, res) => {
+    Course.find()
+      .sort({ date: -1 })
+      .limit(4)
+      .then(course => res.json(course))
+      .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
+  });
 
 module.exports = router;
