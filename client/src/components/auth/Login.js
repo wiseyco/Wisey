@@ -110,7 +110,8 @@ class Login extends Component {
                       Connexion
                     </button>
                     <div className="form-group login-form">
-                      <Link to='/register'><p id="emailHelp" className="form-text text-muted">Vous n'avez pas encore de compte ? Inscrivez vous ici</p></Link>
+                    <Link to='/register'><p id="emailHelp" className="form-text text-muted">Vous n'avez pas encore de compte ? Inscrivez vous ici</p></Link>
+                    <Link to='/forgot-password'><p id="emailHelp" className="form-text text-muted">Mot de passe oublié?</p></Link>
                     </div>
                   </form>
                 </ModalBody>

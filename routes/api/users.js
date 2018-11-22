@@ -14,13 +14,19 @@ const path = require('path');
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 const validateUserUpdateInput = require('../../validation/user-update');
+const validateForgotPasswordInput = require('../../validation/forgot-password');
+const validateResetPasswordInput = require('../../validation/reset-password');
 
 // Load User model
 const User = require('../../models/User');
 
-// Set nodemailer options
-const email = process.env.MAILER_EMAIL_ID || 'wwwwiseyco@gmail.com';
-const pass = process.env.MAILER_PASSWORD || 'Hellowisey18';
+// // Set nodemailer options
+// const email = process.env.MAILER_EMAIL_ID || 'wwwwiseyco@gmail.com';
+// const pass = process.env.MAILER_PASSWORD || 'Hellowisey18';
+
+const email = require('../../config/keys').mailerEmailId;
+const pass = require('../../config/keys').mailerPassword;
+
 const smtpTransport = nodemailer.createTransport({
   service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
   auth: {
@@ -28,6 +34,7 @@ const smtpTransport = nodemailer.createTransport({
     pass: pass
   }
 });
+
 const handlebarsOptions = {
   viewEngine: 'handlebars',
   viewPath: path.resolve('./routes/templates'),
@@ -146,9 +153,15 @@ router.post('/login', (req, res) => {
 // @route   POST api/users/forgot-password
 // @desc    Reset the user password
 // @access  Private
-router.post('/forgot-password', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const errors = {};
+router.post('/forgot-password', (req, res) => {
 
+  const { errors, isValid } = validateForgotPasswordInput(req.body);
+
+  if(!isValid) {
+    console.log('errors :', errors);
+    return res.status(400).json(errors);
+  }
+  
   async.waterfall([
     (done) => {
       User
@@ -157,8 +170,9 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
           if(user) {
             done(err, user);
           } else {
-            done('User not found');
-            errors.notfound = 'User not found';
+            // done('User not found');
+            errors.email = 'User not found';
+            console.log('errors :', errors);
             return res.status(404).json(errors);
           }
         });
@@ -171,6 +185,7 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
       });
     },
     (user, token, done) => {
+      console.log('in :')
       User
         .findByIdAndUpdate(
           { _id: user._id },
@@ -178,7 +193,7 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
           { upsert: true, new: true })
         .exec((err, new_user) => {
           done(err, token, new_user);
-          console.log('user :', new_user);
+          // console.log('user :', new_user);
         });
     },
     (token, user, done) => {
@@ -188,7 +203,7 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
         template: 'forgot-password-email',
         subject: 'Reset your password',
         context: {
-          url: 'http://localhost:3000/auth/reset_password?token=' + token,
+          url: 'http://localhost:3000/reset-password?token=' + token,
           name: user.firstName
         }
       };
@@ -201,7 +216,9 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
       });
     }
   ], (err) => {
-    return res.status(422).json({ message: err })
+    console.log('err :', err);
+    errors.token = 'token expired.'
+    return res.status(422).json(errors);
   });
 });
 
@@ -211,6 +228,58 @@ router.post('/forgot-password', passport.authenticate('jwt', { session: false })
 // @access  Private
 router.post('/reset-password', (req, res) => {
 
+  const { errors, isValid } = validateResetPasswordInput(req.body);
+
+  if(!isValid) {
+    console.log('errors :', errors);
+    return res.status(400).json(errors);
+  }
+
+  const token = req.body.token;
+  // res.json(token);
+  if(token) {
+    User
+      .findOne({
+        reset_password_token: req.body.token,
+        reset_password_expires: { $gt: Date.now() }    
+      })
+      .exec((err, user) => {
+        if(!err && user) {
+          if(req.body.password === req.body.verifyPassword) {
+            
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(req.body.password, salt, (err, hash) => {
+
+                if(err) throw err;
+                user.password = hash;
+                // user.password = bcrypt.hashSync(req.body.password, 10);
+                user.reset_password_token = undefined;
+                user.reset_password_expires = undefined;
+                
+                user
+                  .save()
+                  .then(user => {
+                    doWeSendBackToken(req, res, user);
+                  })
+                  .catch(err => {
+                    console.log('err :', err);
+                    res.status(422).json(err)
+                  })
+              });
+            });
+          } else {
+            errors.password = 'Passwords do not match';
+            return res.status(400).json(errors);
+          }
+        } else {
+          errors.password = 'Password reset token is invalid or has expired.';
+          return res.status(400).json(errors);
+        }
+      });
+  } else {
+    errors.password = 'No token founded.';
+    return res.status(400).json(errors);
+  }
 });
 
 
@@ -244,6 +313,7 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 
 // @functions send back token if match email & password
 const doWeSendBackToken = (req, res, user) => {
+  const errors = {};
   const password = req.body.password;
   
   if(!user) {

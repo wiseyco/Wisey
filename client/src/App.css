@@ -903,9 +903,6 @@ color: #e15f41;
   z-index: 9;
 }
 
-.modal-header {
-}
-
 .default-header .right-bar {
   position: relative;
 }
@@ -1715,7 +1712,6 @@ footer .footer-nav li a:hover {
 }
 
 .title-row {
-  background-color:;
   padding: 10px;
 }
 
@@ -1956,6 +1952,17 @@ footer .footer-nav li a:hover {
   font-size: 16px;
 } */
 
+.forgot-password {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 100px;
+}
 
 /* END MODAL */
 

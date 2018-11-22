@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavbarLanding from './NavbarLanding';
+import { Link } from 'react-router-dom';
 
 class Landing extends Component {
 
@@ -19,7 +20,8 @@ class Landing extends Component {
 							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
 							<br />
 							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
-							<a href="/" className="primary-btn banner-btn">Je trouve ma formation</a>
+							<Link class="primary-btn banner-btn" to="/courses">Je trouve ma formation</Link>
+
 						</div>
 					</div>
 				</div>
