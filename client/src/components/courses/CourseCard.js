@@ -8,10 +8,10 @@ class CourseCard extends Component {
     const { course } = this.props;
 
     return (
-      <div className="col-md-4">
+      <div className="col-sm-12 col-md-4">
         <div className="card">
         <div className="box">
-            <h2>{this.props.title} <br /><br /><span>{this.props.categories}</span></h2>
+            <h6>Pro Formation</h6><br /><h2>{this.props.title} <br /><br /><span>{this.props.categories}</span></h2>
             <img src="img/icons/calendar_small.png" alt="" />&nbsp;<span>{this.props.duration}{this.props.ofDays}</span>
             <br />
             <br />

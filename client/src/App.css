@@ -1682,12 +1682,31 @@ footer .footer-nav li a:hover {
 .module-section {
   margin-top: 50px;
   margin-bottom: 50px;
-  padding: 30px;
-  border: 1px solid grey;
-  border-radius: 20px;
-  
+  margin-left: 50px;
+  margin-right: 50px;
+  /* padding: 30px; */
+  /* border: 1px solid grey;
+  border-radius: 20px; */
 }
 
+.author .description span {
+  font-size:14px;
+  background:#c44569;
+  color:#fff;
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:15px;
+}
+
+.module-info span {
+  font-size:14px;
+  background:#303952;
+  color:#fff;
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:15px;
+}
+/* 
 .module-container {
   background-color: #ffffff;
   border-radius: 20px;
@@ -1699,11 +1718,16 @@ footer .footer-nav li a:hover {
 }
 
 .module-first-container {
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 }
 
 .module-second-container {
+  margin-left: 0;
+  margin-right: 0;
   margin-bottom: 100px;
+  background-color: #303952;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .module-third-container {
   line-height: 10em;
@@ -1744,7 +1768,7 @@ footer .footer-nav li a:hover {
 
 .module-note {
   vertical-align: middle;
-}
+} */
 
 .comments-date p {
   font-size: 13px;
@@ -2239,27 +2263,23 @@ footer .footer-nav li a:hover {
 
 /* END DASHBOARD */
 
-.filters {
-  width: 15%;
-  float: left; }
+
   .filters .star-button-container {
-    text-align: center; }
+  }
     .filters .star-button-container small {
       color: #aaa;
-      margin-bottom: 8px;
-      display: inline-block; }
+    }
   .filters .title {
     margin-top: 2px;
     margin-bottom: 20px; }
   .filters-available-size {
-    display: inline-block;
     margin-bottom: 10px;
     /* Customize the label (the container) */ }
     .filters-available-size label {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      font-size: 22px;
+      font-size: 16px;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -2287,18 +2307,22 @@ footer .footer-nav li a:hover {
         opacity: 0;
         cursor: pointer; }
       .filters-available-size label .checkmark {
-        position: absolute;
-        background-color: #303952;
-        top: 0;
-        left: 0;
-        width: 150px;
-        height: 35px;
-        font-size: 14px;
-        font-weight: bold;
-        border: 1px solid grey;
-        line-height: 35px;
-        text-align: center;
-        color: #ffffff;
-        border: 1px solid transparent;
-        border-radius: 10px;
+        /* position: absolute; */
+        /* background-color: #303952; */
+        /* top: 0;
+        left: 0; */
+        background-color: #e15f41;
+        color: #fff;
+        line-height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        display: inline-block;
+        font-weight: 600;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        min-width: 150px;
+        font-size: 12px;
      }

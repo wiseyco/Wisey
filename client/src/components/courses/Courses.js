@@ -87,7 +87,32 @@ class Courses extends Component {
             <Navbar />
 
                 <section className="section profile-section">
-                             <div className="search-header-bg">
+                    <div className="content">
+                    <div className="container-fluid">
+                        <div className="container search-header">
+                            <div className="text-center">
+                               <h1 className="text-center">Découvrez toutes nos formations</h1>
+                             </div>
+                        </div>  
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="card card-user text-center">
+                                <br />
+                                <h6>Filtres</h6>
+                                <br />
+                                <Filter />
+                            </div>
+                        </div>
+
+                    <div className="col-md-8">
+                        <div className="row module-search-row">
+                            {courseCards}
+                        </div>
+                    </div>  
+                </div>
+              </div>
+            </div>
+                             {/* <div className="search-header-bg">
                                 <div className="container search-header">
                                     <div className="text-center">
                                         <h1 className="text-center">Découvrez toutes nos formations</h1>
@@ -97,15 +122,6 @@ class Courses extends Component {
                                     <br />
                                     <div className="container search-items-container">
                                     <div className="row search-items-row justify-content-between align-items-center">
-                                        {/* <div className="col-md-3">
-                                        <button type="button" className="btn btn-outline-primary search-btn">Marketing</button>
-                                        </div>
-                                        <div className="col-md-3">
-                                        <button type="button" className="btn btn-outline-secondary search-btn">Management</button>
-                                        </div>
-                                        <div className="col-md-3">
-                                        <button type="button" className="btn btn-outline-success search-btn">Numérique</button>
-                                        </div> */}
                                         <Filter />
                                     </div>
                                 </div>
@@ -118,7 +134,7 @@ class Courses extends Component {
                                     <div className="row module-search-row">
                                             {courseCards}
                                     </div>
-                                 </div>
+                                 </div> */}
                     </section>
         </div>
     )

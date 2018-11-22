@@ -21,25 +21,24 @@ class Filter extends Component {
   }
 
   toggleCheckbox = (label) => {
-      console.log("ON FILTRE")
     if (this.selectedCheckboxes.has(label)) {
       this.selectedCheckboxes.delete(label);
-      console.log("ON DELETE")
   } else {
       this.selectedCheckboxes.add(label);
-      console.log("ON ADD")
     }
 
     this.props.updateFilters(Array.from(this.selectedCheckboxes));
   }
 
   createCheckbox = (label) => (
+
     <Checkbox
-        classes="filters-available-size"
+        classes="filters-available-size text-center"
         label={label}
         handleCheckboxChange={this.toggleCheckbox}
         key={label}
     />
+
   )
 
   createCheckboxes = () => (
