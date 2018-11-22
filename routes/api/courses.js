@@ -6,6 +6,9 @@ const passport = require('passport');
 const validateCourseInput = require('../../validation/course');
 const validateRatingInput = require('../../validation/rating');
 
+// Load Slugify
+const slugify = require('../../utils/slugify');
+
 // Load Course Model
 const Course = require('../../models/Course');
 
@@ -51,9 +54,9 @@ router.post(
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
         if (req.body.ref) courseFields.ref = req.body.ref;
-        // domain - Split into array
-        if (typeof req.body.domain !== 'undefined') {
-          courseFields.domain = req.body.domain.split(',');
+        // domain (categories) - Split into array
+        if (typeof req.body.categories !== 'undefined') {
+          courseFields.categories = req.body.categories.split(',');
         }
 
         // Syllabus

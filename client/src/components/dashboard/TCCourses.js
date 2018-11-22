@@ -39,6 +39,7 @@ class TCCourses extends Component {
       categories: '',
       requirements: '',
       ref: '',
+      uri: '',
       nextSessions: [],
       errors: {}
     }
@@ -81,6 +82,7 @@ class TCCourses extends Component {
       categories: this.state.categories,
       requirements: this.state.requirements,
       ref: this.state.ref,
+      handle: this.state.uri,
       nextSessions: this.state.nextSessions,
     };
 
@@ -161,17 +163,17 @@ class TCCourses extends Component {
                   <div className="form-group login-form">
                       <br />
                       <label>Titre du parcours</label>
-                      <InputGroup
+                      <TextFieldGroup
                         placeholder="Titre du parcours"
                         name="title"
                         value={this.state.title}
                         onChange={this.onChange}
-                        error={isEmpty(this.state.title) ? errors.title = 'Le titre est obligatoire' : null}
+                        error={errors.title}
                         info="Quel est le titre du parcours."
                       />
 
                       <label>Accroche du parcours</label>
-                      <InputGroup
+                      <TextFieldGroup
                         placeholder="Accroche du parcours"
                         name="punchline"
                         value={this.state.punchline}
@@ -180,7 +182,7 @@ class TCCourses extends Component {
                       />
 
                       <label>Description du parcours</label>
-                      <TextAreaFieldGroup
+                      <TextFieldGroup
                         placeholder="Description"
                         name="desc"
                         value={this.state.desc}
@@ -213,11 +215,12 @@ class TCCourses extends Component {
                       />
 
                       <label>Prix</label>
-                      <InputGroup
+                      <TextFieldGroup
                         placeholder="Prix en €"
                         name="price"
                         value={this.state.price}
                         onChange={this.onChange}
+                        error={errors.price}
                         info="Quel est le prix de la formation en eruo"
                       />
 
@@ -237,12 +240,13 @@ class TCCourses extends Component {
                       <div className="row">
                         <div className="col-md-6">
                         <label>Temps :</label>
-                          <InputGroup
+                          <TextFieldGroup
                             placeholder="Temps"
                             name="time"
                             value={this.state.time}
                             onChange={this.onChange}
                             info="Un nombre"
+                            error={errors.time}
                           />
                         </div>
                         <div className="col-md-6">
@@ -253,19 +257,20 @@ class TCCourses extends Component {
                             value={this.state.unit}
                             onChange={this.onChange}
                             options={durationOf}
-                            error={errors.targetedAudience}
+                            error={errors.unit}
                             info="En heures, jours, mois, années"
                           />
                         </div>
                       </div>
 
                       <label>Syllabus</label>
-                      <InputGroup
+                      <TextFieldGroup
                         placeholder="Syllabus"
                         name="syllabus"
                         value={this.state.syllabus}
                         onChange={this.onChange}
                         info="Quel est le Syllabus."
+                        error={errors.syllabus}
                       />
                       <label>Niveau visé</label>
                         <SelectListGroup
@@ -278,30 +283,41 @@ class TCCourses extends Component {
                           info="En heures, jours, mois, années"
                         />
                         <label>Catégories</label>
-                        <InputGroup
+                        <TextFieldGroup
                           placeholder="Catégories"
                           name="categories"
                           value={this.state.categories}
                           onChange={this.onChange}
+                          error={errors.categories}
                           info="Quels sont les catégories ?"
                         />
                         <label>Prérequis</label>
-                        <InputGroup
+                        <TextFieldGroup
                           placeholder="Prérequis"
                           name="requirements"
                           value={this.state.requirements}
                           onChange={this.onChange}
+                          error={errors.requirements}
                           info="Quels sont les Prérequis ?"
                         />
                         <label>Référence</label>
-                        <InputGroup
+                        <TextFieldGroup
                           placeholder="Référence"
                           name="ref"
                           value={this.state.ref}
                           onChange={this.onChange}
+                          error={errors.ref}
                           info="Quelle est la Référence ?"
                         />
-
+                        <label>uri</label>
+                        <TextFieldGroup
+                          placeholder="uri"
+                          name="uri"
+                          value={this.state.uri}
+                          onChange={this.onChange}
+                          error={errors.handle}
+                          info="Quelle uri souhaitez-vous donner au parcours ?"
+                        />
                         <label>NextSession ?</label>
 
                     </div>
