@@ -30,14 +30,14 @@ const courseSchema = new Schema({
     type: Number,
     required: true
   },
-  CPF: {
+  cpf: {
     type: Boolean
   },
   duration: {
-    number: {
+    time: {
       type: Number
     },
-    of: {
+    unit: {
       type: String
     }
   },
