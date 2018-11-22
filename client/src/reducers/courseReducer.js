@@ -1,4 +1,4 @@
-import { GET_COURSES, GET_COURSE, COURSE_LOADING } from '../actions/types';
+import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_TRAINING_CENTER_COURSES } from '../actions/types';
 
 const initialState = {
     course: null,
@@ -20,6 +20,12 @@ export default function(state = initialState, action) {
             course: action.payload,
             loading: false
         }
+        case GET_TRAINING_CENTER_COURSES:
+        return {
+            ...state,
+            courses: action.payload,
+            loading: false
+        }
         case COURSE_LOADING:
         return {
             ...state,
@@ -27,6 +33,6 @@ export default function(state = initialState, action) {
         }
         default:
         return state;
-        
+
     }
 }

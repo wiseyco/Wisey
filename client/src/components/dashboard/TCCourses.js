@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -15,6 +14,10 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
+import Spinner from '../common/Spinner';
+import CourseItem from './CourseItem';
+import { getCourseDashboard } from '../../actions/courseActions';
+
 class TCCourses extends Component {
   constructor(props) {
     super();
@@ -27,8 +30,8 @@ class TCCourses extends Component {
       price: '',
       CPF: false,
       duration: {
-        number: '',
-        of: ''
+        time: '',
+        unit: ''
       },
       syllabus: [],
       targetedLevel: '',
@@ -56,6 +59,10 @@ class TCCourses extends Component {
   onSubmit = e => {
     e.preventDefault();
     console.log('Submited !');
+  }
+
+  componentDidMount() {
+    this.props.getCourseDashboard();
   }
 
   render() {
@@ -91,7 +98,22 @@ class TCCourses extends Component {
       { label: 'Bac +5', value: 'bac5' },
       { label: 'Doctorat', value: 'doctorat' },
     ];
-  
+
+    const { courses, loading } = this.props.course;
+    let courseItems;
+
+    if (courses === null || loading) {
+      courseItems = <Spinner />;
+    } else {
+      if (courses.length > 0) {
+        courseItems = courses.map(course => (
+          <CourseItem key={course._id} course={course} />
+        ));
+      } else {
+        courseItems = <h4>Vous n'avez pas encore crée de cours</h4>;
+      }
+    }
+
 
     addCourseForm = (
       <div>
@@ -107,7 +129,7 @@ class TCCourses extends Component {
                   <div className="form-group login-form">
                       <br />
                       <label>Titre du parcours</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Titre du parcours"
                         name="title"
                         value={this.state.title}
@@ -115,9 +137,9 @@ class TCCourses extends Component {
                         error={isEmpty(this.state.title) ? errors.title = 'Le titre est obligatoire' : null}
                         info="Quel est le titre du parcours."
                       />
-                      
+
                       <label>Accroche du parcours</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Accroche du parcours"
                         name="punchline"
                         value={this.state.punchline}
@@ -159,7 +181,7 @@ class TCCourses extends Component {
                       />
 
                       <label>Prix</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Prix en €"
                         name="price"
                         value={this.state.price}
@@ -183,7 +205,7 @@ class TCCourses extends Component {
                       <div className="row">
                         <div className="col-md-6">
                         <label>Temps :</label>
-                          <TextFieldGroup 
+                          <TextFieldGroup
                             placeholder="Tepms"
                             name="duration"
                             value={this.state.price}
@@ -206,7 +228,7 @@ class TCCourses extends Component {
                       </div>
 
                       <label>Syllabus</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Syllabus"
                         name="syllabus"
                         value={this.state.syllabus}
@@ -224,7 +246,7 @@ class TCCourses extends Component {
                           info="En heures, jours, mois, années"
                         />
                         <label>Catégories</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Catégories"
                           name="categories"
                           value={this.state.categories}
@@ -232,7 +254,7 @@ class TCCourses extends Component {
                           info="Quels sont les catégories ?"
                         />
                         <label>Prérequis</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Prérequis"
                           name="requirements"
                           value={this.state.requirements}
@@ -240,7 +262,7 @@ class TCCourses extends Component {
                           info="Quels sont les Prérequis ?"
                         />
                         <label>Référence</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Référence"
                           name="ref"
                           value={this.state.ref}
@@ -251,7 +273,7 @@ class TCCourses extends Component {
                         <label>NextSession ?</label>
 
                     </div>
-                    
+
                     <button type="submit" className="btn btn-primary primary-btn">
                       Ajouter un parcours
                     </button>
@@ -277,14 +299,14 @@ class TCCourses extends Component {
                     <div className="row">
                       <div className="col-md-9">
                         <div className="card-header ">
-                          <h4 className="card-title">Mes coures</h4>
+                          <h4 className="card-title">Mes cours</h4>
                           <p className="card-category">Ajouter, éditer ou supprimer un cours</p>
                         </div>
                       </div>
                       <div className="col-md-3 btn-group-vertical">
-                            
+
                           {addCourseForm}
-                          
+
 
                       </div>
                     </div>
@@ -292,121 +314,8 @@ class TCCourses extends Component {
                       <div className="table-full-width">
                         <table className="table">
                           <tbody>
-                            <tr>
-                              <td>
-                                <div className="form-check">
-                                  <label className="form-check-label">
-                                    <input className="form-check-input" type="checkbox" value="" />
-                                    <span className="form-check-sign"></span>
-                                  </label>
-                                </div>
-                              </td>
-                              <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept thr /ough metro Detroit
-                                </td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Read "Following makes Medium better"</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" disabled />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Unfollow 5 enemies from twitter</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
+                          {courseItems}
+
                             </tbody>
                           </table>
                         </div>
@@ -429,4 +338,14 @@ class TCCourses extends Component {
   }
 }
 
-export default TCCourses;
+
+TCCourses.propTypes = {
+  getCourseDashboard: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  course: state.course
+});
+
+export default connect(mapStateToProps, { getCourseDashboard })(TCCourses);
