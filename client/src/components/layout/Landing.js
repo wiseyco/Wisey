@@ -1,9 +1,53 @@
 import React, { Component } from 'react';
 import NavbarLanding from './NavbarLanding';
 
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getLatestCourses } from '../../actions/courseActions';
+import Spinner from '../common/Spinner';
+import CourseLandingItem from '../courses/CourseLandingItem';
+
 class Landing extends Component {
 
+	constructor(props) {
+        super(props);
+        this.state = {
+            loadedCourse: [],
+            loading: false
+        }
+	}
+
+	componentWillMount() {    
+		this.props.getLatestCourses();
+		console.log(this.props)
+	  }
+	componentWillReceiveProps(nextProps) {
+        
+    	const { course, loading } = nextProps;
+
+        	if(nextProps.course.course) {
+            	const loadedCourse = nextProps.course.course;
+            	this.setState({loadedCourse: loadedCourse})       
+			}
+		}
+	
     render() {
+
+		const { loadedCourse, loading} = this.state;
+		let courseLandingItem;
+		console.log("STATE RENDER", this.state)
+        if (loadedCourse === null || loading) {
+            return (<Spinner />);
+		  }
+		else {
+			courseLandingItem = loadedCourse.map(course => (
+				<CourseLandingItem
+				key={course._id}
+				id={course._id}
+				title={course.title}
+				/>
+			))
+		}
     
     return (
 		<div>
@@ -31,68 +75,8 @@ class Landing extends Component {
 			<div className="container">
 				<p className="text-uppercase"><strong>Dernières formations proposées</strong></p>
 				<div className="row">
-					<div className="col-lg-3 col-md-6">
-						<div className="single-publish">
-							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
-							<div className="top">
-								<div className="mb-15 d-flex">
-									<a href="/">3 janvier 2018</a>
-									<span className="line">|</span>
-									<a href="/">Formation Paris</a>
-								</div>
-								<h6 className="text-uppercase"><a href="/">Chef de projet multimédia</a></h6>
-							</div>
-							<p className="mb-30">Le chef de projet multimédia gère et coordonne l’ensemble de la production du produit multimédia autour d’une équipe composée de développeurs, UX designers, webdesigners, webmarketers…</p>
-							<a href="/module.html" className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><span className="lnr lnr-arrow-right"></span></a>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-6">
-						<div className="single-publish">
-							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
-							<div className="top">
-								<div className="mb-15 d-flex">
-									<a href="/">15 Janvier 2018</a>
-									<span className="line">|</span>
-									<a href="/">Forma' Top</a>
-								</div>
-								<h6 className="text-uppercase"><a href="/">Chef de projet marketing</a></h6>
-							</div>
-							<p className="mb-30">Le chef de projet multimédia gère et coordonne l’ensemble de la production du produit multimédia autour d’une équipe composée de développeurs, UX designers, webdesigners, webmarketers…</p>
-							<a href="/" className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><span className="lnr lnr-arrow-right"></span></a>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-6">
-						<div className="single-publish">
-							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
-							<div className="top">
-								<div className="mb-15 d-flex">
-									<a href="/">28 Janvier 2018</a>
-									<span className="line">|</span>
-									<a href="/">Petite Formation</a>
-								</div>
-								<h6 className="text-uppercase"><a href="/">Développeur Javascript</a></h6>
-							</div>
-							<p class="mb-30">Le chef de projet multimédia gère et coordonne l’ensemble de la production du produit multimédia autour d’une équipe composée de développeurs, UX designers, webdesigners, webmarketers…</p>
-							<a href="/" className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><span className="lnr lnr-arrow-right"></span></a>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-6">
-						<div className="single-publish">
-							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
-							<div className="top">
-								<div className="mb-15 d-flex">
-									<a href="/">25 Mars 2018</a>
-									<span className="line">|</span>
-									<a href="/">Educ' School</a>
-								</div>
-								<h6 className="text-uppercase"><a href="/">Data Scientist Chief Expert</a></h6>
-							</div>
-							<p className="mb-30">Le chef de projet multimédia gère et coordonne l’ensemble de la production du produit multimédia autour d’une équipe composée de développeurs, UX designers, webdesigners, webmarketers…</p>
-							<a href="/" className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><span className="lnr lnr-arrow-right"></span></a>
-						</div>
-					</div>
-					
-			</div>
+					{courseLandingItem}
+				</div>
             </div>
 		</section>
 
@@ -173,4 +157,16 @@ class Landing extends Component {
     }
 }
 
-export default Landing;
+Landing.propTypes = {
+    getLatestCourses: PropTypes.func.isRequired,
+    course: PropTypes.array.isRequired,
+}
+
+const mapStateToProps = state => ({
+    course: state.course,
+})
+
+export default connect (mapStateToProps,
+    { getLatestCourses }
+    )
+    (Landing);

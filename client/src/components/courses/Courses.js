@@ -19,19 +19,6 @@ class Courses extends Component {
         }
     }
 
-    // componentWillMount () {
-    //     const { filters } = this.props;
-    //     this.props.handleGetCourses(filters);
-
-    // }
-
-    // componentWillReceiveProps = nextProps => {
-    //     if(nextProps.course.course) {
-    //         const loadedCourse = nextProps.course.course;
-    //         this.setState({loadedCourse: loadedCourse})
-    //     }
-    // }
-
     componentWillMount() {
         const { filters } = this.props;
     
@@ -112,33 +99,11 @@ class Courses extends Component {
                 </div>
               </div>
             </div>
-                             {/* <div className="search-header-bg">
-                                <div className="container search-header">
-                                    <div className="text-center">
-                                        <h1 className="text-center">Découvrez toutes nos formations</h1>
-                                        <h5 className="text-center">Devenez expert sur un métier passionnant et décrochez un emploi. Garanti.
-                                        </h5>
-                                    </div>
-                                    <br />
-                                    <div className="container search-items-container">
-                                    <div className="row search-items-row justify-content-between align-items-center">
-                                        <Filter />
-                                    </div>
-                                </div>
-                                <br />
-                              
-                                </div>
-
-                             </div>
-                                <div className="container">
-                                    <div className="row module-search-row">
-                                            {courseCards}
-                                    </div>
-                                 </div> */}
-                    </section>
-        </div>
-    )
-    }
+                
+        </section>
+    </div>
+)
+}
 }
 
 Courses.propTypes = {

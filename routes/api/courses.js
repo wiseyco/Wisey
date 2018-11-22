@@ -214,6 +214,17 @@ router.post(
       .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
   });
 
+  // @route   GET api/courses/latest
+  // @desc    Get latest courses
+  // @access  Public
+  router.get('/latest', (req, res) => {
+    Course.find()
+      .sort({ date: -1 })
+      .limit(4)
+      .then(course => res.json(course))
+      .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
+  });
+
 
   // @route   GET api/courses/get/:id
   // @desc    Get course by id

@@ -9,4 +9,5 @@ export const COURSE_LOADING = 'COURSE_LOADING';
 // COURSES
 export const GET_COURSE = 'GET_COURSE';
 export const GET_COURSES = 'GET_COURSES';
+export const GET_LATEST_COURSES = 'GET_LATEST_COURSES';
 export const UPDATE_FILTER = 'UPDATE_FILTER ';

@@ -860,7 +860,7 @@ td, th {
   overflow: hidden;
 }
 
-.lnr {
+.fas {
 color: #e15f41;
 }
 
@@ -1137,6 +1137,17 @@ color: #e15f41;
   padding: 50px;
   border-radius: 40px;
   color: black;
+}
+
+.course-landing-item-title {
+  white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.course-landing-item-punchline {
+  height: 150px;
+  overflow: scroll;
 }
 
 .signle-service {

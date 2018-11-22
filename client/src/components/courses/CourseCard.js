@@ -15,7 +15,7 @@ class CourseCard extends Component {
             <img src="img/icons/calendar_small.png" alt="" />&nbsp;<span>{this.props.duration}{this.props.ofDays}</span>
             <br />
             <br />
-            <img src="img/icons/star_small.png" alt="" />&nbsp;<span>4,6 / 5</span>
+            <img src="img/icons/star_small.png" alt="" />&nbsp;<span>5 / 5</span>
             <br />
             <br />
             <p>{this.props.punchline}</p>

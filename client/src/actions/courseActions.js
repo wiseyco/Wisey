@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE } from './types';
+import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_LATEST_COURSES } from './types';
 
 
 // Get course by id
@@ -53,6 +53,25 @@ export const getCourses = (filters) => dispatch => {
         })
       );
   };
+
+// Get latest courses
+export const getLatestCourses = () => dispatch => {
+  // dispatch(setProfileLoading());
+  axios.get("/api/courses/latest")
+  .then(res => {
+    console.log("res latest courses", res);
+      dispatch({
+          type: GET_LATEST_COURSES,
+          payload: res.data
+      })
+    })
+    .catch(err =>
+      dispatch({
+          type: GET_ERRORS,
+          payload: null
+        })
+    )
+}
 
   export const updateFilters = (filters) => dispatch => {
     dispatch({
