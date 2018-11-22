@@ -6,6 +6,9 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 const async = require('async');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+const hbs = require('nodemailer-express-handlebars');
+const path = require('path');
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -15,6 +18,23 @@ const validateUserUpdateInput = require('../../validation/user-update');
 // Load User model
 const User = require('../../models/User');
 
+// Set nodemailer options
+const email = process.env.MAILER_EMAIL_ID || 'wwwwiseyco@gmail.com';
+const pass = process.env.MAILER_PASSWORD || 'Hellowisey18';
+const smtpTransport = nodemailer.createTransport({
+  service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+  auth: {
+    user: email,
+    pass: pass
+  }
+});
+const handlebarsOptions = {
+  viewEngine: 'handlebars',
+  viewPath: path.resolve('./routes/templates'),
+  extName: '.html'
+};
+
+smtpTransport.use('compile', hbs(handlebarsOptions));
 
 // @route   POST api/users/register
 // @desc    Register or update a user 
@@ -123,36 +143,75 @@ router.post('/login', (req, res) => {
     });
 });
 
-// // @route   POST api/users/reset-password
-// // @desc    Reset the user password
-// // @access  Private
-// router.post('/reset-password', passport.authenticate('jwt', { session: false }), (req, res) => {
-  
-//   // Are inputs valid?
-//   let email;
-//   // catch inputs 
-//   if(req.body.email) email = req.body.email;
+// @route   POST api/users/forgot-password
+// @desc    Reset the user password
+// @access  Private
+router.post('/forgot-password', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const errors = {};
 
-//   User
-//     .findOne({ email })
-//     .then(user => {
+  async.waterfall([
+    (done) => {
+      User
+        .findOne({ email: req.body.email })
+        .exec((err, user) => {
+          if(user) {
+            done(err, user);
+          } else {
+            done('User not found');
+            errors.notfound = 'User not found';
+            return res.status(404).json(errors);
+          }
+        });
+    },
+    (user, done) => {
+      // Create the random token
+      crypto.randomBytes(20, (err, buffer) => {
+        let token = buffer.toString('hex');
+        done (err, user, token);
+      });
+    },
+    (user, token, done) => {
+      User
+        .findByIdAndUpdate(
+          { _id: user._id },
+          { reset_password_token: token, reset_password_expires: Date.now() + 86400000 },
+          { upsert: true, new: true })
+        .exec((err, new_user) => {
+          done(err, token, new_user);
+          console.log('user :', new_user);
+        });
+    },
+    (token, user, done) => {
+      let data = {
+        to: user.email,
+        from: email,
+        template: 'forgot-password-email',
+        subject: 'Reset your password',
+        context: {
+          url: 'http://localhost:3000/auth/reset_password?token=' + token,
+          name: user.firstName
+        }
+      };
+      smtpTransport.sendMail(data, (err) => {
+        if(!err) {
+          return res.json({ message: 'Kindly check your email for further instructions' });
+        } else {
+          return done(err);
+        }
+      });
+    }
+  ], (err) => {
+    return res.status(422).json({ message: err })
+  });
+});
 
-//       if(!user) {
-//         let errors = 'No user found';
-//         res.status(400).json(errors);
-//       }
 
-      
+// @route   POST api/users/reset-password
+// @desc    Reset the user password
+// @access  Private
+router.post('/reset-password', (req, res) => {
 
-//     })
-
-
-//   // compare
-
-//   // Salt
-
-//   // Update
-// });
+});
 
 
 // @route   GET api/users/current

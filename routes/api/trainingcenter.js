@@ -144,18 +144,18 @@ router.post('/', upload.single('logo'), passport.authenticate('jwt', { session: 
   // Save logo into path variable
   let imgUri;
   
-  if(req.file !== undefined) {
-    PhotoPath = req.file.path;
-    errors.logo = "Problème lors de l'upload du logo";
-  }
+  // if(req.file !== undefined) {
+  //   PhotoPath = req.file.path;
+  //   errors.logo = "Problème lors de l'upload du logo";
+  // }
 
   // Save into cloudinary
-  cloudinary.v2.uploader.upload(PhotoPath, (error, result) => {
-    imgUri = result.url; 
+  // cloudinary.v2.uploader.upload(PhotoPath, (error, result) => {
+  //   imgUri = result.url; 
 
-    const trainingCenterFields = {};
+  //   const trainingCenterFields = {};
 
-    trainingCenterFields.user = req.user.id
+  //   trainingCenterFields.user = req.user.id
 
     // uri
     // if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName); // Moved below 
@@ -220,7 +220,7 @@ router.post('/', upload.single('logo'), passport.authenticate('jwt', { session: 
         }
       });
   
-  });
+  // }); // Cloudinaty
 });
 
 
