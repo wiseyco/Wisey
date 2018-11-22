@@ -154,7 +154,7 @@ class Profile extends Component {
                                             </div>
                                             <div className="col-md-6">
                                             <input
-                                            class="form-control profile-input"
+                                            className="form-control profile-input"
                                             type="text" name="firstName"
                                             value={this.state.firstName}
                                             placeholder={this.props.auth.user.firstName}

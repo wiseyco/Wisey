@@ -15,7 +15,9 @@ import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer'
 // import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Search from './components/courses/Search'
+import Courses from './components/courses/Courses'
+import Course from './components/courses/Course'
+
 
 import Dashboard from './components/dashboard/Dashboard';
 import TCProfile from './components/dashboard/TCProfile';
@@ -67,6 +69,9 @@ class App extends Component {
           <Switch>
             <PrivateRoute exact path="/tc-map" component={TCMap} />
           </Switch>
+          <Route exact path="/Courses" component={ Courses } />
+          <Route exact path="/course/:id" component={ Course } />
+          <Footer />
           </div>
         </Router>
       </Provider>
