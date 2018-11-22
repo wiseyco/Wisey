@@ -17,7 +17,7 @@ class CourseCard extends Component {
         <div className="box">
             {/* <h6>Pro Formation</h6><br /> */}
             <h2>{this.props.title} <br /><br /><span>{this.props.categories}</span></h2>
-            <Moment format="DD/MM/YYYY"><span>{this.props.date}</span></Moment>
+            <span><Moment format="DD/MM/YYYY">{this.props.date}</Moment></span>
             <br />
             <br />
             <img src={star} alt="" /><img src={star} alt="" /><img src={star} alt="" /><img src={star} alt="" /><img src={star} alt="" />

@@ -5,15 +5,24 @@ import PropTypes from 'prop-types';
 import Navbar from '../layout/Navbar';
 import Spinner from '../common/Spinner';
 import { getCourseById } from '../../actions/courseActions';
-import calendar from '../../img/icons/calendar.png';
-import controls from '../../img/icons/controls.png';
-import hourglass from '../../img/icons/hourglass.png';
-import training from '../../img/icons/training.png';
+// import calendar from '../../img/icons/calendar.png';
+// import controls from '../../img/icons/controls.png';
+// import hourglass from '../../img/icons/hourglass.png';
+// import training from '../../img/icons/training.png';
 import star from '../../img/icons/star.png';
-import TextFieldGroup from '../common/TextFieldGroup';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+// import TextFieldGroup from '../common/TextFieldGroup';
+// import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import Moment from 'react-moment';
 
 class Course extends Component {
+
+      constructor(props) {
+        super(props);
+        this.state = {
+            loadedCourse: [],
+            loading: true
+        }
+    }
 
     componentDidMount () {
         if (this.props.match.params.id) {
@@ -22,18 +31,21 @@ class Course extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        
-        if (nextProps.course.course === null && this.props.course.loading) {
-          this.props.history.push('/not-found');
-        }
+
+      const { course, loading } = nextProps;
+      if(course.course) {
+            	const loadedCourse = course.course;
+            	this.setState({loadedCourse: loadedCourse, loading: false})       
+			}
       }
 
     render () {
 
-        const { course, loading } = this.props.course;
-        if (course === null || loading) {
+        const { loadedCourse, loading} = this.state;
+        console.log("COURSE RENDER", loadedCourse)
+        if (loading) {
             return (<Spinner />);
-          } 
+          }
 
         
     
@@ -55,41 +67,43 @@ class Course extends Component {
                             <a href="/tc-profile">
                               <img className="avatar border-gray" src="https://image.freepik.com/icones-gratuites/logo-de-pomme_318-40184.jpg" alt="..." />
                               <h6>Pro Formation</h6>
-                              <h4 className="title">{course.title}</h4>
+                              <h4 className="title">{loadedCourse.title}</h4>
                             </a>
                             <br />
                           <p className="description">
-                          <span>{course.categories}</span>
+                          <span>{loadedCourse.categories}</span>
                           </p>
                           <img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/>
                         </div>
                         <br/>
                         <hr/>
                         <br/>
-                        <p className="description text-center">
-                        Etiam dignissim urna eget malesuada tincidunt. Sed pellentesque nibh non placerat pulvinar. Suspendisse sit amet augue quis felis ornare ultrices eu a lorem. Sed quis lectus in mauris fringilla scelerisque. Nulla faucibus tellus vitae nisi scelerisque, at sollicitudin nisi malesuada. Vestibulum at erat a felis ultrices ultricies vel eget lacus.
-                          </p>
+                        <p className="description text-center">{loadedCourse.desc}</p>
                       
                             <div className="row module-info text-center">
                                  <div className="col-12">
-                                    <span>10 janvier 2019</span>
+                                    <span><Moment format="DD/MM/YYYY">
+                                      {loadedCourse.nextSessions[0].from}
+                                    </Moment></span>
                                 </div>
                             </div>
                             <br />
-                            <div className="row module-info text-center">
+                            {/* <div className="row module-info text-center">
                                  <div className="col-12">
                                     <span>5 jours</span>
                                 </div>
                             </div>
-                            <br />
+                            <br /> */}
                             <div className="row module-info text-center">
                                  <div className="col-12">
-                                    <span>Présentiel</span>
+                                    <span>{loadedCourse.price} €</span>
                                 </div>
                             </div>
                             <br />
                             <div className="description text-center">
-                                <p><strong>Prérequis :</strong> </p>
+                                <p><strong>Prérequis : </strong>
+                                {loadedCourse.requirements}
+                                </p>
                             </div>
                       </div>
                       <div className="button-container mr-auto ml-auto">
@@ -109,28 +123,34 @@ class Course extends Component {
 
                             <div className="row">
                               <div className="col-md-10 pr-1">
-                                <label>Chapitre 1</label>
-                                <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
-
-</p>
+                                <label>
+                                {loadedCourse.syllabus[0].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[0].desc}
+                                </p>
                               </div>
                             </div>
 
                            <div className="row">
                               <div className="col-md-10 pr-1">
-                                <label>Chapitre 2</label>
-                                <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
-
-</p>
+                                <label>
+                                {loadedCourse.syllabus[1].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[1].desc}
+                                </p>
                               </div>
                             </div>
 
                            <div className="row">
                               <div className="col-md-10 pr-1">
-                                <label>Chapitre 3</label>
-                                <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
-
-</p>
+                                <label>
+                                {loadedCourse.syllabus[2].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[2].desc}
+                                </p>
                               </div>
                             </div>
                             <input

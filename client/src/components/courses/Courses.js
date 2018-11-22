@@ -61,6 +61,7 @@ class Courses extends Component {
                     desc={course.desc}
                     date={course.nextSessions[0].from}
                     categories={course.categories[0]}
+                    
                     // duration={course.duration[0]}
                     // ofDays={course.duration[1]}
                     
