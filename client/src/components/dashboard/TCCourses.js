@@ -6,17 +6,20 @@ import DbNavBar from './common/DbNavBar.js';
 import DbFooter from './common/DbFooter.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { classnames } from 'classnames';
 import { Link } from 'react-router-dom';
 
 import isEmpty from '../../validation/isEmpty';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
 import Spinner from '../common/Spinner';
 import CourseItem from './CourseItem';
 import { getCourseDashboard } from '../../actions/courseActions';
+import { createCourse } from '../../actions/courseActions';
 
 class TCCourses extends Component {
   constructor(props) {
@@ -28,11 +31,9 @@ class TCCourses extends Component {
       delivery: '',
       targetedAudience: '',
       price: '',
-      CPF: false,
-      duration: {
-        time: '',
-        unit: ''
-      },
+      cpf: false,
+      time: '',
+      unit: '',
       syllabus: [],
       targetedLevel: '',
       categories: '',
@@ -41,28 +42,59 @@ class TCCourses extends Component {
       nextSessions: [],
       errors: {}
     }
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChange = e => {
+    console.log(e.target.name);
+    if (e.target.name === "cpf") {
+      this.setState({cpf: !this.state.cpf});
+    }
+    else {
+      this.setState({[e.target.name]: e.target.value});
+    }
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    console.log('Submitted !');
+    const courseData = {
+      title: this.state.title,
+      punchline: this.state.punchline,
+      desc: this.state.desc,
+      delivery: this.state.delivery,
+      targetedAudience: this.state.targetedAudience,
+      price: this.state.price,
+      cpf: this.state.cpf,
+      time: this.state.time,
+      unit: this.state.unit,
+      title1: this.state.syllabus,
+      targetedLevel: this.state.targetedLevel,
+      categories: this.state.categories,
+      requirements: this.state.requirements,
+      ref: this.state.ref,
+      nextSessions: this.state.nextSessions,
+    };
+
+    this.props.createCourse(courseData, this.props.history);
+  }
+
+  componentDidMount() {
+    this.props.getCourseDashboard();
   }
 
   toggle =() => {
     this.setState({
       modal: !this.state.modal
     });
-  }
-
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      CPF: !this.state.CPF
-    });
-  }
-
-  onSubmit = e => {
-    e.preventDefault();
-    console.log('Submited !');
-  }
-
-  componentDidMount() {
-    this.props.getCourseDashboard();
   }
 
   render() {
@@ -129,7 +161,7 @@ class TCCourses extends Component {
                   <div className="form-group login-form">
                       <br />
                       <label>Titre du parcours</label>
-                      <TextFieldGroup
+                      <InputGroup
                         placeholder="Titre du parcours"
                         name="title"
                         value={this.state.title}
@@ -139,7 +171,7 @@ class TCCourses extends Component {
                       />
 
                       <label>Accroche du parcours</label>
-                      <TextFieldGroup
+                      <InputGroup
                         placeholder="Accroche du parcours"
                         name="punchline"
                         value={this.state.punchline}
@@ -181,7 +213,7 @@ class TCCourses extends Component {
                       />
 
                       <label>Prix</label>
-                      <TextFieldGroup
+                      <InputGroup
                         placeholder="Prix en €"
                         name="price"
                         value={this.state.price}
@@ -192,9 +224,9 @@ class TCCourses extends Component {
                       <div className="form-group">
                         <input
                           className="mr-10"
-                          name={this.state.CPF}
+                          name="cpf"
                           type="checkbox"
-                          value={this.state.CPF}
+                          value={this.state.cpf}
                           onChange={this.onChange}
                         />
                         <label className="form-check-label">
@@ -205,10 +237,10 @@ class TCCourses extends Component {
                       <div className="row">
                         <div className="col-md-6">
                         <label>Temps :</label>
-                          <TextFieldGroup
-                            placeholder="Tepms"
-                            name="duration"
-                            value={this.state.price}
+                          <InputGroup
+                            placeholder="Temps"
+                            name="time"
+                            value={this.state.time}
                             onChange={this.onChange}
                             info="Un nombre"
                           />
@@ -216,9 +248,9 @@ class TCCourses extends Component {
                         <div className="col-md-6">
                           <label>compté en :</label>
                           <SelectListGroup
-                            placeholder="Public"
-                            name="targetedAudience"
-                            value={this.state.duration.of}
+                            placeholder=""
+                            name="unit"
+                            value={this.state.unit}
                             onChange={this.onChange}
                             options={durationOf}
                             error={errors.targetedAudience}
@@ -228,12 +260,12 @@ class TCCourses extends Component {
                       </div>
 
                       <label>Syllabus</label>
-                      <TextFieldGroup
+                      <InputGroup
                         placeholder="Syllabus"
                         name="syllabus"
                         value={this.state.syllabus}
                         onChange={this.onChange}
-                        info="Quel est le Sylabus."
+                        info="Quel est le Syllabus."
                       />
                       <label>Niveau visé</label>
                         <SelectListGroup
@@ -246,7 +278,7 @@ class TCCourses extends Component {
                           info="En heures, jours, mois, années"
                         />
                         <label>Catégories</label>
-                        <TextFieldGroup
+                        <InputGroup
                           placeholder="Catégories"
                           name="categories"
                           value={this.state.categories}
@@ -254,7 +286,7 @@ class TCCourses extends Component {
                           info="Quels sont les catégories ?"
                         />
                         <label>Prérequis</label>
-                        <TextFieldGroup
+                        <InputGroup
                           placeholder="Prérequis"
                           name="requirements"
                           value={this.state.requirements}
@@ -262,7 +294,7 @@ class TCCourses extends Component {
                           info="Quels sont les Prérequis ?"
                         />
                         <label>Référence</label>
-                        <TextFieldGroup
+                        <InputGroup
                           placeholder="Référence"
                           name="ref"
                           value={this.state.ref}
@@ -341,11 +373,14 @@ class TCCourses extends Component {
 
 TCCourses.propTypes = {
   getCourseDashboard: PropTypes.func.isRequired,
-  course: PropTypes.object.isRequired
+  createCourse: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  course: state.course
+  course: state.course,
+  errors: state.errors
 });
 
-export default connect(mapStateToProps, { getCourseDashboard })(TCCourses);
+export default connect(mapStateToProps, { getCourseDashboard, createCourse })(withRouter(TCCourses));
