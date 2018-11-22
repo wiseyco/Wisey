@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavbarLanding from './NavbarLanding';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getLatestCourses } from '../../actions/courseActions';
@@ -45,6 +45,8 @@ class Landing extends Component {
 				key={course._id}
 				id={course._id}
 				title={course.title}
+				desc={course.desc}
+				date={course.nextSessions[0].from}
 				/>
 			))
 		}
@@ -63,7 +65,7 @@ class Landing extends Component {
 							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
 							<br />
 							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
-							<a href="/" className="primary-btn banner-btn">Je trouve ma formation</a>
+							<Link to="/Courses" className="primary-btn banner-btn">Je trouve ma formation</Link>
 						</div>
 					</div>
 				</div>

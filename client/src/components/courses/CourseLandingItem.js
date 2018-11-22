@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
 
 
 
@@ -14,14 +15,14 @@ class CourseLandingItem extends Component {
 							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
 							<div className="top">
 								<div className="mb-15 d-flex">
-								<Link to={`/course/${this.props.id}`}>3 janvier 2018</Link>
+								<Moment format="DD/MM/YYYY">{this.props.date}</Moment>
 									<span className="line">|</span>
-									<Link to={`/course/${this.props.id}`}>Formation Paris</Link>
+									{this.props.location}
 								</div>
 								<h6 className="text-uppercase course-landing-item-title"><Link to={`/course/${this.props.id}`}>{this.props.title}</Link></h6>
 							</div>
 							<div className="course-landing-item-punchline">
-							<p className="mb-30">Le chef de projet multimédia gère et coordonne l’ensemble de la production du produit multimédia autour d’une équipe composée de développeurs, UX designers, webdesigners, webmarketers…</p>
+							<p className="mb-30">{this.props.desc}</p>
 							</div>
 							<Link
 							to={`/course/${this.props.id}`}

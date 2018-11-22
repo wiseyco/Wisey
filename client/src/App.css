@@ -1150,6 +1150,11 @@ color: #e15f41;
   overflow: scroll;
 }
 
+.course-card-desc {
+  height: 60px;
+  overflow: scroll;
+}
+
 .signle-service {
   margin-top: 30px;
 }

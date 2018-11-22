@@ -7,11 +7,15 @@ import Checkbox from './Checkbox';
 
 const availableCourses = [
   'Marketing',
+  'Communication',
   'Management',
-  'Numérique',
-  'Développement',
-  'Stratégie',
-  'Droit'
+  'Organisation',
+  'RH',
+  'Comptabilité',
+  'Finance',
+  'Informatique',
+  'Digital',
+  'Langues'
 ];
 
 class Filter extends Component {
