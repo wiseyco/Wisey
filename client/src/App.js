@@ -24,6 +24,9 @@ import TCProfile from './components/dashboard/TCProfile';
 import TCCourses from './components/dashboard/TCCourses';
 import TCMap from './components/dashboard/TCMap';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
+import ForgotPassword from '../src/components/auth/forgot-password/ForgotPassword';
+import ResetPassword from '../src/components/auth/forgot-password/ResetPassword';
+import EmailSent from '../src/components/auth/forgot-password/EmailSent';
 
 import Profile from './components/profile/Profile';
 
@@ -70,6 +73,9 @@ class App extends Component {
           </Switch>
           <Route exact path="/Courses" component={ Courses } />
           <Route exact path="/course/:id" component={ Course } />
+          <Route exact path="/reset-password" component={ ResetPassword } />
+          <Route exact path="/forgot-password" component={ ForgotPassword } />          
+          <Route exact path="/email-sent" component={ EmailSent } />          
           <Footer />
           </div>
         </Router>

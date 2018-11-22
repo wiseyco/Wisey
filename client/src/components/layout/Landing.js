@@ -65,7 +65,8 @@ class Landing extends Component {
 							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
 							<br />
 							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
-							<Link to="/Courses" className="primary-btn banner-btn">Je trouve ma formation</Link>
+							<Link class="primary-btn banner-btn" to="/courses">Je trouve ma formation</Link>
+
 						</div>
 					</div>
 				</div>

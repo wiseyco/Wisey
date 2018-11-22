@@ -19,6 +19,12 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  reset_password_token: {
+    type: String
+  },
+  reset_password_expires: {
+    type: Date
+  },
   date: {
     type: Date,
     default: Date.now
