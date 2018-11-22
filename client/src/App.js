@@ -54,7 +54,6 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/profile" component={ Profile } />
             </Switch>
-            <Route exact path="/search" component={ Search } />
           </div>
           {/* <Footer /> */}
           <Switch>
