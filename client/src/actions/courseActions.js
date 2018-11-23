@@ -14,7 +14,7 @@ export const getCourseById = (id) => dispatch => {
           payload: res.data
       })
     })
-      
+
       .catch(err =>
           dispatch({
               type: GET_COURSE,
@@ -32,7 +32,7 @@ export const getCourses = (filters) => dispatch => {
         let courses = res.data;
         console.log("courses", courses, "res data", res.data)
 
-        if(filters 
+        if(filters
           // && filters.length > 0
           ){
         courses = courses.filter( c => filters.find( f => c.categories.find( field => field === f ) ) )
@@ -78,34 +78,40 @@ export const getLatestCourses = () => dispatch => {
       type: UPDATE_FILTER,
       payload: filters,
     });
-  
+
   }
 
 // Get the training center's courses fot the training center dashboard @route GET api/courses/dashboard
 
 export const getCourseDashboard = () => dispatch => {
+  console.log("getCourseDashboard to back");
   dispatch(setCourseLoading());
   axios
     .get('api/courses/dashboard')
-    .then(res =>
+    .then(res => {
+      console.log("Got courses", res);
       dispatch({
         type: GET_TRAINING_CENTER_COURSES,
         payload: res.data
       })
+     }
     )
-    .catch(err =>
+    .catch(err => {
+      console.log("Error", err);
       dispatch({
         type: GET_TRAINING_CENTER_COURSES,
         payload: null
-      })
+      })}
     );
  };
- 
+
  // Create Course
  export const createCourse = (courseData, history) => dispatch => {
   axios
     .post('api/courses/create', courseData)
-    .then(res => history.push('/dashboard'))
+    .then(res => {
+      console.log("Creating course", res);
+      history.push('/dashboard')})
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

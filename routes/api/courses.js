@@ -215,6 +215,7 @@ router.post(
         res.status(404).json({ nocoursefound: 'No course found with that ID' })
       );
   });
+
   // @route   POST api/courses/like/:id
   // @desc    Like a course as a user
   // @access  Private
@@ -231,7 +232,7 @@ router.post(
             ) {
               return res
                 .status(400)
-                .json({ alreadyliked: 'User already liked this post' });
+                .json({ alreadyliked: 'User already liked this course' });
             }
             // Add user id to likes array
             course.likes.unshift({ user: req.user.id });
@@ -241,6 +242,7 @@ router.post(
       });
     }
   );
+
   // @route   POST api/courses/unlike/:id
   // @desc    Unlike a course as a user
   // @access  Private
@@ -257,7 +259,7 @@ router.post(
             ) {
               return res
                 .status(400)
-                .json({ notliked: 'You have not yet liked this post' });
+                .json({ notliked: 'You have not yet liked this course' });
             }
             // Get remove index
             const removeIndex = course.likes
@@ -383,7 +385,5 @@ router.post(
       .then(course => res.json(course))
       .catch(err => res.status(404).json({ nocoursefound: 'No courses found' }));
   });
-  
-module.exports = router;
- 
 
+module.exports = router;
