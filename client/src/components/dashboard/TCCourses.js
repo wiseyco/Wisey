@@ -17,7 +17,6 @@ import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
 import Spinner from '../common/Spinner';
-import CourseItem from './CourseItem';
 import { getCourseDashboard } from '../../actions/courseActions';
 import { createCourse } from '../../actions/courseActions';
 
@@ -141,7 +140,25 @@ class TCCourses extends Component {
     } else {
       if (courses.length > 0) {
         courseItems = courses.map(course => (
-          <CourseItem key={course._id} course={course} />
+          <tr>
+            <td>
+              <div className="form-check">
+                <label className="form-check-label">
+                  <input className="form-check-input" type="checkbox" value="" />
+                  <span className="form-check-sign"></span>
+                </label>
+              </div>
+            </td>
+            <td>{course.title}</td>
+            <td className="td-actions text-right">
+              <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+                <i className="fa fa-edit"></i>
+              </button>
+              <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
+                <i className="fa fa-times"></i>
+              </button>
+            </td>
+          </tr>
         ));
       } else {
         courseItems = <h4>Vous n'avez pas encore crée de cours</h4>;
@@ -364,7 +381,7 @@ class TCCourses extends Component {
                           <tbody>
                           {courseItems}
 
-                            </tbody>
+                          </tbody>
                           </table>
                         </div>
                       </div>
