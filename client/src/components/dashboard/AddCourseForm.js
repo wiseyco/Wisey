@@ -292,7 +292,7 @@ class AddCourseForm extends Component {
 
 AddCourseForm.proptypes = {
   errors: PropTypes.object.isRequired,
-  createCourse: PropTypes.func.isRequired,
+  createCourse: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

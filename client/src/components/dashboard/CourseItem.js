@@ -3,7 +3,32 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
+import { deleteCourse } from '../../actions/courseActions';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 class CourseItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    }
+    this.toggle = this.toggle.bind(this);
+    this.delete = this.delete.bind(this);
+  }
+
+  toggle =() => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  delete =() => {
+    console.log("Hello");
+    console.log(this.props.course._id);
+    this.props.deleteCourse(this.props.course._id, this.props.history);
+  }
+
   render() {
     const { course } = this.props;
 
@@ -24,12 +49,12 @@ class CourseItem extends Component {
             </Link>
           </td>
           <td className="td-actions text-right">
-            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+            <Button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
               <i className="fa fa-edit"></i>
-            </button>
-            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
+            </Button>
+            <Button onClick={this.delete} type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
               <i className="fa fa-times"></i>
-            </button>
+            </Button>
           </td>
         </tr>
     );
@@ -37,7 +62,8 @@ class CourseItem extends Component {
 }
 
 CourseItem.propTypes = {
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  deleteCourse: PropTypes.func.isRequired
 };
 
-export default CourseItem;
+export default connect(null, { deleteCourse })(withRouter(CourseItem));

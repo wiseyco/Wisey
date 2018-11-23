@@ -135,6 +135,23 @@ export const getCourseDashboard = () => dispatch => {
     );
  };
 
+ // Delete Course
+ export const deleteCourse = (id, history) => dispatch => {
+   console.log("Delete request to back");
+  axios
+    .delete(`api/courses/delete/${id}`)
+    .then(res => {
+      console.log("Deleted course", res);
+      history.push('/dashboard')})
+    .catch(err => {
+      console.log("Error", err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })}
+    );
+ };
+
   // Course loading
 export const setCourseLoading = () => {
   return {
