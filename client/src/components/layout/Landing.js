@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavbarLanding from './NavbarLanding';
+import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -53,7 +54,7 @@ class Landing extends Component {
     
     return (
 		<div>
-		<NavbarLanding />
+		<Navbar />
         <div>
         {/* // Start Banner Area */}
 		<section className= "banner-area relative">
@@ -93,42 +94,42 @@ class Landing extends Component {
 			<div id="filter-content" className="row no-gutters mt-70">
 				<div className="mix category-1 col-lg-3 col-md-4 col-sm-6 single-filter-content content-1" data-myorder="1">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Developpement</h5>
+						<h5 className="text-white text-uppercase">Marketing</h5>
 					</div>
 				</div>
 				<div className="mix category-1 category-5 category-3 category-5 col-lg-3 col-md-4 col-sm-6 single-filter-content content-2" data-myorder="2">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Business</h5>
+						<h5 className="text-white text-uppercase">Communication</h5>
 					</div>
 				</div>
 				<div className="mix category-1 category-5 col-lg-3 col-md-4 col-sm-6 single-filter-content content-3" data-myorder="3">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Informatique et Logiciels</h5>
+						<h5 className="text-white text-uppercase">Management</h5>
 					</div>
 				</div>
 				<div className="mix category-2 category-3 category-6 col-lg-3 col-md-4 col-sm-6 single-filter-content content-4" data-myorder="4">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Marketing</h5>
+						<h5 className="text-white text-uppercase">Organisation</h5>
 					</div>
 				</div>
 				<div className="mix category-1 category-4 category-5 col-lg-3 col-md-4 col-sm-6 single-filter-content content-5" data-myorder="5">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Numérique</h5>
+						<h5 className="text-white text-uppercase">Ressources Humaines</h5>
 					</div>
 				</div>
 				<div className="mix category-1 category-3 category-5 category-6 col-lg-3 col-md-4 col-sm-6 single-filter-content content-6" data-myorder="6">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Multimédia</h5>
+						<h5 className="text-white text-uppercase">Finance</h5>
 					</div>
 				</div>
 				<div className="mix category-2 category-4 category-3 col-lg-3 col-md-4 col-sm-6 single-filter-content content-7" data-myorder="7">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Developpement Personnel</h5>
+						<h5 className="text-white text-uppercase">Informatique</h5>
 					</div>
 				</div>
 				<div className="mix category-2 category-6 category-5 col-lg-3 col-md-4 col-sm-6 single-filter-content content-8" data-myorder="8">
 					<div className="overlay overlay-bg-content d-flex align-items-center justify-content-center flex-column">
-						<h5 className="text-white text-uppercase">Formation</h5>
+						<h5 className="text-white text-uppercase">Digital</h5>
 					</div>
 				</div>
 			</div>
@@ -146,7 +147,7 @@ class Landing extends Component {
 							<p className="text-white mb-30">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 								</p>
-							<a href="/" className="primary-btn text-white d-inline-flex align-items-center">Proposer une formation <span class="lnr lnr-arrow-right"></span></a>
+							<Link to="/dashboard" className="primary-btn text-white d-inline-flex align-items-center">Proposer une formation <span class="lnr lnr-arrow-right"></span></Link>
 						</div>
 					</div>
 				</div>

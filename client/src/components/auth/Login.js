@@ -71,7 +71,7 @@ class Login extends Component {
     return (
       
       <div>
-        <Button color="danger" onClick={this.toggle}>
+        <Button className="login-btn" color="danger" onClick={this.toggle}>
           Connexion
         </Button>
         <Modal className="reactstrap-modal" isOpen={this.state.modal} toggle={this.toggle}>

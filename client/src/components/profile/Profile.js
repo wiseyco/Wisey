@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { setCurrentUser } from '../../actions/authActions';
+import { updateUser } from '../../actions/authActions';
+
 import isEmpty from '../../validation/isEmpty';
+import TextFieldGroup from '../common/TextFieldGroup';
+
 
 
 class Profile extends Component {
@@ -23,18 +27,13 @@ class Profile extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    componentDidMount () {
-        // this.props.setCurrentUser();
-        console.log("props did mount :", this.props.auth.user.email);
+    componentWillMount () {
+        // this.setCurrentUser();
     }
 
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.errors) {
-            this.setState({errors: nextProps.errors})
-        }
-
-        if (nextProps.auth.user) {
-            const user = nextProps.auth.user;
+    componentDidUpdate (prevProps) {
+        if (this.props.payload !== prevProps.payload) {
+            const user = this.props.payload;
 
             // If user field does not exist, make an empty string
             user.firstName =!isEmpty(user.firstName) ? user.firstName : '';
@@ -49,6 +48,29 @@ class Profile extends Component {
             })
         }
     }
+    
+
+    // componentWillReceiveProps (nextProps) {
+    //     if (nextProps.errors) {
+    //         this.setState({errors: nextProps.errors})
+    //     }
+
+    //     if (nextProps.auth.user) {
+    //         const user = nextProps.auth.user;
+
+    //         // If user field does not exist, make an empty string
+    //         user.firstName =!isEmpty(user.firstName) ? user.firstName : '';
+    //         user.lastName =!isEmpty(user.lastName) ? user.lastName : '';
+    //         user.email =!isEmpty(user.email) ? user.email : '';
+
+    //         // Set component fields state
+    //         this.setState({
+    //             firstName: user.firstName,
+    //             lastName: user.lastName,
+    //             email: user.email,
+    //         })
+    //     }
+    // }
 
     onChange (e) {
         this.setState({
@@ -57,34 +79,160 @@ class Profile extends Component {
     }
 
     onSubmit (e) {
-        console.log(this.props);
         e.preventDefault();
 
-        const updateUser = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-        }
+        const userNewData = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email
+        };
 
-        axios
-        .post('/api/users/update', updateUser)
-        .then(res => this.setState({
-            firstName: res.firstName,
-            lastName: res.lastName,
-            email: res.email,
-        }))
-        .catch(err => this.setState({errors: err.response.data}))
+    this.props.updateUser(userNewData, this.props.history);
+        this.setState({
+            firstName: userNewData.firstName,
+            lastName: userNewData.lastName,
+            email: userNewData.email,
+        })
+  
     }
 
     render () {
+        console.log("render",this.props.payload)
 
-        const { isAuthenticated, user} = this.props.auth;
+        const { isAuthenticated, user} = this.state;
     
     return (
         <div> 
-            <Navbar /> 
-            <section>
-                <div className="container emp-profile">
+            <Header /> 
+            <section className="section">
+
+                 <div className="content">
+                <div className="container-fluid">
+                  <div className="row">
+
+                    <div className="col-md-4">
+                        <div className="card card-user">
+                            <div className="card-image">
+                            <img src="https://magazine.sportihome.com/wp-content/uploads/2018/06/Rando-Lac-montagne.jpg" alt="..." />
+                            </div>
+                            <div className="card-body">
+                            <div className="author">
+                                <a href="">
+                                <img className="avatar border-gray" src="https://oaq.qc.ca/wp-content/uploads/2018/05/profil-avatar-e1525783442424.png" alt="..." />
+                                <h4 className="title">{this.props.auth.user.firstName} {this.props.auth.user.lastName}</h4>
+                                <p>{this.state.email}</p>
+                                </a>
+                                <br />
+                            </div>
+                            <br/>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-8">
+                      <div className="card">
+                        <div className="card-header">
+                          <h3 className="card-title"><strong>Mon Profil</strong></h3>
+                        </div>
+                        <div className="card-body">
+
+                          <form onSubmit={this.onSubmit}>
+
+                            <div className="row">
+                              <div className="col-md-10 pr-1">
+                                <h5>Informations personnelles</h5>
+                                    <label>
+                                    Prénom
+                                    </label>
+                                    <TextFieldGroup 
+                                        // placeholder="Prénom"
+                                        type="firstName"
+                                        name="firstName"
+                                        value={this.state.firstName}
+                                        onChange={this.onChange}
+                                    />
+                                    <label>
+                                    Nom
+                                    </label>
+                                    <TextFieldGroup 
+                                        placeholder="Nom"
+                                        type="lastName"
+                                        name="lastName"
+                                        value={this.state.lastName}
+                                        onChange={this.onChange}
+                                    />
+                                    <label>
+                                    Email
+                                    </label>
+                                    <TextFieldGroup 
+                                        placeholder="Email"
+                                        type="email"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.onChange}
+                                    />
+                              </div>
+                            </div>
+
+                           <div className="row">
+                              <div className="col-md-10 pr-1">
+                                <h5>Informations professionnelles</h5>
+                                    <label>
+                                    
+                                    </label>
+                                    <p>
+                                    
+                                    </p>
+                                </div>
+                                </div>
+                                <hr/>
+                            <div className="text-center">
+                                <input
+                                type="submit"
+                                className="btn btn-primary primary-btn"
+                                value="Enregistrer les modifications"
+                                />
+                            </div>
+
+                          </form>
+
+                        </div>
+
+                        <div className="card-header">
+                          <h3 className="card-title"><strong>Ma Wish List</strong></h3>
+                        </div>
+                        <div className="card-body">
+                            <div className="row profile-wishlist-row">
+                                <div className="col-md-3">
+                                        <img class="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card image cap" />
+                                </div>
+                                <div className="col-md-6">
+                                    <h5>React pour les nuls</h5>
+                                </div>
+                                <div className="col-md-3">
+                                    <button className="primary-btn btn-primary">Voir</button>
+                                </div>
+                                <hr/>
+                            </div>
+                            <div className="row profile-wishlist-row">
+                                <div className="col-md-3">
+                                        <img class="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card image cap" />
+                                </div>
+                                <div className="col-md-6">
+                                    <h5>React pour les mecs solides</h5>
+                                </div>
+                                <div className="col-md-3">
+                                    <button className="primary-btn btn-primary">Voir</button>
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                      </div>
+                    </div>  
+                </div>
+              </div>
+            </div>
+                {/* <div className="container emp-profile">
                     <form method="">
                         <div className="row">
                             <div className="col-md-4">
@@ -262,7 +410,7 @@ class Profile extends Component {
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> */}
             </section>
 
         </div>
@@ -270,8 +418,9 @@ class Profile extends Component {
     }
 }
 
-Navbar.proptypes = {
+Profile.proptypes = {
     setCurrentUser: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
   }
   
@@ -282,4 +431,4 @@ Navbar.proptypes = {
 
 // export default Profile;
 
-export default connect(mapStateToProps, {setCurrentUser})(Profile);
+export default connect(mapStateToProps, {setCurrentUser, updateUser})(Profile);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
@@ -82,7 +82,7 @@ class Courses extends Component {
         
     return (
         <div> 
-            <Navbar />
+            <Header />
 
                 <section className="section profile-section">
                     <div className="content">
@@ -94,7 +94,7 @@ class Courses extends Component {
                         </div>  
                     <div className="row">
                         <div className="col-md-4">
-                            <div className="card card-user text-center">
+                            <div className="card card-user text-center card-filter">
                                 <br />
                                 <h6>Filtres</h6>
                                 <br />
