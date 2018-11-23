@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -7,13 +6,19 @@ import DbNavBar from './common/DbNavBar.js';
 import DbFooter from './common/DbFooter.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { classnames } from 'classnames';
 import { Link } from 'react-router-dom';
 
 import isEmpty from '../../validation/isEmpty';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
+
+import Spinner from '../common/Spinner';
+import { getCourseDashboard } from '../../actions/courseActions';
+import { createCourse } from '../../actions/courseActions';
 
 class TCCourses extends Component {
   constructor(props) {
@@ -25,37 +30,72 @@ class TCCourses extends Component {
       delivery: '',
       targetedAudience: '',
       price: '',
-      CPF: false,
-      duration: {
-        number: '',
-        of: ''
-      },
+      cpf: false,
+      time: '',
+      unit: '',
       syllabus: [],
       targetedLevel: '',
       categories: '',
       requirements: '',
       ref: '',
+      uri: '',
       nextSessions: [],
       errors: {}
     }
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChange = e => {
+    console.log(e.target.name);
+    if (e.target.name === "cpf") {
+      this.setState({cpf: !this.state.cpf});
+    }
+    else {
+      this.setState({[e.target.name]: e.target.value});
+    }
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    console.log('Submitted !');
+    const courseData = {
+      title: this.state.title,
+      punchline: this.state.punchline,
+      desc: this.state.desc,
+      delivery: this.state.delivery,
+      targetedAudience: this.state.targetedAudience,
+      price: this.state.price,
+      cpf: this.state.cpf,
+      time: this.state.time,
+      unit: this.state.unit,
+      title1: this.state.syllabus,
+      targetedLevel: this.state.targetedLevel,
+      categories: this.state.categories,
+      requirements: this.state.requirements,
+      ref: this.state.ref,
+      handle: this.state.uri,
+      nextSessions: this.state.nextSessions,
+    };
+
+    this.props.createCourse(courseData, this.props.history);
+  }
+
+  componentDidMount() {
+    this.props.getCourseDashboard();
   }
 
   toggle =() => {
     this.setState({
       modal: !this.state.modal
     });
-  }
-
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      CPF: !this.state.CPF
-    });
-  }
-
-  onSubmit = e => {
-    e.preventDefault();
-    console.log('Submited !');
   }
 
   render() {
@@ -91,7 +131,40 @@ class TCCourses extends Component {
       { label: 'Bac +5', value: 'bac5' },
       { label: 'Doctorat', value: 'doctorat' },
     ];
-  
+
+    const { courses, loading } = this.props.course;
+    let courseItems;
+
+    if (courses === null || loading) {
+      courseItems = <Spinner />;
+    } else {
+      if (courses.length > 0) {
+        courseItems = courses.map(course => (
+          <tr>
+            <td>
+              <div className="form-check">
+                <label className="form-check-label">
+                  <input className="form-check-input" type="checkbox" value="" />
+                  <span className="form-check-sign"></span>
+                </label>
+              </div>
+            </td>
+            <td>{course.title}</td>
+            <td className="td-actions text-right">
+              <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+                <i className="fa fa-edit"></i>
+              </button>
+              <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
+                <i className="fa fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        ));
+      } else {
+        courseItems = <h4>Vous n'avez pas encore crée de cours</h4>;
+      }
+    }
+
 
     addCourseForm = (
       <div>
@@ -107,17 +180,17 @@ class TCCourses extends Component {
                   <div className="form-group login-form">
                       <br />
                       <label>Titre du parcours</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Titre du parcours"
                         name="title"
                         value={this.state.title}
                         onChange={this.onChange}
-                        error={isEmpty(this.state.title) ? errors.title = 'Le titre est obligatoire' : null}
+                        error={errors.title}
                         info="Quel est le titre du parcours."
                       />
-                      
+
                       <label>Accroche du parcours</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Accroche du parcours"
                         name="punchline"
                         value={this.state.punchline}
@@ -126,7 +199,7 @@ class TCCourses extends Component {
                       />
 
                       <label>Description du parcours</label>
-                      <TextAreaFieldGroup
+                      <TextFieldGroup
                         placeholder="Description"
                         name="desc"
                         value={this.state.desc}
@@ -159,20 +232,21 @@ class TCCourses extends Component {
                       />
 
                       <label>Prix</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Prix en €"
                         name="price"
                         value={this.state.price}
                         onChange={this.onChange}
+                        error={errors.price}
                         info="Quel est le prix de la formation en eruo"
                       />
 
                       <div className="form-group">
                         <input
                           className="mr-10"
-                          name={this.state.CPF}
+                          name="cpf"
                           type="checkbox"
-                          value={this.state.CPF}
+                          value={this.state.cpf}
                           onChange={this.onChange}
                         />
                         <label className="form-check-label">
@@ -183,35 +257,37 @@ class TCCourses extends Component {
                       <div className="row">
                         <div className="col-md-6">
                         <label>Temps :</label>
-                          <TextFieldGroup 
-                            placeholder="Tepms"
-                            name="duration"
-                            value={this.state.price}
+                          <TextFieldGroup
+                            placeholder="Temps"
+                            name="time"
+                            value={this.state.time}
                             onChange={this.onChange}
                             info="Un nombre"
+                            error={errors.time}
                           />
                         </div>
                         <div className="col-md-6">
                           <label>compté en :</label>
                           <SelectListGroup
-                            placeholder="Public"
-                            name="targetedAudience"
-                            value={this.state.duration.of}
+                            placeholder=""
+                            name="unit"
+                            value={this.state.unit}
                             onChange={this.onChange}
                             options={durationOf}
-                            error={errors.targetedAudience}
+                            error={errors.unit}
                             info="En heures, jours, mois, années"
                           />
                         </div>
                       </div>
 
                       <label>Syllabus</label>
-                      <TextFieldGroup 
+                      <TextFieldGroup
                         placeholder="Syllabus"
                         name="syllabus"
                         value={this.state.syllabus}
                         onChange={this.onChange}
-                        info="Quel est le Sylabus."
+                        info="Quel est le Syllabus."
+                        error={errors.syllabus}
                       />
                       <label>Niveau visé</label>
                         <SelectListGroup
@@ -224,34 +300,45 @@ class TCCourses extends Component {
                           info="En heures, jours, mois, années"
                         />
                         <label>Catégories</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Catégories"
                           name="categories"
                           value={this.state.categories}
                           onChange={this.onChange}
+                          error={errors.categories}
                           info="Quels sont les catégories ?"
                         />
                         <label>Prérequis</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Prérequis"
                           name="requirements"
                           value={this.state.requirements}
                           onChange={this.onChange}
+                          error={errors.requirements}
                           info="Quels sont les Prérequis ?"
                         />
                         <label>Référence</label>
-                        <TextFieldGroup 
+                        <TextFieldGroup
                           placeholder="Référence"
                           name="ref"
                           value={this.state.ref}
                           onChange={this.onChange}
+                          error={errors.ref}
                           info="Quelle est la Référence ?"
                         />
-
+                        <label>uri</label>
+                        <TextFieldGroup
+                          placeholder="uri"
+                          name="uri"
+                          value={this.state.uri}
+                          onChange={this.onChange}
+                          error={errors.handle}
+                          info="Quelle uri souhaitez-vous donner au parcours ?"
+                        />
                         <label>NextSession ?</label>
 
                     </div>
-                    
+
                     <button type="submit" className="btn btn-primary primary-btn">
                       Ajouter un parcours
                     </button>
@@ -277,14 +364,14 @@ class TCCourses extends Component {
                     <div className="row">
                       <div className="col-md-9">
                         <div className="card-header ">
-                          <h4 className="card-title">Mes coures</h4>
+                          <h4 className="card-title">Mes cours</h4>
                           <p className="card-category">Ajouter, éditer ou supprimer un cours</p>
                         </div>
                       </div>
                       <div className="col-md-3 btn-group-vertical">
-                            
+
                           {addCourseForm}
-                          
+
 
                       </div>
                     </div>
@@ -292,122 +379,9 @@ class TCCourses extends Component {
                       <div className="table-full-width">
                         <table className="table">
                           <tbody>
-                            <tr>
-                              <td>
-                                <div className="form-check">
-                                  <label className="form-check-label">
-                                    <input className="form-check-input" type="checkbox" value="" />
-                                    <span className="form-check-sign"></span>
-                                  </label>
-                                </div>
-                              </td>
-                              <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept thr /ough metro Detroit
-                                </td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" checked />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Read "Following makes Medium better"</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div className="form-check">
-                                    <label className="form-check-label">
-                                      <input className="form-check-input" type="checkbox" value="" disabled />
-                                      <span className="form-check-sign"></span>
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>Unfollow 5 enemies from twitter</td>
-                                <td className="td-actions text-right">
-                                  <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                    <i className="fa fa-edit"></i>
-                                  </button>
-                                  <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
+                          {courseItems}
+
+                          </tbody>
                           </table>
                         </div>
                       </div>
@@ -429,4 +403,17 @@ class TCCourses extends Component {
   }
 }
 
-export default TCCourses;
+
+TCCourses.propTypes = {
+  getCourseDashboard: PropTypes.func.isRequired,
+  createCourse: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  course: state.course,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { getCourseDashboard, createCourse })(withRouter(TCCourses));

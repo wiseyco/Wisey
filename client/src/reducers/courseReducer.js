@@ -1,4 +1,4 @@
-import { GET_COURSES, GET_COURSE, COURSE_LOADING, GET_LATEST_COURSES } from '../actions/types';
+import { GET_COURSES, GET_COURSE, COURSE_LOADING, GET_LATEST_COURSES, GET_TRAINING_CENTER_COURSES } from '../actions/types';
 
 const initialState = {
     course: null,
@@ -26,6 +26,12 @@ export default function(state = initialState, action) {
             course: action.payload,
             loading: false
         }
+        case GET_TRAINING_CENTER_COURSES:
+        return {
+            ...state,
+            courses: action.payload,
+            loading: false
+            }
         case COURSE_LOADING:
         return {
             ...state,

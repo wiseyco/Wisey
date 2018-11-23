@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_LATEST_COURSES } from './types';
+import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_LATEST_COURSES, GET_TRAINING_CENTER_COURSES, CREATE_COURSE  } from './types';
 
 
 // Get course by id
@@ -80,6 +80,39 @@ export const getLatestCourses = () => dispatch => {
     });
   
   }
+
+// Get the training center's courses fot the training center dashboard @route GET api/courses/dashboard
+
+export const getCourseDashboard = () => dispatch => {
+  dispatch(setCourseLoading());
+  axios
+    .get('api/courses/dashboard')
+    .then(res =>
+      dispatch({
+        type: GET_TRAINING_CENTER_COURSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_TRAINING_CENTER_COURSES,
+        payload: null
+      })
+    );
+ };
+ 
+ // Create Course
+ export const createCourse = (courseData, history) => dispatch => {
+  axios
+    .post('api/courses/create', courseData)
+    .then(res => history.push('/dashboard'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+ };
 
   // Course loading
 export const setCourseLoading = () => {
