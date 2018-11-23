@@ -135,6 +135,7 @@ router.post(
         if (req.body.unit) courseFields.duration.unit = req.body.unit;
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
+        if (req.body.ref) courseFields.ref = req.body.ref;
         // domain - Split into array
         if (typeof req.body.domain !== 'undefined') {
           courseFields.domain = req.body.domain.split(',');

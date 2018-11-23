@@ -14,6 +14,7 @@ import Spinner from '../common/Spinner';
 import { getCourseDashboard } from '../../actions/courseActions';
 
 import AddCourseForm from './AddCourseForm.js';
+import CourseItem from './CourseItem';
 
 class TCCourses extends Component {
 
@@ -49,25 +50,7 @@ class TCCourses extends Component {
     } else {
       if (courses.length > 0) {
         courseItems = courses.map(course => (
-          <tr>
-            <td>
-              <div className="form-check">
-                <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" value="" />
-                  <span className="form-check-sign"></span>
-                </label>
-              </div>
-            </td>
-            <td>{course.title}</td>
-            <td className="td-actions text-right">
-              <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                <i className="fa fa-edit"></i>
-              </button>
-              <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                <i className="fa fa-times"></i>
-              </button>
-            </td>
-          </tr>
+          <CourseItem key={course._id} course={course} />
         ));
       } else {
         courseItems = (
@@ -110,6 +93,7 @@ class TCCourses extends Component {
                         </ModalFooter>
                       </Modal>
                     </div>
+                    </div>
                     <div className="card-body ">
                       <div className="table-full-width">
                         <table className="table">
@@ -126,7 +110,7 @@ class TCCourses extends Component {
                           <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
                         </div>
                       </div>
-                    </div>
+
                   </div>
                 </div>
               </div>

@@ -110,7 +110,22 @@ export const getCourseDashboard = () => dispatch => {
   axios
     .post('api/courses/create', courseData)
     .then(res => {
-      console.log("Creating course", res);
+      console.log("Created course", res);
+      history.push('/dashboard')})
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+ };
+
+ // Update Course
+ export const updateCourse = (courseData, history) => dispatch => {
+  axios
+    .post('api/courses/update', courseData)
+    .then(res => {
+      console.log("Updated course", res);
       history.push('/dashboard')})
     .catch(err =>
       dispatch({
