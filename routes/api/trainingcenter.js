@@ -153,9 +153,9 @@ router.post('/', upload.single('logo'), passport.authenticate('jwt', { session: 
   // cloudinary.v2.uploader.upload(PhotoPath, (error, result) => {
   //   imgUri = result.url; 
 
-  //   const trainingCenterFields = {};
+    const trainingCenterFields = {};
 
-  //   trainingCenterFields.user = req.user.id
+    trainingCenterFields.user = req.user.id
 
     // uri
     // if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName); // Moved below 
