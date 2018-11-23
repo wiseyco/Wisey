@@ -84,7 +84,120 @@ class Profile extends Component {
         <div> 
             <Navbar /> 
             <section>
-                <div className="container emp-profile">
+            <div className="content">
+                <div className="container-fluid">
+                  <div className="row">
+
+                    <div className="col-md-4">
+                      <div className="card card-user">
+                        <div className="card-image">
+                          <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..." />
+                        </div>
+                        <div className="card-body">
+                          <div className="author">
+                            <a href="/tc-profile">
+                              <img className="avatar border-gray" src="http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme.jpg" alt="..." />
+                              <h4 className="title">{this.props.auth.user.firstName} {this.props.auth.user.lastName}</h4>
+                            </a>
+                            <br />
+                          <p className="description">
+                          <span>{loadedCourse.categories}</span>
+                          </p>
+                          <img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <br/>
+                        <p className="description text-center">{loadedCourse.desc}</p>
+                      
+                            <div className="row module-info text-center">
+                                 <div className="col-12">
+                                    <span><Moment format="DD/MM/YYYY">
+                                      {loadedCourse.nextSessions[0].from}
+                                    </Moment></span>
+                                </div>
+                            </div>
+                            <br />
+            
+                            <div className="row module-info text-center">
+                                 <div className="col-12">
+                                    <span>{loadedCourse.price} €</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div className="description text-center">
+                                <p><strong>Prérequis : </strong>
+                                {loadedCourse.requirements}
+                                </p>
+                            </div>
+                      </div>
+                      <div className="button-container mr-auto ml-auto">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                    <div className="col-md-8">
+                      <div className="card">
+                        <div className="card-header">
+                          <h3 className="card-title"><strong>Résumé de la formation</strong></h3>
+                        </div>
+                        <div className="card-body">
+
+                          <form>
+
+                            <div className="row">
+                              <div className="col-md-10 pr-1">
+                                <label>
+                                {loadedCourse.syllabus[0].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[0].desc}
+                                </p>
+                              </div>
+                            </div>
+
+                           <div className="row">
+                              <div className="col-md-10 pr-1">
+                                <label>
+                                {loadedCourse.syllabus[1].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[1].desc}
+                                </p>
+                              </div>
+                            </div>
+
+                           <div className="row">
+                              <div className="col-md-10 pr-1">
+                                <label>
+                                {loadedCourse.syllabus[2].title}
+                                </label>
+                                <p>
+                                {loadedCourse.syllabus[2].desc}
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="submit"
+                              className="btn btn-primary primary-btn"
+                              value="Profil de l'organisme"/>
+
+                            <div className="clearfix"></div>
+
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>  
+                </div>
+              </div>
+            </div>
+
+
+
+
+                {/* <div className="container emp-profile">
                     <form method="">
                         <div className="row">
                             <div className="col-md-4">
@@ -262,7 +375,7 @@ class Profile extends Component {
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> */}
             </section>
 
         </div>
