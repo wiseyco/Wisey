@@ -100,64 +100,18 @@ class Course extends Component {
       );
     }
 
-        
-    
-    return (
-        <div className="module-page"> 
-            <Header />
-            <section className="section module-section">
-            <div className="content">
-                <div className="container-fluid">
-                  <div className="row">
+  return (
+      <div className="module-page"> 
+          <Header />
+          <section className="section module-section">
+          <div className="content">
+              <div className="container-fluid">
+                <div className="row">
 
-                    <div className="col-md-4">
-                      <div className="card card-user">
-                        <div className="card-image">
-                          <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..." />
-                        </div>
-                        <div className="card-body">
-                          <div className="author">
-                            <a href="/tc-profile">
-                              <img className="avatar border-gray" src="https://image.freepik.com/icones-gratuites/logo-de-pomme_318-40184.jpg" alt="..." />
-                              <h6>Pro Formation</h6>
-                              <h4 className="title">{loadedCourse.title}</h4>
-                            </a>
-                            <br />
-                          <p className="description">
-                          <span>{loadedCourse.categories}</span>
-                          </p>
-                          <img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/><img src={star} alt=""/>
-                        </div>
-                        <br/>
-                        <hr/>
-                        <br/>
-                        <p className="description text-center">{loadedCourse.desc}</p>
-                      
-                            <div className="row module-info text-center">
-                                 <div className="col-12">
-                                    <span><Moment format="DD/MM/YYYY">
-                                      {loadedCourse.nextSessions[0].from}
-                                    </Moment></span>
-                                </div>
-                            </div>
-                            <br />
-                            {/* <div className="row module-info text-center">
-                                 <div className="col-12">
-                                    <span>5 jours</span>
-                                </div>
-                            </div>
-                            <br /> */}
-                            <div className="row module-info text-center">
-                                 <div className="col-12">
-                                    <span>{loadedCourse.price} €</span>
-                                </div>
-                            </div>
-                            <br />
-                            <div className="description text-center">
-                                <p><strong>Prérequis : </strong>
-                                {loadedCourse.requirements}
-                                </p>
-                            </div>
+                  <div className="col-md-4">
+                    <div className="card card-user">
+                      <div className="card-image">
+                        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..." />
                       </div>
                       <div className="card-body">
                         <div className="author">
