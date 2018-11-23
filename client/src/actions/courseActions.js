@@ -30,8 +30,6 @@ export const getCourses = (filters) => dispatch => {
       .get('/api/courses')
       .then(res => {
         let courses = res.data;
-        console.log("courses", courses, "res data", res.data)
-
         if(filters 
           // && filters.length > 0
           ){
@@ -119,4 +117,87 @@ export const setCourseLoading = () => {
   return {
       type: COURSE_LOADING
   }
+};
+
+// Cards case
+// Add to wishList
+export const addToWishList = id => dispatch => {
+  console.log('id :', id);
+  axios
+    .post(`/api/courses/like/${id}`)
+    // Reload the post after like
+    .then(res => dispatch(getAllCourses()))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Cards case
+// Romove from wishList
+export const removeFromWishList = id => dispatch => {
+  axios
+    .post(`/api/courses/unlike/${id}`)
+    // Reload the post after unlike
+    .then(res => dispatch(getAllCourses()))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// One course case
+// Add to wishList
+export const addToWishListOne = id => dispatch => {
+  console.log('id :', id);
+  axios
+    .post(`/api/courses/like/${id}`)
+    // Reload the post after like
+    .then(res => dispatch(getCourseById(id)))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// One course case
+// Romove from wishList
+export const removeFromWishListOne = id => dispatch => {
+  axios
+    .post(`/api/courses/unlike/${id}`)
+    // Reload the post after unlike
+    .then(res => dispatch(getCourseById(id)))
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Get all courses
+// Use for the Add or Remove Wishlist
+export const getAllCourses = () => dispatch => {
+  dispatch(setCourseLoading());
+  axios
+    .get('/api/courses')
+    .then(res => {
+      dispatch({
+        type: GET_COURSES,
+        payload: res.data
+      })}
+    )
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    }
+  );
 };

@@ -132,17 +132,17 @@ router.get('/:uri', (req, res) => {
 // @access  Private
 router.post('/', upload.single('logo'), passport.authenticate('jwt', { session: false }), (req, res) => {
   // Are inputs valid?
+
+  console.log('req.body :', req.body);
   const { errors, isValid } = validateTrainingCenterInput(req.body);
 
   if(!isValid) {
+    console.log('errors :', errors);
     return res.status(400).json(errors);
   }
-  console.log('req.body :', req.body);
-  
-  console.log('object 3:', req.file);
 
   // Save logo into path variable
-  let imgUri;
+  // let imgUri;
   
   // if(req.file !== undefined) {
   //   PhotoPath = req.file.path;
@@ -160,7 +160,7 @@ router.post('/', upload.single('logo'), passport.authenticate('jwt', { session: 
     // uri
     // if(req.body.companyName) trainingCenterFields.uri = slugify(req.body.companyName); // Moved below 
     if(req.body.companyName) trainingCenterFields.companyName = req.body.companyName;
-    if(imgUri) trainingCenterFields.logo = imgUri;
+    // if(imgUri) trainingCenterFields.logo = imgUri;
     if(req.body.desc) trainingCenterFields.desc = req.body.desc;
     if(req.body.certification) trainingCenterFields.certification = req.body.certification;
     if(req.body.expertise) trainingCenterFields.expertise = req.body.expertise;

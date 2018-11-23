@@ -41,6 +41,14 @@ const courseSchema = new Schema({
      type: String
    }
  },
+ likes: [
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
+    }
+  }
+],
  syllabus: [
    {
      title: {

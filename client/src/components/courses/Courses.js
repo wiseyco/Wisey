@@ -51,6 +51,14 @@ class Courses extends Component {
 
         const { loadedCourse } = this.state;
         let courseCards;
+        
+        // const didLike = e => {
+        //     if (e.filter(like => like.user.toString() === this.props.auth.user.id)) {
+        //         return true
+        //     } else 
+        //     return false
+
+        // }
 
             if (loadedCourse) {
                 courseCards = loadedCourse.map(course => (
@@ -112,15 +120,16 @@ class Courses extends Component {
 Courses.propTypes = {
     getCourses: PropTypes.func.isRequired,
     course: PropTypes.array.isRequired,
-    filters: PropTypes.array.isRequired
+    filters: PropTypes.array.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     course: state.course,
     filters: state.filters.items,
+    auth: state.auth
 })
 
 export default connect (mapStateToProps,
     { getCourses }
-    )
-    (Courses);
+    )(Courses);

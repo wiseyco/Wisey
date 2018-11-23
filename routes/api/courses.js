@@ -237,7 +237,10 @@ router.post(
             course.likes.unshift({ user: req.user.id });
             course.save().then(course => res.json(course));
           })
-          .catch(err => res.status(404).json({ coursenotfound: 'No course found' }));
+          .catch(err => {
+            console.log('err :', err);
+            res.status(404).json({ coursenotfound: 'No course found' })
+          });
       });
     }
   );
