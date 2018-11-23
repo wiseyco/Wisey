@@ -86,12 +86,12 @@ class TCCourses extends Component {
                           <ModalHeader toggle={this.toggle}>
                             Ajouter un cours
                           </ModalHeader>
-                            <ModalBody >
-                              <AddCourseForm />
-                            </ModalBody>
-                            <ModalFooter>
-                        </ModalFooter>
-                      </Modal>
+                          <ModalBody >
+                            <AddCourseForm />
+                          </ModalBody>
+                          <ModalFooter>
+                          </ModalFooter>
+                        </Modal>
                     </div>
                     </div>
                     <div className="card-body ">

@@ -13,9 +13,9 @@ import { withRouter } from 'react-router-dom';
 
 import { updateCourse } from '../../actions/courseActions';
 
-class AddCourseForm extends Component {
+class EditCourseForm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       title: '',
       punchline: '',
@@ -40,11 +40,51 @@ class AddCourseForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
+  componentWillMount() {
+
+      const course = this.props.course;
+      console.log("Hello edit course");
+      console.log(course);
+
+      // Bring categories array back to CSV
+      const categoriesCSV = course.categories.join(',');
+
+      // If course field doesnt exist, make empty string
+      course.title = !isEmpty(course.title) ? course.title : '';
+      course.punchline = !isEmpty(course.punchline) ? course.punchline : '';
+      course.desc = !isEmpty(course.desc) ? course.desc : '';
+      course.delivery = !isEmpty(course.delivery) ? course.delivery : '';
+      course.targetedAudience = !isEmpty(course.targetedAudience) ? course.targetedAudience : '';
+      course.price = !isEmpty(course.price) ? course.price : '';
+      course.cpf = !isEmpty(course.cpf) ? course.cpf : '';
+      course.time = !isEmpty(course.duration.time) ? course.duration.time : '';
+      course.unit = !isEmpty(course.duration.unit) ? course.duration.unit : '';
+      course.syllabus = !isEmpty(course.syllabus) ? course.syllabus[0].title : '';
+      course.targetedLevel = !isEmpty(course.targetedLevel) ? course.targetedLevel : '';
+      course.requirements = !isEmpty(course.requirements) ? course.requirements : '';
+      course.ref = !isEmpty(course.ref) ? course.ref : '';
+      course.uri = !isEmpty(course.uri) ? course.uri : '';
+
+      // Set component fields state
+      this.setState({
+        title: course.title,
+        punchline: course.punchline,
+        desc: course.desc,
+        delivery: course.delivery,
+        targetedAudience: course.targetedAudience,
+        price: course.price,
+        cpf: course.cpf,
+        time: course.time,
+        unit: course.unit,
+        syllabus: course.syllabus,
+        targetedLevel: course.targetedLevel,
+        categories: categoriesCSV,
+        requirements: course.requirements,
+        ref: course.ref,
+        uri: course.uri
+      });
   }
+
 
   onChange = e => {
     console.log(e.target.name);
@@ -282,7 +322,7 @@ class AddCourseForm extends Component {
                   </div>
 
                   <button type="submit" className="btn btn-primary primary-btn">
-                    Ajouter un parcours
+                    Modifier le parcours
                   </button>
                 </form>
     </div>
@@ -290,13 +330,13 @@ class AddCourseForm extends Component {
  }
 }
 
-AddCourseForm.proptypes = {
+EditCourseForm.proptypes = {
   errors: PropTypes.object.isRequired,
-  createCourse: PropTypes.func.isRequired,
+  updateCourse: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, { updateCourse })(withRouter(AddCourseForm));
+export default connect(mapStateToProps, { updateCourse })(withRouter(EditCourseForm));

@@ -87,7 +87,7 @@ export const getCourseDashboard = () => dispatch => {
   console.log("getCourseDashboard to back");
   dispatch(setCourseLoading());
   axios
-    .get('api/courses/dashboard')
+    .get('/api/courses/dashboard')
     .then(res => {
       console.log("Got courses", res);
       dispatch({
@@ -108,7 +108,7 @@ export const getCourseDashboard = () => dispatch => {
  // Create Course
  export const createCourse = (courseData, history) => dispatch => {
   axios
-    .post('api/courses/create', courseData)
+    .post('/api/courses/create', courseData)
     .then(res => {
       console.log("Created course", res);
       history.push('/dashboard')})
@@ -122,16 +122,18 @@ export const getCourseDashboard = () => dispatch => {
 
  // Update Course
  export const updateCourse = (courseData, history) => dispatch => {
+   console.log("Update request to back");
   axios
-    .post('api/courses/update', courseData)
+    .post('/api/courses/update', courseData)
     .then(res => {
       console.log("Updated course", res);
       history.push('/dashboard')})
-    .catch(err =>
+    .catch(err => {
+      console.log("Error", err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
+      })}
     );
  };
 
@@ -139,7 +141,7 @@ export const getCourseDashboard = () => dispatch => {
  export const deleteCourse = (id, history) => dispatch => {
    console.log("Delete request to back");
   axios
-    .delete(`api/courses/delete/${id}`)
+    .delete(`/api/courses/delete/${id}`)
     .then(res => {
       console.log("Deleted course", res);
       history.push('/dashboard')})

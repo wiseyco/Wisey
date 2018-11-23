@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { deleteCourse } from '../../actions/courseActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import EditCourseForm from './EditCourseForm.js';
 
 class CourseItem extends Component {
   constructor(props) {
@@ -49,9 +51,19 @@ class CourseItem extends Component {
             </Link>
           </td>
           <td className="td-actions text-right">
-            <Button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+            <Button onClick={this.toggle} type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
               <i className="fa fa-edit"></i>
             </Button>
+            <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}>
+              <ModalHeader toggle={this.toggle}>
+                Modifier un cours
+              </ModalHeader>
+              <ModalBody >
+                <EditCourseForm course={course} />
+              </ModalBody>
+              <ModalFooter>
+              </ModalFooter>
+            </Modal>
             <Button onClick={this.delete} type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
               <i className="fa fa-times"></i>
             </Button>

@@ -15,7 +15,7 @@ import { createCourse } from '../../actions/courseActions';
 
 class AddCourseForm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       title: '',
       punchline: '',
