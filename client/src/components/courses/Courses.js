@@ -86,7 +86,7 @@ class Courses extends Component {
                         </div>  
                     <div className="row">
                         <div className="col-md-4">
-                            <div className="card card-user text-center">
+                            <div className="card card-user text-center card-filter">
                                 <br />
                                 <h6>Filtres</h6>
                                 <br />

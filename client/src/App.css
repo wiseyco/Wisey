@@ -93,6 +93,10 @@ a, a:focus, a:hover {
   padding: 60px;
 }
 
+.card-filter {
+  
+}
+
 /**
  *  Typography
  *
@@ -2129,7 +2133,10 @@ footer .footer-nav li a:hover {
 
 /* START PROFILE-2 */
 
-
+.profile-wishlist-row {
+  align-items: center;
+  margin-bottom: 20px;
+}
 
 .emp-profile{
   padding: 3%;
