@@ -1935,7 +1935,7 @@ footer .footer-nav li a:hover {
 /* START SECOND NAVBAR */
 
 .second-navbar {
-  background-color: #f1f2f6 !important;
+  background: none !important;
   color: black !important;
 }
 
