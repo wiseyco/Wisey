@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 import Spinner from '../common/Spinner';
 import { getCourseById } from '../../actions/courseActions';
 // import calendar from '../../img/icons/calendar.png';
@@ -51,7 +51,7 @@ class Course extends Component {
     
     return (
         <div className="module-page"> 
-            <Navbar />
+            <Header />
             <section className="section module-section">
             <div className="content">
                 <div className="container-fluid">

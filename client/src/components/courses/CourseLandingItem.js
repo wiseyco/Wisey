@@ -24,6 +24,7 @@ class CourseLandingItem extends Component {
 							<div className="course-landing-item-punchline">
 							<p className="mb-30">{this.props.desc}</p>
 							</div>
+							<br/>
 							<Link
 							to={`/course/${this.props.id}`}
 							className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><i class="fas fa-arrow-right"></i></Link>

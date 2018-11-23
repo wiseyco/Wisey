@@ -4,10 +4,39 @@ import Login from '../auth/Login';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { clearCurrentTrainingCenter } from '../../actions/tcActions';
+import DarkLogo from '../../assets/img/wiseyco/logos/dark-logo.png';
+
 import { logoutUser } from '../../actions/authActions';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    Button,
+    DropdownItem } from 'reactstrap';
 
 
-class Navbar extends Component {
+class Header extends Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+          isOpen: false
+        };
+      }
+      toggle() {
+        this.setState({
+          isOpen: !this.state.isOpen
+        });
+      }
 
 
     onLogoutClick (e) {
@@ -21,53 +50,51 @@ class Navbar extends Component {
         const { isAuthenticated, user} = this.props.auth;
 
         const authLinks = (
-            <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link>
-                </li>
-                <li class="nav-item active">
-                    <Link class="nav-link" to="/profile">Profil <span class="sr-only">(current)</span></Link>
-                </li>
-                <li class="nav-link">
-                <Link to="/" onClick={this.onLogoutClick.bind(this)}>
-                     {/* <img style={{width: '25px', marginRight: '5px'}} src={user.avatar} alt={user.name} title="You must have a Gravatar connecter to your email to display an image" /> */}
-                     {' '}
-                        Logout
-                </Link>
-                </li>
-            </ul>
 
-        </div>
+            <Nav className="ml-auto" navbar>
+                <NavItem>
+                    <NavLink><Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link></NavLink>
+                </NavItem>
+                <NavItem>
+                <Link class="nav-link" to="/profile">Profil <span class="sr-only">(current)</span></Link>
+                </NavItem>
+                <NavItem>
+                    <NavLink><Link class="nav-link" to="/dashboard">Accès Pro<span class="sr-only">(current)</span></Link></NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink>
+                    <Link to="/" onClick={this.onLogoutClick.bind(this)}>Logout</Link>
+                    </NavLink>
+                </NavItem>
+            </Nav>
         )
 
         const guestLinks = (
-            <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link>
-                </li>
-                <li class="nav-item">
-                    <Login/>
-                </li>
-            </ul>
-
-        </div>
+            <Nav className="ml-auto" navbar>
+                <NavItem>
+                    <NavLink><Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link></NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink><Link class="nav-link" to="/dashboard">Accès Pro<span class="sr-only">(current)</span></Link></NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink><Login/></NavLink>
+                </NavItem>
+            </Nav>
+    
             )
 
     return (
-        <div> 
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
-            <Link to="/"><img style={{width: '150px'}} src="/logo_title.png" /></Link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        {isAuthenticated ? authLinks : guestLinks}
-        </nav>
-
-        </div>
-    )
+            <div>
+                <Navbar className="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
+                    <Link to="/"><NavbarBrand><img style={{width: '150px'}} src={DarkLogo} /></NavbarBrand></Link>
+                        <NavbarToggler onClick={this.toggle} style={{color: 'black'}} />
+                            <Collapse isOpen={this.state.isOpen} style={{color: 'black'}} navbar> 
+                                {isAuthenticated ? authLinks : guestLinks}
+                        </Collapse>
+                </Navbar>
+            </div>
+        )
     }
 }
 Navbar.proptypes = {
@@ -80,4 +107,4 @@ Navbar.proptypes = {
     auth: state.auth
   })
   
-  export default connect(mapStateToProps, {logoutUser, clearCurrentTrainingCenter })(Navbar);
+  export default connect(mapStateToProps, {logoutUser, clearCurrentTrainingCenter })(Header);

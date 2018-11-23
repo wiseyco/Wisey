@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
@@ -72,7 +72,7 @@ class Register extends Component {
 
     return (
         <div>
-            <Navbar />
+            <Header />
     <section className="profile-section">
         <div className="container">
             <div className="row">

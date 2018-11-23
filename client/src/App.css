@@ -1147,8 +1147,12 @@ color: #e15f41;
 }
 
 .course-landing-item-punchline {
-  height: 150px;
+  height: 120px;
   overflow: scroll;
+}
+
+.course-landing-item-punchline p {
+  font-size: 15px;
 }
 
 .course-card-desc {
@@ -1290,35 +1294,35 @@ color: #e15f41;
 }
 
 .single-filter-content.content-1 {
-  background: url(img/multimedia.jpeg) no-repeat center center/cover;
+  background: url('https://www.msimage.fr/wp-content/uploads/2015/11/MARCHAND-DE-TAPIS.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-2 {
-  background: url(img/marketing.jpeg) no-repeat center center/cover;
+  background: url('http://lieuxdits.free.fr/haddock3.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-3 {
-  background: url(img/coding.jpeg) no-repeat center center/cover;
+  background: url('https://i.eurosport.com/2012/11/19/913529-19885020-2560-1440.jpg?w=1050') no-repeat center center/cover;
 }
 
 .single-filter-content.content-4 {
-  background: url(img/multimedia.jpeg) no-repeat center center/cover;
+  background: url('http://ekladata.com/_PoqFMAKzDlByIZ-S-_PHmUmPQ0.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-5 {
-  background: url(img/coding.jpeg) no-repeat center center/cover;
+  background: url('https://taskandpurpose.com/wp-content/uploads/2014/07/AP87010113385.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-6 {
-  background: url(img/multimedia.jpeg) no-repeat center center/cover;
+  background: url('https://exploringyourmind.com/wp-content/uploads/2018/08/man-with-money-e1533514707611.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-7 {
-  background: url(img/marketing.jpeg) no-repeat center center/cover;
+  background: url('https://www.superprof.fr/blog/file/2017/08/geek-programmation-informatique-700x381.jpg') no-repeat center center/cover;
 }
 
 .single-filter-content.content-8 {
-  background: url(img/coding.jpeg) no-repeat center center/cover;
+  background: url('http://www.museedesconfluences.fr/sites/default/files/styles/ressources_notice/public/Medias/Ressources/dchft7197_01.jpg?itok=1bna8giW') no-repeat center center/cover;
 }
 
 .single-member {
@@ -1931,7 +1935,8 @@ footer .footer-nav li a:hover {
 /* START SECOND NAVBAR */
 
 .second-navbar {
-  background-color: #303952 !important;
+  background-color: #f1f2f6 !important;
+  color: black !important;
 }
 
 .navbar .navbar-expand-md .navbar-dark .fixed-top .bg-dark .second-navbar {
@@ -1995,6 +2000,17 @@ footer .footer-nav li a:hover {
 .login-form {
   font-size: 16px;
 } */
+
+.login-btn {
+  background: none;
+  color: #c44569;
+}
+
+.login-btn:hover {
+  color: #fff;;
+  border: 1px solid #fff;
+  background: #303952;
+}
 
 .forgot-password {
   display: -ms-flexbox;
@@ -2328,7 +2344,7 @@ footer .footer-nav li a:hover {
       .filters-available-size label:hover input ~ .checkmark {
         border: 1px solid #1b1a20; }
       .filters-available-size label input:checked ~ .checkmark {
-        background-color: #786fa6;
+        background-color: #e15f41;
         color: black; }
       .filters-available-size label input:checked ~ .checkmark:after {
         display: block; }
@@ -2341,7 +2357,7 @@ footer .footer-nav li a:hover {
         /* background-color: #303952; */
         /* top: 0;
         left: 0; */
-        background-color: #e15f41;
+        background: #596275;
         color: #fff;
         line-height: 40px;
         padding: 0 20px;

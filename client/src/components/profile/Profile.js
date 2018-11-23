@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -103,7 +103,7 @@ class Profile extends Component {
     
     return (
         <div> 
-            <Navbar /> 
+            <Header /> 
             <section className="section">
 
                  <div className="content">

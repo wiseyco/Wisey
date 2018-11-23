@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../layout/Navbar';
+import Header from '../layout/Navbar';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
@@ -74,7 +74,7 @@ class Courses extends Component {
         
     return (
         <div> 
-            <Navbar />
+            <Header />
 
                 <section className="section profile-section">
                     <div className="content">
