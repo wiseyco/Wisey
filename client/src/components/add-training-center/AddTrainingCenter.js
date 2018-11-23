@@ -110,7 +110,7 @@ class AddTrainingCenter extends Component {
 
       inputTab = (
         <div>
-          <h3>Compte professionnel</h3>
+          <h3>Général</h3>
           <p>ETAPE 1</p>
 
           <TextFieldGroup 
@@ -208,40 +208,6 @@ class AddTrainingCenter extends Component {
             info="Dites nous combien de participants vous avez formé l'année dernière (2017)."
           />
 
-          <h5>Liens externes</h5>
-
-          <TextFieldGroup 
-            placeholder="Site internet"
-            name="website"
-            value={this.state.website}
-            onChange={this.onChange}
-            error={errors.website}
-          />
-
-          <TextFieldGroup 
-            placeholder="Compte Linkedin"
-            name="linkedin"
-            value={this.state.linkedin}
-            onChange={this.onChange}
-            error={errors.linkedin}
-          />
-
-          <TextFieldGroup 
-            placeholder="Compte Twitter"
-            name="twitter"
-            value={this.state.twitter}
-            onChange={this.onChange}
-            error={errors.twitter}
-          />
-
-          <TextFieldGroup 
-            placeholder="Compte Youtube"
-            name="youtube"
-            value={this.state.youtube}
-            onChange={this.onChange}
-            error={errors.youtube}
-          />
-
           <div class="form-group submit-btn-pro">
             <button
               type="button"
@@ -283,20 +249,55 @@ class AddTrainingCenter extends Component {
 
       inputTab= (
         <div>
-          <h3>Compte professionnel</h3>
+          <h3>Social</h3>
           <p>ETAPE 3</p>
-          <h5>Télécharger des photos</h5>
+          {/* <h5>Télécharger des photos</h5> */}
 
-          <div class="form-group input-group mb-3">
+          {/* <div class="form-group input-group mb-3"> */}
             {/* <div class="custom-file form-control-lg">
               <input type="file" name="logo" placeholder="Logo" class="custom-file-input " />
               <label class="custom-file-label" aria-describedby="inputGroupFileAddon02">Importez votre logo</label>
             </div> */}
-            <div class="form-group">
+            {/* <div class="form-group">
               <label for="exampleFormControlFile1">Example file input</label>
               <input type="file" name="logo" class="form-control-file" id="exampleFormControlFile1" />
             </div>
-          </div>
+          </div> */}
+
+          <h5>Liens externes</h5>
+
+          <TextFieldGroup 
+            placeholder="Site internet"
+            name="website"
+            value={this.state.website}
+            onChange={this.onChange}
+            error={errors.website}
+          />
+
+          <TextFieldGroup 
+            placeholder="Compte Linkedin"
+            name="linkedin"
+            value={this.state.linkedin}
+            onChange={this.onChange}
+            error={errors.linkedin}
+          />
+
+          <TextFieldGroup 
+            placeholder="Compte Twitter"
+            name="twitter"
+            value={this.state.twitter}
+            onChange={this.onChange}
+            error={errors.twitter}
+          />
+
+          <TextFieldGroup 
+            placeholder="Compte Youtube"
+            name="youtube"
+            value={this.state.youtube}
+            onChange={this.onChange}
+            error={errors.youtube}
+          />
+
 
             <div class="form-group submit-btn-pro">
           <button
