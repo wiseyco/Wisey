@@ -14,7 +14,8 @@ class Courses extends Component {
         super(props);
         this.state = {
             loadedCourse: [],
-            loading: false
+            loading: false,
+            filters: null
         }
     }
 
@@ -24,7 +25,22 @@ class Courses extends Component {
         this.handleGetCourses(filters);
       }
     
-      componentWillReceiveProps(nextProps) {
+    //   componentWillReceiveProps(nextProps) {
+
+    //     const { filters: nextFilters } = nextProps;
+
+    //     if(nextProps.course.course) {
+    //         const loadedCourse = nextProps.course.course;
+    //         this.setState({loadedCourse: loadedCourse})       
+    //     }
+            
+    //     if (nextFilters !== this.props.filters) {
+    //       this.handleGetCourses(nextFilters);
+    //     }
+    //   }
+
+
+    componentWillReceiveProps(nextProps) {
 
         const { filters: nextFilters } = nextProps;
 
@@ -35,8 +51,17 @@ class Courses extends Component {
             
         if (nextFilters !== this.props.filters) {
           this.handleGetCourses(nextFilters);
+
+          if(Object.keys(nextFilters).length === 0) {
+            const loadedCourse = nextProps.course.course;
+            this.handleGetCourses(nextFilters);
+              this.setState({
+                loadedCourse
+              })
+          }
         }
       }
+
     
       handleGetCourses = (filters = this.props.filters) => {
         this.setState({ loading: true });

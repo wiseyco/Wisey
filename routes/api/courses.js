@@ -282,7 +282,6 @@ router.post(
     '/dashboard',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-      console.log("Hello1");
       //Get TrainingCenter ID
       TrainingCenter.findOne({ user: req.user.id })
         .then(trainingCenter => {
@@ -300,7 +299,6 @@ router.post(
     '/wishlist',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log("Hello1");
     //Get list of courses with the user's id in their like table
         Course.find({ likes: { $elemMatch: { user: req.user.id } }})
           .sort({ date: -1 })

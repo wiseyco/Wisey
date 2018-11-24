@@ -29,11 +29,9 @@ export const getCourses = (filters) => dispatch => {
       .get('/api/courses')
       .then(res => {
         let courses = res.data;
-        if(filters 
-          // && filters.length > 0
-          ){
+        if(filters  && filters.length > 0){
         courses = courses.filter( c => filters.find( f => c.categories.find( field => field === f ) ) )
-      }
+        } 
 
       // if(!!callback) {
       //   callback();
@@ -197,3 +195,21 @@ export const getAllCourses = () => dispatch => {
     }
   );
 };
+
+export const getWishedCourses = () => dispatch => {
+  dispatch(setCourseLoading());
+  axios
+    .get('/api/courses/wishlist')
+    .then(res => 
+      dispatch({
+        type: GET_COURSES,
+        payload: res.data
+      })
+    )
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })  
+    )
+}

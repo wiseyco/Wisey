@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { setCurrentUser } from '../../actions/authActions';
-import { updateUser } from '../../actions/authActions';
+import { setCurrentUser, updateUser } from '../../actions/authActions';
+import { getWishedCourses } from '../../actions/courseActions';
 
 import isEmpty from '../../validation/isEmpty';
 import TextFieldGroup from '../common/TextFieldGroup';
+import ProfileWishies from './ProfileWishes';
+import Spinner from '../common/Spinner';
 
 
 
@@ -21,14 +23,16 @@ class Profile extends Component {
             firstName: this.props.auth.user.firstName,
             lastName: this.props.auth.user.lastName,
             email: this.props.auth.user.email,
+            wishedCourses: [],
             errors: {}
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    componentWillMount () {
+    componentDidMount() {
         // this.setCurrentUser();
+        this.props.getWishedCourses();
     }
 
     componentDidUpdate (prevProps) {
@@ -48,7 +52,17 @@ class Profile extends Component {
             })
         }
     }
-    
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.course.course) {
+
+            const wishedCourses = nextProps.course.course
+
+            this.setState({
+                wishedCourses: wishedCourses
+            })
+        }
+    }
 
     // componentWillReceiveProps (nextProps) {
     //     if (nextProps.errors) {
@@ -93,16 +107,45 @@ class Profile extends Component {
             lastName: userNewData.lastName,
             email: userNewData.email,
         })
-  
+
     }
 
     render () {
 
         // const { isAuthenticated, user} = this.state;
-    
+        const { loading } = this.props.course;
+        const course = this.state.wishedCourses;
+
+        let myWishes;
+
+        if(loading) {
+            
+            myWishes= (
+                <div className="center">
+                    <Spinner />
+                </div>
+
+            );
+        } else {
+
+            if(course.length > 0){
+                
+                myWishes = course.map((oneCourse, i) => (
+                    <ProfileWishies {...oneCourse} key={i}/>
+                ))
+            } else {
+                myWishes= (
+                    <div className="mt-30 mb-30 flex-column flex-middle flex-cell">
+                        <h4>Il n'y a rien dans votre wishlist</h4>
+                        <Link className="btn btn-primary primary-btn" to="/courses">Trouver des cours</Link>
+                    </div>
+                );
+            }
+        }
+
     return (
-        <div> 
-            <Header /> 
+        <div>
+            <Header />
             <section className="section">
 
                  <div className="content">
@@ -143,7 +186,7 @@ class Profile extends Component {
                                     <label>
                                     Prénom
                                     </label>
-                                    <TextFieldGroup 
+                                    <TextFieldGroup
                                         // placeholder="Prénom"
                                         type="firstName"
                                         name="firstName"
@@ -153,7 +196,7 @@ class Profile extends Component {
                                     <label>
                                     Nom
                                     </label>
-                                    <TextFieldGroup 
+                                    <TextFieldGroup
                                         placeholder="Nom"
                                         type="lastName"
                                         name="lastName"
@@ -163,7 +206,7 @@ class Profile extends Component {
                                     <label>
                                     Email
                                     </label>
-                                    <TextFieldGroup 
+                                    <TextFieldGroup
                                         placeholder="Email"
                                         type="email"
                                         name="email"
@@ -177,10 +220,10 @@ class Profile extends Component {
                               <div className="col-md-10 pr-1">
                                 <h5>Informations professionnelles</h5>
                                     <label>
-                                    
+
                                     </label>
                                     <p>
-                                    
+
                                     </p>
                                 </div>
                                 </div>
@@ -201,7 +244,9 @@ class Profile extends Component {
                           <h3 className="card-title"><strong>Ma Wish List</strong></h3>
                         </div>
                         <div className="card-body">
-                            <div className="row profile-wishlist-row">
+
+                            {myWishes}
+                            {/* <div className="row profile-wishlist-row">
                                 <div className="col-md-3">
                                         <img className="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card cap1" />
                                 </div>
@@ -224,10 +269,10 @@ class Profile extends Component {
                                     <button className="primary-btn btn-primary">Voir</button>
                                 </div>
                                 <hr/>
-                            </div>
+                            </div> */}
                         </div>
                       </div>
-                    </div>  
+                    </div>
                 </div>
               </div>
             </div>
@@ -263,7 +308,7 @@ class Profile extends Component {
                                             <a className="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                                 aria-controls="profile" aria-selected="true">Profil</a>
                                         </li>
-                                    
+
                                     </ul>
                                 </div>
                             </div>
@@ -421,13 +466,15 @@ Profile.proptypes = {
     setCurrentUser: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    getWishedCourses: PropTypes.func
   }
-  
+
   const mapStateToProps = (state) => ({
     auth: state.auth,
-    payload: state.payload
+    payload: state.payload,
+    course: state.course
   })
 
 // export default Profile;
 
-export default connect(mapStateToProps, {setCurrentUser, updateUser})(Profile);
+export default connect(mapStateToProps, {setCurrentUser, updateUser, getWishedCourses})(Profile);
