@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../layout/Navbar';
 import Spinner from '../common/Spinner';
@@ -34,7 +33,7 @@ class Course extends Component {
 
   componentWillReceiveProps(nextProps) {
 
-    const { course, loading } = nextProps;
+    const { course } = nextProps;
     
     if(course.course) {
       const loadedCourse = course.course;
@@ -66,7 +65,6 @@ class Course extends Component {
   }
 
   onDislikeClick = id => {
-    console.log('id :', id);
     this.props.removeFromWishListOne(id);
     this.setState({
       isLiked: !this.state.isLiked
@@ -76,9 +74,7 @@ class Course extends Component {
   render () {
 
     const { loadedCourse, loading} = this.state;
-    console.log('course ID:', loadedCourse._id);
-    console.log('Course Object :', this.props.course);
-
+    
     if (loading) {
       return (<Spinner />);
     }

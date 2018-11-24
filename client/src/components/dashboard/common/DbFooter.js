@@ -1,36 +1,37 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class DbFooter extends Component {
   render() {
     return (
-      <footer class="footer">
-        <div class="container">
+      <footer className="footer">
+        <div className="container">
           <nav>
-            <ul class="footer-menu">
+            <ul className="footer-menu">
               <li>
-                <a href="#">
-                    Home
-                </a>
+                <Link to="/">
+                    Acceuil du site
+                </Link>
               </li>
               <li>
-                <a href="#">
-                    Company
-                </a>
+                <Link to="/courses">
+                    Formation
+                </Link>
               </li>
               <li>
-                <a href="#">
-                    Portfolio
-                </a>
+                <Link to="/profile">
+                    Mon profile
+                </Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="/">
                     Blog
-                </a>
+                </Link>
               </li>
           </ul>
-          <p class="copyright text-center">
+          <p className="copyright text-center">
             &copy; {new Date().getFullYear()} 
-            <a href="http://www.wisey.co"> Wisey.co</a>, made with love for a world
+            <Link to="http://www.wisey.co"> Wisey.co</Link>, made with love for a world
             </p>
           </nav>
         </div>

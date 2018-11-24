@@ -7,13 +7,8 @@ import DbFooter from './common/DbFooter.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { classnames } from 'classnames';
-import { Link } from 'react-router-dom';
 
-import isEmpty from '../../validation/isEmpty';
 import TextFieldGroup from '../common/TextFieldGroup';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
 import Spinner from '../common/Spinner';
@@ -22,7 +17,7 @@ import { createCourse } from '../../actions/courseActions';
 
 class TCCourses extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       title: '',
       punchline: '',
@@ -136,29 +131,39 @@ class TCCourses extends Component {
     let courseItems;
 
     if (courses === null || loading) {
-      courseItems = <Spinner />;
-    } else {
-      if (courses.length > 0) {
-        courseItems = courses.map(course => (
+      courseItems = (
+        <tbody>
           <tr>
             <td>
-              <div className="form-check">
-                <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" value="" />
-                  <span className="form-check-sign"></span>
-                </label>
-              </div>
-            </td>
-            <td>{course.title}</td>
-            <td className="td-actions text-right">
-              <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                <i className="fa fa-edit"></i>
-              </button>
-              <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                <i className="fa fa-times"></i>
-              </button>
+              <Spinner />
             </td>
           </tr>
+        </tbody>
+      );
+    } else {
+      if (courses.length > 0) {
+        courseItems = courses.map((course, i) => (
+          <tbody key={i}>
+            <tr>
+              <td>
+                <div className="form-check">
+                  <label className="form-check-label">
+                    <input className="form-check-input" type="checkbox" value="" />
+                    <span className="form-check-sign"></span>
+                  </label>
+                </div>
+              </td>
+              <td>{course.title}</td>
+              <td className="td-actions text-right">
+                <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+                  <i className="fa fa-edit"></i>
+                </button>
+                <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
+                  <i className="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
         ));
       } else {
         courseItems = <h4>Vous n'avez pas encore crée de cours</h4>;
@@ -378,17 +383,16 @@ class TCCourses extends Component {
                     <div className="card-body ">
                       <div className="table-full-width">
                         <table className="table">
-                          <tbody>
+                          
                           {courseItems}
 
-                          </tbody>
                           </table>
                         </div>
                       </div>
                       <div className="card-footer ">
                         <hr />
                         <div className="stats">
-                          <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                          <i className="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
                         </div>
                       </div>
                     </div>

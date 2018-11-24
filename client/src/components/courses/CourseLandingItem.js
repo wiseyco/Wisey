@@ -8,7 +8,7 @@ import Moment from 'react-moment';
 class CourseLandingItem extends Component {
 
     render() {
-		const { course } = this.props;
+		// const { course } = this.props;
         return (
                 <div className="col-lg-3 col-md-6">
 						<div className="single-publish">
@@ -27,7 +27,7 @@ class CourseLandingItem extends Component {
 							<br/>
 							<Link
 							to={`/course/${this.props.id}`}
-							className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><i class="fas fa-arrow-right"></i></Link>
+							className="details-btn d-flex justify-content-center align-items-center"><span className="details">Details</span><i className="fas fa-arrow-right"></i></Link>
 						</div>
 					</div>
         )
@@ -35,7 +35,7 @@ class CourseLandingItem extends Component {
 }
 
 CourseLandingItem.propTypes = {
-	course: PropTypes.object.isRequired
+	course: PropTypes.object
   };
   
   export default CourseLandingItem;

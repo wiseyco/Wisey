@@ -3,7 +3,7 @@ import Header from '../layout/Navbar';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { setCurrentUser } from '../../actions/authActions';
 import { updateUser } from '../../actions/authActions';
@@ -97,9 +97,8 @@ class Profile extends Component {
     }
 
     render () {
-        console.log("render",this.props.payload)
 
-        const { isAuthenticated, user} = this.state;
+        // const { isAuthenticated, user} = this.state;
     
     return (
         <div> 
@@ -117,11 +116,11 @@ class Profile extends Component {
                             </div>
                             <div className="card-body">
                             <div className="author">
-                                <a href="">
+                                <Link to="/">
                                 <img className="avatar border-gray" src="https://oaq.qc.ca/wp-content/uploads/2018/05/profil-avatar-e1525783442424.png" alt="..." />
                                 <h4 className="title">{this.props.auth.user.firstName} {this.props.auth.user.lastName}</h4>
                                 <p>{this.state.email}</p>
-                                </a>
+                                </Link>
                                 <br />
                             </div>
                             <br/>
@@ -204,7 +203,7 @@ class Profile extends Component {
                         <div className="card-body">
                             <div className="row profile-wishlist-row">
                                 <div className="col-md-3">
-                                        <img class="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card image cap" />
+                                        <img className="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card cap1" />
                                 </div>
                                 <div className="col-md-6">
                                     <h5>React pour les nuls</h5>
@@ -216,7 +215,7 @@ class Profile extends Component {
                             </div>
                             <div className="row profile-wishlist-row">
                                 <div className="col-md-3">
-                                        <img class="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card image cap" />
+                                        <img className="card-img-top" src="http://eticeo.com/wp-content/uploads/2016/11/SERVICE-FORMATION-2-1030x617.jpg" alt="Card cap" />
                                 </div>
                                 <div className="col-md-6">
                                     <h5>React pour les mecs solides</h5>

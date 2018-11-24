@@ -38,8 +38,8 @@ TextFieldGroup.propTypes = {
   error: PropTypes.string,
   info: PropTypes.string,
   type: PropTypes.string.isRequired,
-  onChange: PropTypes.string.isRequired,
-  disabled: PropTypes.string
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.func
 };
 
 TextFieldGroup.defaultProps = {

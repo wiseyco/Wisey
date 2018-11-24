@@ -9,13 +9,12 @@ export const getCurrentTrainingCenter = () => dispatch => {
   
   axios
     .get('/api/tc')
-    .then(res => {
-      console.log('res :', res);
+    .then(res => 
       dispatch({
         type: GET_TRAINING_CENTER,
         payload: res.data
       })
-    })
+    )
     .catch(err => 
       dispatch({
         type: GET_TRAINING_CENTER,
@@ -29,12 +28,12 @@ export const getProfileByHandle = uri => dispatch => {
   dispatch(setTrainingCenterLoading());
   axios
     .get(`/api/tc/${uri}`)
-    .then(res => {
+    .then(res =>
       dispatch({
         type: GET_TRAINING_CENTER,
         payload: res.data
       })
-    })
+    )
     .catch(err =>
       dispatch({
         type: GET_TRAINING_CENTER,
@@ -49,7 +48,6 @@ export const createTrainingCenter = (trainingCenterData, history) => dispatch =>
     .then(res => history.push('/dashboard'))
     // .then(res => console.log('res :', res))
     .catch(err => {
-      console.log('err :', err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from '../layout/Navbar';
-import axios from 'axios';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -119,8 +118,8 @@ class Courses extends Component {
 
 Courses.propTypes = {
     getCourses: PropTypes.func.isRequired,
-    course: PropTypes.array.isRequired,
-    filters: PropTypes.array.isRequired,
+    course: PropTypes.object.isRequired,
+    filters: PropTypes.array,
     auth: PropTypes.object.isRequired
 }
 

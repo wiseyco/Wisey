@@ -39,10 +39,10 @@ const SelectListGroup = ({
 
 SelectListGroup.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   error: PropTypes.string,
   info: PropTypes.string,
-  onChange: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired
 };
 

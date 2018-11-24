@@ -55,7 +55,6 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        console.log(userData);
         this.props.loginUser(userData);
     }
 
@@ -80,7 +79,7 @@ class Login extends Component {
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group login-form">
                       <br />
-                      <label for="exampleInputEmail1">Email</label>
+                      <label>Email</label>
                       <input 
                         type="email"
                         name="email"
@@ -94,7 +93,7 @@ class Login extends Component {
                       {errors.email && (<div className ="invalid-feedback">{errors.email}</div>)}
                     </div>
                     <div className="form-group login-form">
-                      <label for="exampleInputPassword1">Mot de passe</label>
+                      <label>Mot de passe</label>
                       <input 
                         type="password"
                         name="password"

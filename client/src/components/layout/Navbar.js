@@ -11,15 +11,9 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    Button,
-    DropdownItem } from 'reactstrap';
+    } from 'reactstrap';
 
 
 class Header extends Component {
@@ -47,24 +41,22 @@ class Header extends Component {
 
     render () {
     
-        const { isAuthenticated, user} = this.props.auth;
+        const { isAuthenticated } = this.props.auth;
 
         const authLinks = (
 
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <NavLink><Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link></NavLink>
+                    <Link className="nav-link" to="/courses">Formations <span className="sr-only">(current)</span></Link>
                 </NavItem>
                 <NavItem>
-                <Link class="nav-link" to="/profile">Profil <span class="sr-only">(current)</span></Link>
+                <Link className="nav-link" to="/profile">Profil <span className="sr-only">(current)</span></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink><Link class="nav-link" to="/dashboard">Accès Pro<span class="sr-only">(current)</span></Link></NavLink>
+                   <Link className="nav-link" to="/dashboard">Accès Pro<span className="sr-only">(current)</span></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink>
                     <Link to="/" onClick={this.onLogoutClick.bind(this)}>Logout</Link>
-                    </NavLink>
                 </NavItem>
             </Nav>
         )
@@ -72,13 +64,13 @@ class Header extends Component {
         const guestLinks = (
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <NavLink><Link class="nav-link" to="/courses">Formations <span class="sr-only">(current)</span></Link></NavLink>
+                    <Link className="nav-link" to="/courses">Formations <span className="sr-only">(current)</span></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink><Link class="nav-link" to="/dashboard">Accès Pro<span class="sr-only">(current)</span></Link></NavLink>
+                    <Link className="nav-link" to="/dashboard">Accès Pro<span className="sr-only">(current)</span></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink><Login/></NavLink>
+                    <Login/>
                 </NavItem>
             </Nav>
     
@@ -87,7 +79,7 @@ class Header extends Component {
     return (
             <div>
                 <Navbar className="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
-                    <Link to="/"><NavbarBrand><img style={{width: '150px'}} src={DarkLogo} /></NavbarBrand></Link>
+                    <Link to="/"><img style={{width: '150px', marginTop: '10px', marginBottom: '10px'}} src={DarkLogo} alt="Wisey logo"/></Link>
                         <NavbarToggler onClick={this.toggle} style={{color: 'black'}} />
                             <Collapse isOpen={this.state.isOpen} style={{color: 'black'}} navbar> 
                                 {isAuthenticated ? authLinks : guestLinks}

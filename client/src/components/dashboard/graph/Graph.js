@@ -105,7 +105,7 @@ class Graph extends Component {
                                         <td>
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" checked />
+                                                    <input className="form-check-input" type="checkbox" value="" />
                                                     <span className="form-check-sign"></span>
                                                 </label>
                                             </div>
@@ -124,7 +124,7 @@ class Graph extends Component {
                                         <td>
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" checked />
+                                                    <input className="form-check-input" type="checkbox" value="" />
                                                     <span className="form-check-sign"></span>
                                                 </label>
                                             </div>
@@ -144,7 +144,7 @@ class Graph extends Component {
                                         <td>
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" checked />
+                                                    <input className="form-check-input" type="checkbox" />
                                                     <span className="form-check-sign"></span>
                                                 </label>
                                             </div>
@@ -204,7 +204,7 @@ class Graph extends Component {
                     <div className="card-footer ">
                         <hr />
                         <div className="stats">
-                            <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                            <i className="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
                         </div>
                     </div>
                 </div>

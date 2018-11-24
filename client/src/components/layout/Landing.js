@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavbarLanding from './NavbarLanding';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,35 +10,36 @@ import CourseLandingItem from '../courses/CourseLandingItem';
 class Landing extends Component {
 
 	constructor(props) {
-        super(props);
-        this.state = {
-            loadedCourse: [],
-            loading: false
-        }
+		super(props);
+		this.state = {
+				loadedCourse: [],
+				loading: false
+		}
 	}
 
 	componentWillMount() {    
 		this.props.getLatestCourses();
-		console.log(this.props)
-	  }
+	}
+		
 	componentWillReceiveProps(nextProps) {
         
-    	const { course, loading } = nextProps;
+		// const { course, loading } = nextProps;
 
-        	if(nextProps.course.course) {
-            	const loadedCourse = nextProps.course.course;
-            	this.setState({loadedCourse: loadedCourse})       
-			}
+		if(nextProps.course.course) {
+			const loadedCourse = nextProps.course.course;
+			this.setState({loadedCourse: loadedCourse})       
 		}
+	}
 	
     render() {
 
 		const { loadedCourse, loading} = this.state;
 		let courseLandingItem;
-		console.log("STATE RENDER", this.state)
-        if (loadedCourse === null || loading) {
-            return (<Spinner />);
-		  }
+
+		if (loadedCourse === null || loading) {
+      return (<Spinner />);
+		}
+
 		else {
 			courseLandingItem = loadedCourse.map(course => (
 				<CourseLandingItem
@@ -66,7 +66,7 @@ class Landing extends Component {
 							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
 							<br />
 							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
-							<Link class="primary-btn banner-btn" to="/courses">Je trouve ma formation</Link>
+							<Link className="primary-btn banner-btn" to="/courses">Je trouve ma formation</Link>
 
 						</div>
 					</div>
@@ -147,7 +147,7 @@ class Landing extends Component {
 							<p className="text-white mb-30">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 								</p>
-							<Link to="/dashboard" className="primary-btn text-white d-inline-flex align-items-center">Proposer une formation <span class="lnr lnr-arrow-right"></span></Link>
+							<Link to="/dashboard" className="primary-btn text-white d-inline-flex align-items-center">Proposer une formation <span className="lnr lnr-arrow-right"></span></Link>
 						</div>
 					</div>
 				</div>
@@ -163,7 +163,7 @@ class Landing extends Component {
 
 Landing.propTypes = {
     getLatestCourses: PropTypes.func.isRequired,
-    course: PropTypes.array.isRequired,
+    course: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -171,6 +171,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect (mapStateToProps,
-    { getLatestCourses }
-    )
-    (Landing);
+  { getLatestCourses }
+)(Landing);

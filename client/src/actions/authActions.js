@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-import { GET_ERRORS, SET_CURRENT_USER, UPDATE_USER } from './types';
+import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
 
 // Register User
@@ -10,7 +10,6 @@ export const registerUser = (userData) => dispatch => {
   axios
     .post('/api/users/register', userData)
     .then(res => {
-        console.log("on est dans le THEN", res)
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
@@ -35,7 +34,6 @@ export const loginUser = (userData) => dispatch => {
   axios
     .post('/api/users/login', userData)
     .then(res => {
-        console.log("on est dans le THEN", res)
       // Save to localStorage
       const { token } = res.data;
       // Set token to ls
@@ -77,15 +75,13 @@ export const logoutUser = () => dispatch => {
 export const updateUser = (userData, history) => dispatch => {
   axios
     .post('api/users/update', userData)
-    .then(res => 
-      {
-        console.log("res", res)
+    .then(res => {
       dispatch({
         type: SET_CURRENT_USER,
         payload: res.data
       })
       history.push('/profile')
-      })
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

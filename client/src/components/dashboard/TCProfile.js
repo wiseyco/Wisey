@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentTrainingCenter, createTrainingCenter } from '../../actions/tcActions';
 import isEmpty from '../../validation/isEmpty';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -147,7 +147,7 @@ class TCProfile extends Component {
                                   onChange={this.onChange}
                                   error={errors.companyName}
                                   info="* Personnalisez votre url"
-                                  disabled="true"
+                                  disabled={true}
                                 />  
                               </div>
                             </div>
@@ -306,10 +306,11 @@ class TCProfile extends Component {
                         </div>
                         <div className="card-body">
                           <div className="author">
-                            <a to={this.onClickLogo}>
+                            <Link to="/dashboard">
+                            {/* {this.onClickLogo} */}
                               <img className="avatar border-gray" src={this.state.logo} alt="..." />
                               <h5 className="title">{this.state.companyName}</h5>
-                            </a>
+                            </Link>
                           <p className="description">
                               {this.state.website}
                           </p>
@@ -320,15 +321,15 @@ class TCProfile extends Component {
                       </div>
                       <hr />
                       <div className="button-container mr-auto ml-auto">
-                        <a href={this.state.linkedin} className="btn btn-simple btn-link btn-icon">
-                          <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href={this.state.twitter} className="btn btn-simple btn-link btn-icon">
+                        <Link to={this.state.linkedin} className="btn btn-simple btn-link btn-icon">
+                          <i className="fab fa-linkedin-in"></i>
+                        </Link>
+                        <Link to={this.state.twitter} className="btn btn-simple btn-link btn-icon">
                           <i className="fab fa-twitter"></i>
-                        </a>
-                        <a href={this.state.youtube} className="btn btn-simple btn-link btn-icon">
+                        </Link>
+                        <Link to={this.state.youtube} className="btn btn-simple btn-link btn-icon">
                           <i className="fab fa-youtube"></i>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

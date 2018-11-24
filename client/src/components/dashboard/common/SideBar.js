@@ -60,7 +60,7 @@ class SideBar extends Component {
                 </li> */}
                 <li className="active-pro">
                     <div className="nav-link text-center" href="upgrade.html">
-                      <p>Wisey ❤️ you</p>
+                      <p>Wisey ❤ you</p>
                     </div>
                 </li>
             </ul>

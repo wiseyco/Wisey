@@ -3,7 +3,7 @@ import TextFieldGroup from '../../common/TextFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from '../../layout/Navbar';
-import { Link, withRouter} from 'react-router-dom';
+import {  withRouter} from 'react-router-dom';
 import { userForgotPassword } from '../../../actions/authActions';
 
 class ForgotPassword extends Component {

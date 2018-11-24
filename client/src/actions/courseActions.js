@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_LATEST_COURSES, GET_TRAINING_CENTER_COURSES, CREATE_COURSE  } from './types';
+import { GET_COURSES, GET_ERRORS, COURSE_LOADING, UPDATE_FILTER, GET_COURSE, GET_LATEST_COURSES, GET_TRAINING_CENTER_COURSES  } from './types';
 
 
 // Get course by id
@@ -8,7 +8,6 @@ export const getCourseById = (id) => dispatch => {
   // dispatch(setProfileLoading());
   axios.get(`/api/courses/get/${id}`)
   .then(res => {
-    console.log("res après axios", res);
       dispatch({
           type: GET_COURSE,
           payload: res.data
@@ -56,13 +55,12 @@ export const getCourses = (filters) => dispatch => {
 export const getLatestCourses = () => dispatch => {
   // dispatch(setProfileLoading());
   axios.get("/api/courses/latest")
-  .then(res => {
-    console.log("res latest courses", res);
+  .then(res => 
       dispatch({
           type: GET_LATEST_COURSES,
           payload: res.data
       })
-    })
+    )
     .catch(err =>
       dispatch({
           type: GET_ERRORS,
@@ -122,7 +120,6 @@ export const setCourseLoading = () => {
 // Cards case
 // Add to wishList
 export const addToWishList = id => dispatch => {
-  console.log('id :', id);
   axios
     .post(`/api/courses/like/${id}`)
     // Reload the post after like
@@ -153,7 +150,6 @@ export const removeFromWishList = id => dispatch => {
 // One course case
 // Add to wishList
 export const addToWishListOne = id => dispatch => {
-  console.log('id :', id);
   axios
     .post(`/api/courses/like/${id}`)
     // Reload the post after like

@@ -21,13 +21,26 @@ class Dashboard extends Component {
 
   render() {
 
-    const { user } = this.props.auth;
+    // const { user } = this.props.auth;
     const { trainingCenter, loading } = this.props.trainingCenter;
 
     let dashboardContent;
 
     if(trainingCenter === null || loading) {
-      dashboardContent = <Spinner />;
+      dashboardContent = (
+        
+        <div className="wrapper">
+            <SideBar />
+            <div className="main-panel">
+              <DbNavBar/>
+            <div className="content">
+                <Spinner />
+              </div>
+            <DbFooter />
+            </div>
+          </div>
+        
+      );
 
     } else {
 
@@ -66,7 +79,7 @@ class Dashboard extends Component {
                       <h1 className="text-uppercase">Faites décoller votre activité.</h1>
                       <br />
                       <p className="text-uppercase ">Inscrivez gratuitement votre centre de formation et référencez votre entreprise et vos parcours.</p>
-                      <Link to="/add-training-center" clasclassNamesName="primary-btn banner-btn text-dark">
+                      <Link to="/add-training-center" className="primary-btn banner-btn text-dark">
                         Je suis professionnel de la formation
                       </Link>
                     </div>
