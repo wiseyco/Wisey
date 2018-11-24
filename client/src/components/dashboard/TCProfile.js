@@ -4,9 +4,10 @@ import DbNavBar from './common/DbNavBar.js';
 import DbFooter from './common/DbFooter.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentTrainingCenter, createTrainingCenter } from '../../actions/tcActions';
+import { getCurrentTrainingCenter, createTrainingCenter, updateTrainingCenter } from '../../actions/tcActions';
 import isEmpty from '../../validation/isEmpty';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/img/uploads/lacapsule.png'
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -36,7 +37,7 @@ class TCProfile extends Component {
   }
 
   componentWillReceiveProps = nextProps =>  {
-
+    
     if(nextProps.trainingCenter.trainingCenter) {
 
       const trainingCenter = nextProps.trainingCenter.trainingCenter;
@@ -93,8 +94,8 @@ class TCProfile extends Component {
       youtube: this.state.youtube,
     }
 
-    this.props.createTrainingCenter(trainingCenterData, this.props.history)
-    
+    this.props.updateTrainingCenter(trainingCenterData, this.props.history)
+
   }
 
   onChange = e => {
@@ -308,7 +309,7 @@ class TCProfile extends Component {
                           <div className="author">
                             <Link to="/dashboard">
                             {/* {this.onClickLogo} */}
-                              <img className="avatar border-gray" src={this.state.logo} alt="..." />
+                              <img className="avatar border-gray" src={logo} alt="..." />
                               <h5 className="title">{this.state.companyName}</h5>
                             </Link>
                           <p className="description">
@@ -349,7 +350,8 @@ TCProfile.propTypes = {
   trainingCenter: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   getCurrentTrainingCenter: PropTypes.func.isRequired,
-  createTrainingCenter: PropTypes.func.isRequired
+  createTrainingCenter: PropTypes.func.isRequired,
+  updateTrainingCenter: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -360,5 +362,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentTrainingCenter, createTrainingCenter }
+  { getCurrentTrainingCenter, createTrainingCenter, updateTrainingCenter }
 )(TCProfile);
