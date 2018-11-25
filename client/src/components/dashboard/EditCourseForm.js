@@ -63,7 +63,7 @@ class EditCourseForm extends Component {
       course.targetedLevel = !isEmpty(course.targetedLevel) ? course.targetedLevel : '';
       course.requirements = !isEmpty(course.requirements) ? course.requirements : '';
       course.ref = !isEmpty(course.ref) ? course.ref : '';
-      course.uri = !isEmpty(course.uri) ? course.uri : '';
+      course.uri = !isEmpty(course.handle) ? course.handle : '';
 
       // Set component fields state
       this.setState({
