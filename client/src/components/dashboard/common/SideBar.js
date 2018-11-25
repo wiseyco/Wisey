@@ -24,7 +24,7 @@ class SideBar extends Component {
             </li>
             <li>
               <NavLink className="nav-link" to="/tc-courses">
-              <i class="fas fa-list-ol"></i>
+              <i className="fas fa-list-ol"></i>
                 <p>Mes parcours</p>
               </NavLink>
             </li>
