@@ -47,7 +47,7 @@ router.post(
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
         if (req.body.ref) courseFields.ref = req.body.ref;
-        // domain (categories) - Split into array
+        // categories (categories) - Split into array
         if (typeof req.body.categories !== 'undefined') {
           courseFields.categories = req.body.categories.split(',');
         }
@@ -136,9 +136,9 @@ router.post(
         if (req.body.targetedLevel) courseFields.targetedLevel = req.body.targetedLevel;
         if (req.body.requirements) courseFields.requirements = req.body.requirements;
         if (req.body.ref) courseFields.ref = req.body.ref;
-        // domain - Split into array
-        if (typeof req.body.domain !== 'undefined') {
-          courseFields.domain = req.body.domain.split(',');
+        // categories - Split into array
+        if (typeof req.body.categories !== 'undefined') {
+          courseFields.categories = req.body.categories.split(',');
         }
         // Syllabus
         courseFields.syllabus = [];

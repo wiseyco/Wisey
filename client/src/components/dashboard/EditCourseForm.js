@@ -63,7 +63,8 @@ class EditCourseForm extends Component {
       course.targetedLevel = !isEmpty(course.targetedLevel) ? course.targetedLevel : '';
       course.requirements = !isEmpty(course.requirements) ? course.requirements : '';
       course.ref = !isEmpty(course.ref) ? course.ref : '';
-      course.uri = !isEmpty(course.uri) ? course.uri : '';
+      course.uri = !isEmpty(course.handle) ? course.handle : '';
+
 
       // Set component fields state
       this.setState({
@@ -114,7 +115,7 @@ class EditCourseForm extends Component {
       requirements: this.state.requirements,
       ref: this.state.ref,
       handle: this.state.uri,
-      nextSessions: this.state.nextSessions,
+      nextSessions: this.state.nextSessions
     };
     console.log('Submitting !');
     console.log(courseData);
@@ -228,6 +229,7 @@ class EditCourseForm extends Component {
                         className="mr-10"
                         name="cpf"
                         type="checkbox"
+                        defaultChecked={this.state.cpf}
                         value={this.state.cpf}
                         onChange={this.onChange}
                       />
@@ -307,6 +309,7 @@ class EditCourseForm extends Component {
                         onChange={this.onChange}
                         error={errors.ref}
                         info="Quelle est la Référence ?"
+                        disabled={true}
                       />
                       <label>uri</label>
                       <TextFieldGroup

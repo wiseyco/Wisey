@@ -31,7 +31,7 @@ export const getCourses = (filters) => dispatch => {
         let courses = res.data;
         if(filters  && filters.length > 0){
         courses = courses.filter( c => filters.find( f => c.categories.find( field => field === f ) ) )
-        } 
+        }
 
       // if(!!callback) {
       //   callback();
@@ -53,7 +53,7 @@ export const getCourses = (filters) => dispatch => {
 export const getLatestCourses = () => dispatch => {
   // dispatch(setProfileLoading());
   axios.get("/api/courses/latest")
-  .then(res => 
+  .then(res =>
       dispatch({
           type: GET_LATEST_COURSES,
           payload: res.data
@@ -123,7 +123,7 @@ export const getCourseDashboard = () => dispatch => {
       console.log("Updated course", res);
       history.push('/dashboard')})
     .catch(err => {
-      console.log("Error", err);
+      console.log("Error follows:", err.response);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -162,7 +162,7 @@ export const addToWishList = id => dispatch => {
     .post(`/api/courses/like/${id}`)
     // Reload the post after like
     .then(res => dispatch(getAllCourses()))
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -177,7 +177,7 @@ export const removeFromWishList = id => dispatch => {
     .post(`/api/courses/unlike/${id}`)
     // Reload the post after unlike
     .then(res => dispatch(getAllCourses()))
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -192,7 +192,7 @@ export const addToWishListOne = id => dispatch => {
     .post(`/api/courses/like/${id}`)
     // Reload the post after like
     .then(res => dispatch(getCourseById(id)))
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -207,7 +207,7 @@ export const removeFromWishListOne = id => dispatch => {
     .post(`/api/courses/unlike/${id}`)
     // Reload the post after unlike
     .then(res => dispatch(getCourseById(id)))
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -240,16 +240,16 @@ export const getWishedCourses = () => dispatch => {
   dispatch(setCourseLoading());
   axios
     .get('/api/courses/wishlist')
-    .then(res => 
+    .then(res =>
       dispatch({
         type: GET_COURSES,
         payload: res.data
       })
     )
-    .catch(err => 
+    .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })  
+      })
     )
 }
