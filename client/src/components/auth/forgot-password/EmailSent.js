@@ -14,7 +14,7 @@ import Navbar from '../../layout/Navbar';
               <div>
                 <h2>Un email vous a été envoyé !</h2>
                 <Link to="/">
-                  <h5 className="btn-link">Retourner à l'acceuil</h5>
+                  <h5 className="btn-link">Retourner à l'accueil</h5>
                 </Link>
               </div>
             </div>

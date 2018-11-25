@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { deleteCourse } from '../../actions/courseActions';
 import { connect } from 'react-redux';
@@ -9,20 +9,27 @@ import { withRouter } from 'react-router-dom';
 
 import EditCourseForm from './EditCourseForm.js';
 
+import 'antd/dist/antd.css';
+import { Modal, Button, Radio } from 'antd';
+
 class CourseItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      modal1Visible: false,
+      modal2Visible: false,
     }
-    this.toggle = this.toggle.bind(this);
+    // this.toggle = this.toggle.bind(this);
     this.delete = this.delete.bind(this);
   }
 
-  toggle =() => {
-    this.setState({
-      modal: !this.state.modal
-    });
+  setModal1Visible(modal1Visible) {
+    this.setState({ modal1Visible });
+  }
+
+  setModal2Visible(modal2Visible) {
+    this.setState({ modal2Visible });
   }
 
   delete =() => {
@@ -46,23 +53,31 @@ class CourseItem extends Component {
           </td>
           <td>{course.title}</td>
           <td>
-            <Link to={`/course/${course._id}`} className="btn btn-info">
-              Voir Cours
+            <Link to={`/course/${course._id}`}>
+              <Button>Voir Cours</Button>
             </Link>
           </td>
           <td className="td-actions text-right">
-            <Button onClick={this.toggle} type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
+            {/* <Button onClick={this.toggle} type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
               <i className="fa fa-edit"></i>
-            </Button>
-            <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}>
-              <ModalHeader toggle={this.toggle}>
+            </Button> */}
+            <Radio.Button value="small" onClick={() => this.setModal1Visible(true)}>Editer</Radio.Button>
+            <Modal
+                            title="Editer le cours"
+                            style={{ top: 20 }}
+                            visible={this.state.modal1Visible}
+                            onOk={() => this.setModal1Visible(false)}
+                            onCancel={() => this.setModal1Visible(false)}
+                        >
+            {/* <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}> */}
+              {/* <ModalHeader toggle={this.toggle}>
                 Modifier un cours
               </ModalHeader>
-              <ModalBody >
+              <ModalBody > */}
                 <EditCourseForm course={course} />
-              </ModalBody>
+              {/* </ModalBody>
               <ModalFooter>
-              </ModalFooter>
+              </ModalFooter> */}
             </Modal>
             <Button onClick={this.delete} type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
               <i className="fa fa-times"></i>

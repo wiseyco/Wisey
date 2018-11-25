@@ -12,7 +12,7 @@ class CourseLandingItem extends Component {
         return (
                 <div className="col-lg-3 col-md-6">
 						<div className="single-publish">
-							<img src="https://ict.io/wp-content/uploads/2017/02/section-image-1-1024x682.jpg" className="img-fluid" alt="" />
+							<img src="https://cdn.pixabay.com/photo/2017/10/14/09/56/journal-2850091_960_720.jpg" className="img-fluid" alt="" />
 							<div className="top">
 								<div className="mb-15 d-flex">
 								<Moment format="DD/MM/YYYY">{this.props.date}</Moment>
