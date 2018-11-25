@@ -7,8 +7,10 @@
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
     "moment": "^2.22.2",
-    "node-sass": "^4.10.0",
     "react": "^16.6.3",
+    "react-big-calendar": "^0.20.2",
+    "react-bootstrap-sweetalert": "^4.4.1",
+    "react-chartist": "^0.13.1",
     "react-dom": "^16.6.3",
     "react-moment": "^0.8.4",
     "react-redux": "^5.1.1",
@@ -33,5 +35,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0"
+  }
 }

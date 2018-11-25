@@ -6,6 +6,8 @@ import { getCurrentTrainingCenter } from '../../actions/tcActions'
 import Spinner from '../common/Spinner';
 import Navbar from '../layout/Navbar'
 import Graph from './graph/Graph'
+import ChartistGraph from "react-chartist";
+
 
 
 import SideBar from './common/SideBar.js';

@@ -1,0 +1,9 @@
+.card-calendar{
+      margin: 20px auto;
+      padding: 0px;
+      min-height: 633px;
+}
+
+.rbc-month-row{ 
+      min-height: 100px;
+}
