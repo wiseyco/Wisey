@@ -13,7 +13,7 @@ export const getCourseById = (id) => dispatch => {
           payload: res.data
       })
     })
-      
+
       .catch(err =>
           dispatch({
               type: GET_COURSE,
@@ -72,39 +72,79 @@ export const getLatestCourses = () => dispatch => {
       type: UPDATE_FILTER,
       payload: filters,
     });
-  
+
   }
 
 // Get the training center's courses fot the training center dashboard @route GET api/courses/dashboard
 
 export const getCourseDashboard = () => dispatch => {
+  console.log("getCourseDashboard to back");
   dispatch(setCourseLoading());
   axios
-    .get('api/courses/dashboard')
-    .then(res =>
+    .get('/api/courses/dashboard')
+    .then(res => {
+      console.log("Got courses", res);
       dispatch({
         type: GET_TRAINING_CENTER_COURSES,
         payload: res.data
       })
+     }
     )
-    .catch(err =>
+    .catch(err => {
+      console.log("Error", err);
       dispatch({
         type: GET_TRAINING_CENTER_COURSES,
         payload: null
-      })
+      })}
     );
  };
- 
+
  // Create Course
  export const createCourse = (courseData, history) => dispatch => {
   axios
-    .post('api/courses/create', courseData)
-    .then(res => history.push('/dashboard'))
+    .post('/api/courses/create', courseData)
+    .then(res => {
+      console.log("Created course", res);
+      history.push('/dashboard')})
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
+    );
+ };
+
+ // Update Course
+ export const updateCourse = (courseData, history) => dispatch => {
+   console.log("Update request to back");
+  axios
+    .post('/api/courses/update', courseData)
+    .then(res => {
+      console.log("Updated course", res);
+      history.push('/dashboard')})
+    .catch(err => {
+      console.log("Error", err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })}
+    );
+ };
+
+ // Delete Course
+ export const deleteCourse = (id, history) => dispatch => {
+   console.log("Delete request to back");
+  axios
+    .delete(`/api/courses/delete/${id}`)
+    .then(res => {
+      console.log("Deleted course", res);
+      history.push('/dashboard')})
+    .catch(err => {
+      console.log("Error", err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })}
     );
  };
 
