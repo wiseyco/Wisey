@@ -137,6 +137,7 @@ class Profile extends Component {
                 myWishes= (
                     <div className="mt-30 mb-30 flex-column flex-middle flex-cell">
                         <h4>Il n'y a rien dans votre wishlist</h4>
+                        <br/>
                         <Link className="btn btn-primary primary-btn" to="/courses">Trouver des cours</Link>
                     </div>
                 );
@@ -216,7 +217,7 @@ class Profile extends Component {
                               </div>
                             </div>
 
-                           <div className="row">
+                           {/* <div className="row">
                               <div className="col-md-10 pr-1">
                                 <h5>Informations professionnelles</h5>
                                     <label>
@@ -226,7 +227,7 @@ class Profile extends Component {
 
                                     </p>
                                 </div>
-                                </div>
+                                </div> */}
                                 <hr/>
                             <div className="text-center">
                                 <input

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import SideBar from './common/SideBar.js';
 import DbNavBar from './common/DbNavBar.js';
@@ -7,6 +7,10 @@ import DbFooter from './common/DbFooter.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import 'antd/dist/antd.css';
+import { Modal, Button } from 'antd';
+
 
 import Spinner from '../common/Spinner';
 import { getCourseDashboard } from '../../actions/courseActions';
@@ -19,9 +23,18 @@ class TCCourses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal1Visible: false,
+      modal2Visible: false,
     }
-    this.toggle = this.toggle.bind(this);
+    // this.toggle = this.toggle.bind(this);
+  }
+
+  setModal1Visible(modal1Visible) {
+    this.setState({ modal1Visible });
+  }
+
+  setModal2Visible(modal2Visible) {
+    this.setState({ modal2Visible });
   }
 
   componentWillMount() {
@@ -77,18 +90,26 @@ class TCCourses extends Component {
                         </div>
                       </div>
                       <div className="col-md-3 btn-group-vertical">
-                        <Button color="danger" onClick={this.toggle}>
+                        {/* <Button color="danger" onClick={this.toggle}>
                           Ajouter un cours
-                        </Button>
-                        <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}>
-                          <ModalHeader toggle={this.toggle}>
+                        </Button> */}
+                        <Button type="primary" onClick={() => this.setModal1Visible(true)}>Ajouter un cours</Button>
+                        <Modal
+                            title="Ajouter un cours"
+                            style={{ top: 20 }}
+                            visible={this.state.modal1Visible}
+                            onOk={() => this.setModal1Visible(false)}
+                            onCancel={() => this.setModal1Visible(false)}
+                        >
+                        {/* <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}> */}
+                          {/* <ModalHeader toggle={this.toggle}>
                             Ajouter un cours
-                          </ModalHeader>
-                          <ModalBody >
+                          </ModalHeader> */}
+                          {/* <ModalBody > */}
                             <AddCourseForm />
-                          </ModalBody>
-                          <ModalFooter>
-                          </ModalFooter>
+                          {/* </ModalBody> */}
+                          {/* <ModalFooter>
+                          </ModalFooter> */}
                         </Modal>
                     </div>
                     </div>

@@ -10,7 +10,7 @@ class DbFooter extends Component {
             <ul className="footer-menu">
               <li>
                 <Link to="/">
-                    Acceuil du site
+                    Accueil du site
                 </Link>
               </li>
               <li>

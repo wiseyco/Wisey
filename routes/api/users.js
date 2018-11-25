@@ -338,7 +338,7 @@ const doWeSendBackToken = (req, res, user) => {
         });
 
       } else {
-        errors.login = 'E-mail ou mot de passe invalide.';
+        errors.password = 'Mot de passe invalide.';
         res.status(404).json(errors);
       }
     });

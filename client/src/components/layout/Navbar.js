@@ -23,7 +23,8 @@ class Header extends Component {
     
         this.toggle = this.toggle.bind(this);
         this.state = {
-          isOpen: false
+          isOpen: false,
+          scroll: 0
         };
       }
       toggle() {
@@ -39,7 +40,29 @@ class Header extends Component {
         this.props.clearCurrentTrainingCenter();
     }
 
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+      }
+   
+      componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+      }
+
+    handleScroll = () => {
+        this.setState({scroll: window.scrollY});
+     }
+
     render () {
+
+        let classNavbar = ["Navbar"];
+
+        if(this.state.scroll > 50){
+            classNavbar.push("navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar navbar-scrolled");
+         }
+
+         else {
+             classNavbar.push('navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar')
+         }
     
         const { isAuthenticated } = this.props.auth;
 
@@ -78,7 +101,7 @@ class Header extends Component {
 
     return (
             <div>
-                <Navbar className="navbar navbar-expand-md navbar-dark fixed-top bg-dark second-navbar">
+                <Navbar className={classNavbar.join(" ")}>
                     <Link to="/"><img style={{width: '150px', marginTop: '10px', marginBottom: '10px'}} src={DarkLogo} alt="Wisey logo"/></Link>
                         <NavbarToggler onClick={this.toggle} style={{color: 'black'}} />
                             <Collapse isOpen={this.state.isOpen} style={{color: 'black'}} navbar> 

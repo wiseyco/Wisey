@@ -916,6 +916,7 @@ color: #e15f41;
   margin-left: 20px;
 }
 
+
 .default-header nav .main-menu {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1956,6 +1957,11 @@ footer .footer-nav li a:hover {
 .second-navbar {
   background: none !important;
   color: black !important;
+  border: none !important;  
+}
+
+.navbar-scrolled {
+  background:#f1f2f6 !important;
 }
 
 .navbar .navbar-expand-md .navbar-dark .fixed-top .bg-dark .second-navbar {

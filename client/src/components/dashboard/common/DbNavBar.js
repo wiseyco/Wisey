@@ -61,7 +61,7 @@ class DbNavBar extends Component {
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                     <NavLink className="nav-link" to="/">
-                        <span className="no-icon">Acceuil du site</span>
+                        <span className="no-icon">Accueil du site</span>
                     </NavLink>
                 </li>
                 {/* <li className="nav-item dropdown">
