@@ -115,6 +115,7 @@ router.post(
     //Get TrainingCenter ID
     TrainingCenter.findOne({ user: req.user.id })
       .then(trainingCenter => {
+        console.log("THEN TRAINING CENTER")
         // Get all course fields
         const courseFields = {};
         courseFields.trainingcenter = trainingCenter.id;
@@ -125,9 +126,10 @@ router.post(
         if (req.body.delivery) courseFields.delivery = req.body.delivery;
         if (req.body.price) courseFields.price = req.body.price;
         // targetedAudience - Split into array
-        if (typeof req.body.targetedAudience !== 'undefined') {
-          courseFields.targetedAudience = req.body.targetedAudience.split(',');
-        }
+        // if (typeof req.body.targetedAudience !== 'undefined') {
+        //   courseFields.targetedAudience = req.body.targetedAudience.split(',');
+        // }
+        console.log("TEST")
         if (req.body.cpf) courseFields.cpf = req.body.cpf;
         // Duration
         courseFields.duration = {time:"", unit:""}
