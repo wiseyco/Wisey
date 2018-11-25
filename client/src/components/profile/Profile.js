@@ -217,7 +217,7 @@ class Profile extends Component {
                               </div>
                             </div>
 
-                           <div className="row">
+                           {/* <div className="row">
                               <div className="col-md-10 pr-1">
                                 <h5>Informations professionnelles</h5>
                                     <label>
@@ -227,7 +227,7 @@ class Profile extends Component {
 
                                     </p>
                                 </div>
-                                </div>
+                                </div> */}
                                 <hr/>
                             <div className="text-center">
                                 <input
