@@ -22,7 +22,7 @@ import Course from './components/courses/Course'
 import Dashboard from './components/dashboard/Dashboard';
 import TCProfile from './components/dashboard/TCProfile';
 import TCCourses from './components/dashboard/TCCourses';
-import TCMap from './components/dashboard/TCMap';
+import Calendar from './components/dashboard/Calendar';
 import AddTrainingCenter from './components/add-training-center/AddTrainingCenter';
 import ForgotPassword from '../src/components/auth/forgot-password/ForgotPassword';
 import ResetPassword from '../src/components/auth/forgot-password/ResetPassword';
@@ -69,7 +69,7 @@ class App extends Component {
             <PrivateRoute exact path="/tc-courses" component={TCCourses} />
           </Switch>
           <Switch>
-            <PrivateRoute exact path="/tc-map" component={TCMap} />
+            <PrivateRoute exact path="/tc-map" component={Calendar} />
           </Switch>
           <Route exact path="/Courses" component={ Courses } />
           <Route exact path="/course/:id" component={ Course } />

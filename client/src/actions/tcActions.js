@@ -56,6 +56,20 @@ export const createTrainingCenter = (trainingCenterData, history) => dispatch =>
     );
 }
 
+// Udpate training center
+export const updateTrainingCenter = (trainingCenterData, history) => dispatch => {
+  axios.post('/api/tc', trainingCenterData)
+    .then(res => history.push('/tc-profile'))
+    // .then(res => console.log('res :', res))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      })
+    }
+    );
+}
+
 // Training center loading
 export const setTrainingCenterLoading = () => {
   return {

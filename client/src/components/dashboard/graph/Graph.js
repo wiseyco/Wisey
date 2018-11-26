@@ -1,76 +1,129 @@
 import React, { Component } from 'react'
+import ChartistGraph from "react-chartist";
+import {
+    dataPie,
+    dataSales,
+    optionsSales,
+    responsiveSales,
+    dataBar,
+    optionsBar,
+    responsiveBar,
+    table_data
+  } from '../calendar/Variables.js';
+
+import Card from '../common/Card';
+
+  // var mapData = {
+  //   AU: 760,
+  //   BR: 550,
+  //   CA: 120,
+  //   DE: 1300,
+  //   FR: 540,
+  //   GB: 690,
+  //   GE: 200,
+  //   IN: 200,
+  //   RO: 600,
+  //   RU: 300,
+  //   US: 2920
+  // };
 
 class Graph extends Component {
+
+    createTableData() {
+        var tableRows = [];
+        for (var i = 0; i < table_data.length; i++) {
+          tableRows.push(
+            <tr key={i}>
+              <td>
+                <div className="flag">
+                  <img src={table_data[i].flag} alt="us_flag" />
+                </div>
+              </td>
+              <td>{table_data[i].country}</td>
+              <td className="text-right">{table_data[i].count}</td>
+              <td className="text-right">{table_data[i].percentage}</td>
+            </tr>
+          );
+        }
+        return tableRows;
+    }
   render() {
     return (
-      <div>
+      <div>              
         <div className="row">
             <div className="col-md-4">
-                <div className="card ">
-                    <div className="card-header ">
-                        <h4 className="card-title">Email Statistics</h4>
-                        <p className="card-category">Last Campaign Performance</p>
-                    </div>
-                    <div className="card-body ">
-                        <div id="chartPreferences" className="ct-chart ct-perfect-fourth"></div>
-                    </div>
-                    <div className="card-footer ">
-                        <div className="legend">
-                            <i className="fa fa-circle text-info"></i> Open
-                            <i className="fa fa-circle text-danger"></i> Bounce
-                            <i className="fa fa-circle text-warning"></i> Unsubscribe
-                        </div>
-                        <hr />
-                        <div className="stats">
-                            <i className="fa fa-clock-o"></i> Campaign sent 2 days ago
-                        </div>
-                    </div>
-                </div>
+              <Card
+                graph
+                title="Formations"
+                category="Ratio Intra/Inter"
+                content={<ChartistGraph data={dataPie} type="Pie" />}
+                legend={
+                  <div>
+                    <i className="fa fa-circle text-info" /> Intra
+                    <i className="fa fa-circle text-danger" /> Inter
+                  </div>
+                }
+                stats={
+                  <div>
+                    <i className="fa fa-clock-o" /> Dernière mise à jour il y a 3 min.
+                  </div>
+                }
+              />
+
             </div>
             <div className="col-md-8">
-                <div className="card ">
-                    <div className="card-header ">
-                        <h4 className="card-title">Users Behavior</h4>
-                        <p className="card-category">24 Hours performance</p>
-                    </div>
-                    <div className="card-body ">
-                        <div id="chartHours" className="ct-chart"></div>
-                    </div>
-                    <div className="card-footer ">
-                        <div className="legend">
-                            <i className="fa fa-circle text-info"></i> Open
-                            <i className="fa fa-circle text-danger"></i> Click
-                            <i className="fa fa-circle text-warning"></i> Click Second Time
-                        </div>
-                        <hr />
-                        <div className="stats">
-                            <i className="fa fa-history"></i> Updated 3 minutes ago
-                        </div>
-                    </div>
-                </div>
+            <Card
+                graph
+                title="Formations à venir"
+                category="Dans les prochains mois"
+                content={
+                  <ChartistGraph
+                    data={dataSales}
+                    type="Line"
+                    options={optionsSales}
+                    responsiveOptions={responsiveSales}
+                  />
+                }
+                legend={
+                  <div>
+                    <i className="fa fa-circle text-info" /> Intra
+                    <i className="fa fa-circle text-danger" /> Inter
+                  </div>
+                }
+                stats={
+                  <div>
+                    <i className="fa fa-history" /> Dernière mise à jour il y a 3 min.
+                  </div>
+                }
+              />
             </div>
         </div>
         <div className="row">
             <div className="col-md-6">
-                <div className="card ">
-                    <div className="card-header ">
-                        <h4 className="card-title">2017 Sales</h4>
-                        <p className="card-category">All products including Taxes</p>
-                    </div>
-                    <div className="card-body ">
-                        <div id="chartActivity" className="ct-chart"></div>
-                    </div>
-                    <div className="card-footer ">
-                        <div className="legend">
-                            <i className="fa fa-circle text-info"></i> Tesla Model S
-                            <i className="fa fa-circle text-danger"></i> BMW 5 Series
-                        </div>
-                        <hr />
-                        <div className="stats">
-                            <i className="fa fa-check"></i> Data information certified
-                        </div>
-                    </div>
-                </div>
+            <Card
+              graph
+                title="A planifier"
+                category="Les formations à planifier"
+                content={
+                  <ChartistGraph
+                    data={dataBar}
+                    type="Bar"
+                    options={optionsBar}
+                    responsiveOptions={responsiveBar}
+                  />
+                }
+                legend={
+                  <div>
+                    <i className="fa fa-circle text-info" /> Intra
+                    <i className="fa fa-circle text-danger" /> Inter
+                  </div>
+                }
+                stats={
+                  <div>
+                    <i className="fa fa-check" /> Dernière mise à jour il y a 3 min.
+                  </div>
+                }
+              />
             </div>
             <div className="col-md-6">
                 <div className="card  card-tasks">
@@ -86,108 +139,12 @@ class Graph extends Component {
                                         <td>
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" />
-                                                    <span className="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                        <td className="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                                <i className="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className="form-check">
-                                                <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" />
-                                                    <span className="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                        <td className="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                                <i className="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className="form-check">
-                                                <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" />
-                                                    <span className="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept thr /ough metro Detroit
-                                        </td>
-                                        <td className="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                                <i className="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className="form-check">
-                                                <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" />
-                                                    <span className="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                        <td className="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                                <i className="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className="form-check">
-                                                <label className="form-check-label">
-                                                    <input className="form-check-input" type="checkbox" value="" />
-                                                    <span className="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Read "Following makes Medium better"</td>
-                                        <td className="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
-                                                <i className="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" className="btn btn-danger btn-simple btn-link">
-                                                <i className="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className="form-check">
-                                                <label className="form-check-label">
                                                     <input className="form-check-input" type="checkbox" value="" disabled />
                                                     <span className="form-check-sign"></span>
                                                 </label>
                                             </div>
                                         </td>
-                                        <td>Unfollow 5 enemies from twitter</td>
+                                        <td>Planifier les prochaines fromations</td>
                                         <td className="td-actions text-right">
                                             <button type="button" rel="tooltip" title="Edit Task" className="btn btn-info btn-simple btn-link">
                                                 <i className="fa fa-edit"></i>
@@ -204,7 +161,7 @@ class Graph extends Component {
                     <div className="card-footer ">
                         <hr />
                         <div className="stats">
-                            <i className="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                            <i className="now-ui-icons loader_refresh spin"></i> Dernière mise à jour il y a 3 min.
                         </div>
                     </div>
                 </div>

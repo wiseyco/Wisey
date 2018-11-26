@@ -2961,7 +2961,7 @@ fieldset[disabled] .form-control {
   top: 0;
   width: 1px;
   background-color: #DDDDDD;
-  card-body: "";
+  /* card-body: ""; */
   position: absolute;
 } 
 
@@ -4517,9 +4517,9 @@ fieldset[disabled] .form-control {
   .dropdown-menu {
       display: none;
   }
-  .navbar-fixed-top {
+  /* .navbar-fixed-top {
       -webkit-backface-visibility: hidden;
-  }
+  } */
   #bodyClick {
       height: 100%;
       width: 100%;
@@ -4769,7 +4769,7 @@ base class definition
   display: inline-block;
   font: normal normal normal 14px/1 'nucleo-icons';
   font-size: inherit;
-  speak: none;
+  /* speak: none; */
   text-transform: none;
   /* Better Font Rendering */
   -webkit-font-smoothing: antialiased;
@@ -5547,7 +5547,7 @@ font icons
 }
 
 .fixed-plugin .adjustments-line p {
-  float: left;
+  /* float: left; */
   display: inline-block;
   margin-bottom: 0;
   font-size: 1em;
@@ -6171,4 +6171,8 @@ font icons
 
 .documentation .dropdown .dropdown-menu.show {
   transform: translate3d(0, 39px, 0) !important;
+}
+
+.card-graph {
+  padding: 30px;
 }
