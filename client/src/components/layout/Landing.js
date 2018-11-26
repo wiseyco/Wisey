@@ -63,9 +63,9 @@ class Landing extends Component {
 				<div className="row fullscreen align-items-center">
 					<div className="col-lg-8">
 						<div className="banner-content text-center">
-							<h1 className="text-uppercase text-white">La plateforme de la formation professionnelle</h1>
+							<h1 className="text-uppercase text-white">Changez de vie.<br/>Formez-vous aux métiers de demain.</h1>
 							<br />
-							<p className="text-uppercase text-white">Nous vous proposons les meilleures formations numériques pour accompagner votre carrière.</p>
+							<p className="text-uppercase text-white">Wisey, la plateforme de mise en relation entre les apprenants et les professionnels de la formation.</p>
 							<Link className="primary-btn banner-btn" to="/courses">Je trouve ma formation</Link>
 
 						</div>
@@ -144,9 +144,9 @@ class Landing extends Component {
 						<div className="studio-content">
 							<p className="text-uppercase text-white">Professionnels</p>
 							<h2 className="h1 text-white text-uppercase mb-20">La plateforme privilégiée <br /> des organismes de la formation</h2>
-							<p className="text-white mb-30">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-								</p>
+							<p className="text-white mb-30">
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+							</p>
 							<Link to="/dashboard" className="primary-btn text-white d-inline-flex align-items-center">Proposer une formation <span className="lnr lnr-arrow-right"></span></Link>
 						</div>
 					</div>

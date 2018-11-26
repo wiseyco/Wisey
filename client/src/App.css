@@ -2397,3 +2397,7 @@ footer .footer-nav li a:hover {
         min-width: 150px;
         font-size: 12px;
      }
+
+.likes-tc-courses {
+  padding-right: 10px;
+}

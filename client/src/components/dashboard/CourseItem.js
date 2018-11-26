@@ -40,15 +40,20 @@ class CourseItem extends Component {
 
   render() {
     const { course } = this.props;
+    const likes = course.likes.length;
 
     return (
         <tr style = {{width:"100%"}}>
           <td>
-            <div className="form-check">
-              <label className="form-check-label">
-                <input className="form-check-input" type="checkbox" value="" />
-                <span className="form-check-sign"></span>
-              </label>
+            <div className="flex flex-row flex-middle flex-center center">
+              {/* <label className="form-check-label"> */}
+                {/* <input className="form-check-input" type="checkbox" value="" /> */}
+                
+                
+                <i className="fas fa-heart likes-tc-courses"></i>
+                <p className="mb-0">{likes}</p>
+
+              {/* </label> */}
             </div>
           </td>
           <td>{course.title}</td>
@@ -63,12 +68,12 @@ class CourseItem extends Component {
             </Button> */}
             <Radio.Button value="small" onClick={() => this.setModal1Visible(true)}>Editer</Radio.Button>
             <Modal
-                            title="Editer le cours"
-                            style={{ top: 20 }}
-                            visible={this.state.modal1Visible}
-                            onOk={() => this.setModal1Visible(false)}
-                            onCancel={() => this.setModal1Visible(false)}
-                        >
+              title="Editer le cours"
+              style={{ top: 20 }}
+              visible={this.state.modal1Visible}
+              onOk={() => this.setModal1Visible(false)}
+              onCancel={() => this.setModal1Visible(false)}
+            >
             {/* <Modal className="reactstrap-modal-dashboard" isOpen={this.state.modal} toggle={this.toggle}> */}
               {/* <ModalHeader toggle={this.toggle}>
                 Modifier un cours

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import Prout from '../../assets/img/wiseyco/wisey-training.jpeg';
 
 
 
@@ -12,7 +13,7 @@ class CourseLandingItem extends Component {
         return (
                 <div className="col-lg-3 col-md-6">
 						<div className="single-publish">
-							<img src="https://cdn.pixabay.com/photo/2017/10/14/09/56/journal-2850091_960_720.jpg" className="img-fluid" alt="" />
+							<img src={Prout} className="img-fluid" alt="" />
 							<div className="top">
 								<div className="mb-15 d-flex">
 								<Moment format="DD/MM/YYYY">{this.props.date}</Moment>

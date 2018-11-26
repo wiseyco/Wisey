@@ -4,7 +4,7 @@ import Login from '../auth/Login';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { clearCurrentTrainingCenter } from '../../actions/tcActions';
-import DarkLogo from '../../assets/img/wiseyco/logos/dark-logo.png';
+import DarkLogo from '../../assets/img/wiseyco/logos/Logo_wisey_4x.png';
 
 import { logoutUser } from '../../actions/authActions';
 import {
