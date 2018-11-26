@@ -112,7 +112,7 @@ class Course extends Component {
                       <div className="card-body">
                         <div className="author">
                           <a href="/tc-profile">
-                            <img className="avatar border-gray" src="https://image.freepik.com/icones-gratuites/logo-de-pomme_318-40184.jpg" alt="..." />
+                            <img className="avatar border-gray" src="http://www.cnam-paris.fr/medias/photo/picto-accueil-diplome_1479728149265-png" alt="..." />
                             <h6>Pro Formation</h6>
                             <h4 className="title">{loadedCourse.title}</h4>
                           </a>
