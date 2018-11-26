@@ -31,7 +31,7 @@ class DbFooter extends Component {
           </ul>
           <p className="copyright text-center">
             &copy; {new Date().getFullYear()} 
-            <Link to="http://www.wisey.co"> Wisey.co</Link>, made with love for a world
+            <Link to="http://www.wisey.co"> Wisey.co</Link>, made with love for a better world
             </p>
           </nav>
         </div>

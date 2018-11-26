@@ -31,7 +31,7 @@ class SideBar extends Component {
             <li>
               <NavLink className="nav-link" to="/tc-map">
                 <i className="fas fa-table"></i>	
-                <p>Calendirer</p>
+                <p>Calendrier</p>
               </NavLink>
             </li>
             <li>
